@@ -1,16 +1,15 @@
-package com.telerik.peer.repositories.contracts;
+package com.telerik.peer.services.contracts;
 
 import com.telerik.peer.models.User;
-import org.springframework.stereotype.Repository;
+import com.telerik.peer.repositories.contracts.BaseReadRepository;
 
 import java.util.List;
 
-
-public interface UserRepository extends BaseReadRepository<User> {
+public interface UserService extends BaseReadRepository<User> {
 //    List<User> getAll();
 //
 //    User getById(long Id);
-//
+
     void create(User user);
 
     void update(User user);
