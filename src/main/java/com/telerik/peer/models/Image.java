@@ -1,6 +1,5 @@
 package com.telerik.peer.models;
 
-import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
 

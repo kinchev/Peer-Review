@@ -13,7 +13,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
 
-    private int id;
+    private long id;
 
     @Column(name = "username")
     private String username;
@@ -28,7 +28,7 @@ public class User {
     private String number;
 
     @Lob
-    @Column(name = "images")
+    @Column(name = "image")
     private byte[] image;
 
     public byte[] getImage() {
@@ -42,11 +42,11 @@ public class User {
     public User() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
