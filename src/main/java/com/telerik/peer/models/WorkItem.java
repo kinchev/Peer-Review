@@ -37,7 +37,7 @@ public class WorkItem {
         this.id = id;
     }
 
-    @Id
+
     public Long getId() {
         return id;
     }

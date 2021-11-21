@@ -4,29 +4,25 @@ import com.telerik.peer.exceptions.DuplicateEntityException;
 import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.models.User;
-import com.telerik.peer.models.WorkItem;
-import com.telerik.peer.repositories.AbstractCRUDRepository;
 import com.telerik.peer.repositories.contracts.UserRepository;
 import com.telerik.peer.services.contracts.UserService;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
 @Service
-public class UserServiceImpl extends AbstractCRUDRepository<User> implements UserService {
+public class UserServiceImpl implements UserService {
     private static final String MODIFY_USER_ERROR_MESSAGE = "Only the user owner or admin can modify an user.";
     private final UserRepository userRepository;
-    private final WorkItem workItem;
+
 
     @Autowired
-    public UserServiceImpl(Class<User> clazz, SessionFactory sessionFactory, UserRepository userRepository, WorkItem workItem) {
-        super(clazz, sessionFactory);
+    public UserServiceImpl( UserRepository userRepository) {
+
         this.userRepository = userRepository;
-        this.workItem = workItem;
+
     }
 
 
@@ -55,6 +51,11 @@ public class UserServiceImpl extends AbstractCRUDRepository<User> implements Use
         userRepository.create(entity);
     }
 
+    @Override
+    public <V> User getByField(String fieldName, V value) {
+        return userRepository.getByField(fieldName, value);
+    }
+
 
     @Override
     public void update(User entity, User owner) {
@@ -63,7 +64,7 @@ public class UserServiceImpl extends AbstractCRUDRepository<User> implements Use
         }
         boolean duplicateExists = true;
         try {
-            User exisingUser = getByField("username", entity.getUsername());
+            User exisingUser = userRepository.getByField("username", entity.getUsername());
             if (exisingUser.getId() == entity.getId()) {
                 duplicateExists = false;
             }
@@ -85,6 +86,8 @@ public class UserServiceImpl extends AbstractCRUDRepository<User> implements Use
     public User getById(long id) {
         return userRepository.getById(id);
     }
+
+
 
 
 }
