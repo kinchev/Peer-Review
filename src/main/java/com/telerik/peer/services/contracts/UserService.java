@@ -6,16 +6,17 @@ import com.telerik.peer.repositories.contracts.BaseReadRepository;
 
 import java.util.List;
 
-public interface UserService extends  BaseCRUDRepository<User> {
+public interface UserService extends  BaseReadRepository<User>,BaseCRUDRepository<User>{
 
 
     //    List<User> getAll();
 //
 //    User getById(long Id);
+
 //
     void update(User user,User owner);
 //
-//    void update(User user);
+    void delete(long id,User owner);
 //
 //    void delete(long id);
 }

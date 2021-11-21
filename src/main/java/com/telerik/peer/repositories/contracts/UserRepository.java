@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
-public interface UserRepository extends BaseCRUDRepository<User> {
+public interface UserRepository extends BaseCRUDRepository<User>,BaseReadRepository<User> {
 //    List<User> getAll();
 //
 //    User getById(long Id);

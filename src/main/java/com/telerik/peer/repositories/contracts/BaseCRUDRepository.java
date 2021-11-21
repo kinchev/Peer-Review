@@ -1,6 +1,6 @@
 package com.telerik.peer.repositories.contracts;
 
-public interface BaseCRUDRepository<T> extends BaseReadRepository<T>{
+public interface BaseCRUDRepository<T> {
 
     void delete(long id);
 
