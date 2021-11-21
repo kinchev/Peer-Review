@@ -5,6 +5,7 @@ import com.telerik.peer.models.User;
 import com.telerik.peer.repositories.contracts.UserRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,12 @@ public class UserRepositoryImpl extends AbstractCRUDRepository<User> implements 
         super(User.class,sessionFactory);
         this.sessionFactory = sessionFactory;
     }
-
+//    public User getByUsername(String username) {
+//        try(Session session = sessionFactory.openSession()){
+//            Query<User> query = session.createQuery()
+//        }
+//
+//    }
 //    @Override
 //    public List<User> getAll() {
 //        try (Session session = sessionFactory.openSession()) {

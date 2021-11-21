@@ -6,14 +6,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
-public interface UserRepository extends BaseReadRepository<User> {
+public interface UserRepository extends BaseCRUDRepository<User> {
 //    List<User> getAll();
 //
 //    User getById(long Id);
 //
-    void create(User user);
-
-    void update(User user);
-
-    void delete(long id);
+//    void create(User user);
+//
+//    void update(User user);
+//
+//    void delete(long id);
 }
