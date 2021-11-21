@@ -1,6 +1,5 @@
 package com.telerik.peer.models;
 
-
 import javax.persistence.*;
 
 
@@ -13,8 +12,12 @@ public class Image {
     @Column(name = "image_id")
     private int id;
 
-    @Column(name = "file_name")
-    private String fileName;
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
+
+    public Image() {
+    }
 
     public int getId() {
         return id;
@@ -24,16 +27,13 @@ public class Image {
         this.id = id;
     }
 
-    public String getFileName() {
-        return fileName;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public Image() {
-
-
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
+
+

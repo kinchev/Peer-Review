@@ -1,8 +1,8 @@
 package com.telerik.peer.models;
 
-
 import javax.persistence.*;
 import javax.persistence.Entity;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -27,19 +27,12 @@ public class User {
     @Column(name = "phone_number")
     private String number;
 
-    @Lob
-    @Column(name = "image")
-    private byte[] image;
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     public User() {
+
     }
 
     public long getId() {
@@ -81,4 +74,31 @@ public class User {
     public void setNumber(String number) {
         this.number = number;
     }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getId() == user.getId() &&
+                getUsername().equals(user.getUsername()) &&
+                getPassword().equals(user.getPassword()) &&
+                getEmail().equals(user.getEmail()) &&
+                getNumber().equals(user.getNumber());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUsername(),getPassword(),getEmail(),getNumber(),getImage());
+    }
+
+
 }
