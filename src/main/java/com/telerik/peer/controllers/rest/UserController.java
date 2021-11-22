@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import org.springframework.http.HttpHeaders;
+
 import java.util.List;
 
 
@@ -26,14 +28,13 @@ public class UserController {
 
 
     @GetMapping("{id}")
-    public User getById(@PathVariable long id) {
+    public User getById(@RequestHeader HttpHeaders headers, @PathVariable long id) {
         try {
-            User user = userService.getById(id);
+            User user = authenticationHelper.tryGetUser(headers);
             return userService.getByField("id", user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-
     }
 
     @GetMapping

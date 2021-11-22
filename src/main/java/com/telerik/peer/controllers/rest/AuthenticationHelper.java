@@ -32,10 +32,10 @@ public class AuthenticationHelper {
         }
 
         try {
-            String email = headers.getFirst(AUTHORIZATION_HEADER_NAME);
-            return userService.getByField("username",headers);
+            String username = headers.getFirst(AUTHORIZATION_HEADER_NAME);
+            return userService.getByField("username",username);
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user email.");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user username.");
         }
     }
 
