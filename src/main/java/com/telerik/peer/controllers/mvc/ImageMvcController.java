@@ -25,7 +25,6 @@ public class ImageMvcController {
     @PostMapping
     Long uploadImage(@RequestParam MultipartFile multipartFile) throws Exception {
         Image image = new Image();
-        image.setName(multipartFile.getName());
         image.setImage(multipartFile.getBytes());
         return imageService.create(image);
 

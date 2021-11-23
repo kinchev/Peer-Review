@@ -17,18 +17,8 @@ public class Image implements Serializable {
     @Column(name = "image")
     private byte[] image;
 
-    String name;
-
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Image() {

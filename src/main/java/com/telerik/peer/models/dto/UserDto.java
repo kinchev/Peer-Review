@@ -24,7 +24,6 @@ public class UserDto {
 
     @NotBlank
     @Size(min=10, max=10, message = "Number should contain 10 digits.")
-    @Column(name = "phone_number")
     private String number;
 
     private long imageId;

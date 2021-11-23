@@ -20,7 +20,7 @@
             <h1>REGISTRATION</h1></div>
         <div class="form">
             <label>
-                <input placeholder='Email' type="text" th:field="*{username}">
+                <input placeholder='Username' type="text" th:field="*{username}">
             </label>
             <label class="error" th:errors="*{username}"></label>
             <label>
@@ -40,8 +40,8 @@
                     <input placeholder='Phone number' type="text" th:field="*{number}">
                 </label>
                 <label class="error" th:errors="*{number}"></label>
-                <label>
-                    <form method="post" enctype="multipart/form-data">
+                </label>
+                    <form method="post" enctype="multipart/form-data" action="upload">
                         <input type="file" name="imageFile" th:field="*{image}"> />
                         <input type="submit" value="Upload"/>
 
