@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/css/loginnew.css" th:href="@{/static/javascript/css/loginnew.css}">
+    <link rel="stylesheet" href="/static/css/styles.css" th:href="@{/static/javascript/css/styles.css}">
+    <script src="/static/javascript/loginnew.js" th:href="@{/static/javascript/loginnew.js}"></script>
+
+
+
+</head>
+<body>
+
+<form action="#" th:action="@{/auth/login}" th:object="${login}" method="post">
+    <div class="panel">
+        <div class="state"><br><i class="fa fa-unlock-alt"></i><br><h1>Log in</h1></div>
+        <div class="form">
+            <label>
+                <input placeholder='Email' type="text" th:field="*{username}">
+            </label>
+            <label class="error" th:errors="*{username}"></label>
+            <label>
+                <input placeholder='Password' type="password" th:field="*{password}">
+            </label>
+            <label class="error" th:errors="*{password}">Password error placeholder</label>
+            <input class="login" type="submit" value="Submit"/>
+        </div>
+        <div class="fack"><a href="#"><i class="fa fa-question-circle"></i>Forgot password?</a></div>
+    </div>
+</form>
+</body>
+</html>

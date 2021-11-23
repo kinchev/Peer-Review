@@ -15,5 +15,5 @@ public interface ImageService {
 
     void delete(long id, User owner);
 
-    void create(Image image);
+    Long create(Image image);
 }

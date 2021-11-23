@@ -23,12 +23,16 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "number")
+    @Column(name = "phone_number")
     private String number;
 
     @OneToOne
     @JoinColumn(name = "image_id")
     private Image image;
+
+    public boolean isAdmin() {
+        return true;
+    }
 
     public User() {
 
@@ -96,7 +100,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUsername(),getPassword(),getEmail(),getNumber(),getImage());
+        return Objects.hash(getId(), getUsername(), getPassword(), getEmail(), getNumber(), getImage());
     }
 
 

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="/static/css/loginnew.css" th:href="@{/css/loginnew.css}">
+    <link rel="stylesheet" href="/static/css/styles.css" th:href="@{/css/styles.css}">
+    <script src="/static/javascript/loginnew.js" th:href="@{/javascript/loginnew.js}"></script>
+
+</head>
+<body>
+
+
+<form action="#" th:action="@{/auth/register}" th:object="${register}" method="post">
+
+
+    <div class="panel">
+
+        <div class="state"><br><i class="fa fa-unlock-alt"></i><br>
+            <h1>REGISTRATION</h1></div>
+        <div class="form">
+            <label>
+                <input placeholder='Email' type="text" th:field="*{username}">
+            </label>
+            <label class="error" th:errors="*{username}"></label>
+            <label>
+                <input placeholder='Password' type="password" th:field="*{password}">
+            </label>
+            <label class="error" th:errors="*{password}">Password error placeholder</label>
+            <label>
+                <input placeholder='Confirm Password' type="password" th:field="*{passwordConfirm}">
+            </label>
+            <label class="error" th:errors="*{passwordConfirm}">Password error placeholder</label>
+            <label>
+                <label>
+                    <input placeholder='Email' type="text" th:field="*{email}">
+                </label>
+                <label class="error" th:errors="*{email}"></label>
+                <label>
+                    <input placeholder='Phone number' type="text" th:field="*{number}">
+                </label>
+                <label class="error" th:errors="*{number}"></label>
+                <label>
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="file" name="imageFile" th:field="*{image}"> />
+                        <input type="submit" value="Upload"/>
+
+                    </form>
+                    <input class="login" type="submit" value="REGISTRATION"/>
+
+        </div>
+        <div class="fack"><a href="#"><i class="fa fa-question-circle"></i>Forgot password?</a></div>
+    </div>
+</form>
+
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" style="font-size: 16px;">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="file"  accept="image/gif, image/jpeg, image/png" name="image" id="file" style="display: none;"th:href="@{/auth/register}">
+<a
+        class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-3-base u-radius-50 u-btn-1" th:href="@{/auth/register}" >REGISTER<br>
+</a>
+<a
+        class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-3-light-1 u-radius-50 u-btn-2" th:href="@{/auth/login}" >LOGIN</a>
+</body>
+</html>

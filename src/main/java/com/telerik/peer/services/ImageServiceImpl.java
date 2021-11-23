@@ -48,7 +48,8 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void create(Image image) {
+    public Long create(Image image) {
         imageRepository.create(image);
+        return null;
     }
 }

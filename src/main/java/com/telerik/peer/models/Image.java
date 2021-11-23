@@ -1,25 +1,40 @@
 package com.telerik.peer.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Entity
 @Table(name = "images")
-public class Image {
+public class Image implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
-    private int id;
+    private long id;
 
     @Lob
     @Column(name = "image")
     private byte[] image;
 
+    String name;
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Image() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
