@@ -7,6 +7,7 @@ import com.telerik.peer.repositories.contracts.ImageRepository;
 import com.telerik.peer.services.contracts.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -52,4 +53,6 @@ public class ImageServiceImpl implements ImageService {
         imageRepository.create(image);
         return null;
     }
+
+
 }

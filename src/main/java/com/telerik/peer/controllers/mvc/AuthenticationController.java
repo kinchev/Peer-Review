@@ -15,13 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -85,30 +84,29 @@ public class AuthenticationController {
         return "register";
     }
 
-    @PostMapping("/register")
-    public String handleRegister(@Valid @ModelAttribute("register") RegisterDto register,
-                                 BindingResult bindingResult,
-                                 HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            return "register";
-        }
+//    @PostMapping("/register")
+//    public Object handleRegister(@Valid @ModelAttribute("register") RegisterDto register,
+//                                 BindingResult bindingResult,
+//                                 HttpSession session,@RequestParam MultipartFile multipartFile) {
+//        if (bindingResult.hasErrors()) {
+//            return "register";
+//        }
+//
+//        if (!register.getPassword().equals(register.getPasswordConfirm())) {
+//            bindingResult.rejectValue("passwordConfirm", "password_error", "Password confirmation should match password.");
+//            return "register";
+//        }
+//
+//        try {
+//            User user = userMapper.createUserFromRegisterDto(register);
+//            Image image = userMapper.createImageFromRegisterDto(register);
+//
+//
+//        } catch (DuplicateEntityException e) {
+//            bindingResult.rejectValue("username", "username_error", e.getMessage());
+//            return "register";
+//
+//        }
 
-        if (!register.getPassword().equals(register.getPasswordConfirm())) {
-            bindingResult.rejectValue("passwordConfirm", "password_error", "Password confirmation should match password.");
-            return "register";
-        }
 
-        try {
-            User user = userMapper.createUserFromRegisterDto(register);
-            Image image = userMapper.createImageFromRegisterDto(register);
-            user.setImage(image);
-            userService.create(user);
-            return "redirect:/auth/login";
-        } catch (DuplicateEntityException e) {
-            bindingResult.rejectValue("username", "username_error", e.getMessage());
-            return "register";
-
-        }
     }
-
-}
