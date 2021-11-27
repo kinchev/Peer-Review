@@ -6,8 +6,9 @@ import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
-public class UserDto {
+public class UserDto implements Serializable {
 
     @NotBlank
     @UniqueElements

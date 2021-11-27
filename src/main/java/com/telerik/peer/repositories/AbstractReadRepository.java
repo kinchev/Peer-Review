@@ -1,7 +1,7 @@
 package com.telerik.peer.repositories;
 
 import com.telerik.peer.exceptions.EntityNotFoundException;
-import com.telerik.peer.repositories.contracts.BaseReadRepository;
+import com.telerik.peer.repositories.contracts.CRUDRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 import static java.lang.String.format;
 
-public abstract class AbstractReadRepository<T> implements BaseReadRepository<T> {
+public abstract class AbstractReadRepository<T> implements CRUDRepository<T> {
     private final Class<T> clazz;
     private final SessionFactory sessionFactory;
 

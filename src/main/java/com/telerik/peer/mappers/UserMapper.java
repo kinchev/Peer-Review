@@ -7,19 +7,17 @@ import com.telerik.peer.models.dto.RegisterDto;
 import com.telerik.peer.models.dto.UserDto;
 import com.telerik.peer.repositories.contracts.ImageRepository;
 import com.telerik.peer.repositories.contracts.UserRepository;
-import com.telerik.peer.services.contracts.ImageService;
-import com.telerik.peer.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
 
-    private UserService userService;
-    private ImageService imageService;
+    private UserRepository userService;
+    private ImageRepository imageService;
 
     @Autowired
-    public UserMapper(UserService userService, ImageService imageService) {
+    public UserMapper(UserRepository userService, ImageRepository imageService) {
         this.userService = userService;
         this.imageService = imageService;
     }

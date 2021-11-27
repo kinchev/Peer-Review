@@ -1,16 +1,10 @@
 package com.telerik.peer.repositories;
 
-import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.models.User;
 import com.telerik.peer.repositories.contracts.UserRepository;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-
-import java.util.List;
 
 @Repository
 public class UserRepositoryImpl extends AbstractCRUDRepository<User> implements UserRepository {
