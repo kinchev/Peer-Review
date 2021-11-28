@@ -21,6 +21,24 @@ public class WorkItem {
     @Column(name = "description")
     private String description;
 
+    @OneToOne
+    @JoinColumn(name = "creator_id")
+    private User creator;
+
+    @OneToOne
+    @JoinColumn(name = "reviewer_id")
+    private User reviewer;
+
+
+    @OneToOne
+    @JoinColumn(name = "teams_id")
+    private Team team;
+
+
+    @Transient
+    Status status;
+
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "workitems_users",
@@ -28,6 +46,48 @@ public class WorkItem {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> reviewers = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "comments",
+            joinColumns = @JoinColumn(name = "workitem_id"),
+            inverseJoinColumns = @JoinColumn(name = "comment_id")
+    )
+    private Set<Comment> comments = new HashSet<>();
+
+
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public User getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(User reviewer) {
+        this.reviewer = reviewer;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
 
     public WorkItem() {

@@ -1,11 +1,9 @@
 package com.telerik.peer.mappers;
 
 
-import com.telerik.peer.models.Image;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.dto.RegisterDto;
 import com.telerik.peer.models.dto.UserDto;
-import com.telerik.peer.repositories.contracts.ImageRepository;
 import com.telerik.peer.repositories.contracts.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,12 +12,12 @@ import org.springframework.stereotype.Component;
 public class UserMapper {
 
     private UserRepository userService;
-    private ImageRepository imageService;
+
 
     @Autowired
-    public UserMapper(UserRepository userService, ImageRepository imageService) {
+    public UserMapper(UserRepository userService) {
         this.userService = userService;
-        this.imageService = imageService;
+
     }
 
     public UserDto userToDto(User user) {
@@ -28,7 +26,7 @@ public class UserMapper {
         userDto.setPassword(user.getPassword());
         userDto.setNumber(user.getNumber());
         userDto.setEmail(user.getEmail());
-        userDto.setImageId(user.getImage().getId());
+
 
         return userDto;
     }
@@ -46,20 +44,13 @@ public class UserMapper {
     }
 
     private void dtoToObject(UserDto userDto, User user) {
-        Image image = imageService.getById(userDto.getImageId());
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
         user.setNumber(user.getNumber());
-        user.setImage(image);
+
     }
 
-    public Image createImageFromRegisterDto(RegisterDto registerDto) {
-        Image image = new Image();
-        image.setImage(registerDto.getImage());
-        imageService.create(image);
-        return image;
-    }
 
     public User createUserFromRegisterDto(RegisterDto registerDto) {
         User user = new User();

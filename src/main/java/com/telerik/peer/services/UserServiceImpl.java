@@ -5,6 +5,7 @@ import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.models.User;
 import com.telerik.peer.repositories.contracts.UserRepository;
+import com.telerik.peer.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 
 @Service
-public class UserServiceImpl implements com.telerik.peer.services.contracts.UserService {
+public class UserServiceImpl implements UserService {
     private static final String MODIFY_USER_ERROR_MESSAGE = "Only the user owner or admin can modify an user.";
     private final UserRepository userRepository;
 
@@ -50,10 +51,6 @@ public class UserServiceImpl implements com.telerik.peer.services.contracts.User
         userRepository.create(entity);
     }
 
-    @Override
-    public <V> User getByField(String fieldName, V value) {
-        return userRepository.getByField(fieldName, value);
-    }
 
 
     @Override
@@ -74,6 +71,11 @@ public class UserServiceImpl implements com.telerik.peer.services.contracts.User
             throw new DuplicateEntityException("User", "username", entity.getUsername());
         }
         userRepository.update(entity);
+    }
+
+    @Override
+    public <V> User getByField(String fieldName, V value) {
+        return null;
     }
 
     @Override

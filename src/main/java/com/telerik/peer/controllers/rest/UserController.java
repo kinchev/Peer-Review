@@ -4,18 +4,14 @@ import com.telerik.peer.exceptions.DuplicateEntityException;
 import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.mappers.UserMapper;
-import com.telerik.peer.models.Image;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.dto.RegisterDto;
 import com.telerik.peer.models.dto.UserDto;
-import com.telerik.peer.services.contracts.ImageService;
 import com.telerik.peer.services.contracts.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import org.springframework.http.HttpHeaders;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,13 +22,13 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final ImageService imageService;
+
     private final UserMapper userMapper;
     private final AuthenticationHelper authenticationHelper;
 
-    public UserController(UserService userService, ImageService imageService, UserMapper userMapper, AuthenticationHelper authenticationHelper) {
+    public UserController(UserService userService, UserMapper userMapper, AuthenticationHelper authenticationHelper) {
         this.userService = userService;
-        this.imageService = imageService;
+
         this.userMapper = userMapper;
         this.authenticationHelper = authenticationHelper;
     }
@@ -57,9 +53,9 @@ public class UserController {
     @PostMapping
     public User create(@Valid @RequestBody RegisterDto registerDto) {
         try {
-            Image image = userMapper.createImageFromRegisterDto(registerDto);
+
             User user = userMapper.createUserFromRegisterDto(registerDto);
-            user.setImage(image);
+
             userService.create(user);
             return user;
         } catch (DuplicateEntityException e) {

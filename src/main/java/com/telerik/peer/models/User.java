@@ -2,12 +2,15 @@ package com.telerik.peer.models;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Objects;
 
 @Entity
 @Table(name = "users")
 
 public class User {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,9 +29,7 @@ public class User {
     @Column(name = "phone_number")
     private String number;
 
-    @OneToOne
-    @JoinColumn(name = "image_id")
-    private Image image;
+
 
     public boolean isAdmin() {
         return true;
@@ -78,13 +79,9 @@ public class User {
         this.number = number;
     }
 
-    public Image getImage() {
-        return image;
-    }
 
-    public void setImage(Image image) {
-        this.image = image;
-    }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -100,7 +97,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUsername(), getPassword(), getEmail(), getNumber(), getImage());
+        return Objects.hash(getId(), getUsername(), getPassword(), getEmail(), getNumber());
     }
 
 

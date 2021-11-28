@@ -2,26 +2,19 @@ package com.telerik.peer.controllers.mvc;
 
 import com.telerik.peer.controllers.rest.AuthenticationHelper;
 import com.telerik.peer.exceptions.AuthenticationFailureException;
-import com.telerik.peer.exceptions.DuplicateEntityException;
-import com.telerik.peer.exceptions.InvalidUserInputException;
 import com.telerik.peer.mappers.UserMapper;
-import com.telerik.peer.models.Image;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.dto.LoginDto;
 import com.telerik.peer.models.dto.RegisterDto;
-import com.telerik.peer.services.contracts.ImageService;
 import com.telerik.peer.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/auth")
@@ -29,14 +22,14 @@ public class AuthenticationController {
     private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
     private final UserMapper userMapper;
-    private final ImageService imageService;
+
 
     @Autowired
-    public AuthenticationController(UserService userService, AuthenticationHelper authenticationHelper, UserMapper userMapper, ImageService imageService) {
+    public AuthenticationController(UserService userService, AuthenticationHelper authenticationHelper, UserMapper userMapper) {
         this.userService = userService;
         this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;
-        this.imageService = imageService;
+
     }
 
     public boolean isAdmin() {
