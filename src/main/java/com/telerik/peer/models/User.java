@@ -32,12 +32,9 @@ public class User {
     @Column(name = "photo_name")
     private String photoName;
 
-    public String getPhotoName() {
-        return photoName;
-    }
-
-    public void setPhotoName(String photoName) {
-        this.photoName = photoName;
+    @Transient
+    public String getPhotoPath() {
+        return id + "/" + photoName;
     }
 
     public boolean isAdmin() {
@@ -88,9 +85,13 @@ public class User {
         this.number = number;
     }
 
+    public String getPhotoName() {
+        return photoName;
+    }
 
-
-
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
+    }
 
     @Override
     public boolean equals(Object o) {

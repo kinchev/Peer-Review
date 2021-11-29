@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User</title>
+    <title th:text="${user.getUsername()}">User Profile </title>
 </head>
 <body>
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+<!--    <li><h3><a href="#" th:href="@{/users}" th:text="#{navigation.all-users}">Browse all users</a></h3></li>-->
+</ul>
+<div>
+<h2 th:text="${user.getUsername()}">Username</h2>
+<h3 th:text="${user.getEmail()}">Email</h3>
+<h3 th:text="${user.getNumber()}">Number</h3>
+</div>
+
+<br/>
+<img th:src="@{/resources/user-photos/{path}(path=${user.getPhotoPath()})}"  width="128" height="128" alt="Test">
+<br/>
+
+<!--<a th:href="@{/}" title=""><img th:src="@{/user-photos/30/AlexTest.png}" width="128" height="128" alt="Test"></a>-->
+
 
 </body>
 </html>

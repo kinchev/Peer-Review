@@ -1,11 +1,15 @@
 package com.telerik.peer.controllers.mvc;
 
 import com.telerik.peer.controllers.rest.AuthenticationHelper;
+import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.mappers.UserMapper;
+import com.telerik.peer.models.User;
 import com.telerik.peer.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -33,9 +37,17 @@ public class UserMvcController {
 //    }
 
 
-    @GetMapping
-    public String showUserPage() {
-        return "user";
+    @GetMapping("/{id}")
+    public String showSingleUser(@PathVariable int id, Model model) {
+        try {
+            User user = userService.getById(id);
+            model.addAttribute("user", user);
+            return "user";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        }
     }
+
 }
 

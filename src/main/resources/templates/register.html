@@ -11,7 +11,7 @@
 <body>
 
 
-<form action="#" th:action="@{/auth/register}" th:object="${register}" method="post">
+<form action="#" th:action="@{/auth/register}" th:object="${register}" method="post" enctype="multipart/form-data">
 
 
     <div class="panel">
@@ -40,13 +40,12 @@
                     <input placeholder='Phone number' type="text" th:field="*{number}">
                 </label>
                 <label class="error" th:errors="*{number}"></label>
-                </label>
-                    <form method="post" enctype="multipart/form-data" action="upload">
-                        <input type="file" name="imageFile" th:field="*{image}"> />
-                        <input type="submit" value="Upload"/>
+            </label>
+            <label>
+                <input type="file" name="image">
+            </label>
 
-                    </form>
-                    <input class="login" type="submit" value="REGISTRATION"/>
+            <input class="login" type="submit" value="REGISTRATION"/>
 
         </div>
         <div class="fack"><a href="#"><i class="fa fa-question-circle"></i>Forgot password?</a></div>

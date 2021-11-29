@@ -2,19 +2,24 @@ package com.telerik.peer.controllers.mvc;
 
 import com.telerik.peer.controllers.rest.AuthenticationHelper;
 import com.telerik.peer.exceptions.AuthenticationFailureException;
+import com.telerik.peer.exceptions.DuplicateEntityException;
 import com.telerik.peer.mappers.UserMapper;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.dto.LoginDto;
 import com.telerik.peer.models.dto.RegisterDto;
 import com.telerik.peer.services.contracts.UserService;
+import com.telerik.peer.utils.FileUploadHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/auth")
@@ -77,29 +82,36 @@ public class AuthenticationController {
         return "register";
     }
 
-//    @PostMapping("/register")
-//    public Object handleRegister(@Valid @ModelAttribute("register") RegisterDto register,
-//                                 BindingResult bindingResult,
-//                                 HttpSession session,@RequestParam MultipartFile multipartFile) {
-//        if (bindingResult.hasErrors()) {
-//            return "register";
-//        }
-//
-//        if (!register.getPassword().equals(register.getPasswordConfirm())) {
-//            bindingResult.rejectValue("passwordConfirm", "password_error", "Password confirmation should match password.");
-//            return "register";
-//        }
-//
-//        try {
-//            User user = userMapper.createUserFromRegisterDto(register);
-//            Image image = userMapper.createImageFromRegisterDto(register);
-//
-//
-//        } catch (DuplicateEntityException e) {
-//            bindingResult.rejectValue("username", "username_error", e.getMessage());
-//            return "register";
-//
-//        }
+    @PostMapping("/register")
+    public String handleRegister(@Valid @ModelAttribute("register") RegisterDto register,
+                                 BindingResult bindingResult,
+                                 @RequestParam("image") MultipartFile multipartFile,
+                                 HttpSession session) throws IOException {
+        if (bindingResult.hasErrors()) {
+            return "register";
+        }
+
+        if (!register.getPassword().equals(register.getPasswordConfirm())) {
+            bindingResult.rejectValue("passwordConfirm", "password_error", "Password confirmation should match password.");
+            return "register";
+        }
+        User user;
+        String fileName;
+        try {
+            user = userMapper.createUserFromRegisterDto(register);
+            fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            user.setPhotoName(fileName);
+            userService.create(user);
+        } catch (DuplicateEntityException e) {
+            bindingResult.rejectValue("username", "username_error", e.getMessage());
+            return "register";
+        }
+
+        String uploadDir = "resources/user-photos/" + user.getId();
+        FileUploadHelper.saveFile(uploadDir, fileName, multipartFile);
+
+        return "redirect:/auth/login";
+    }
 
 
     }

@@ -49,7 +49,7 @@ public class WorkItem {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "workitem_comment",
+            name = "workitems_comments",
             joinColumns = @JoinColumn(name = "workitem_id"),
             inverseJoinColumns = @JoinColumn(name = "comment_id")
     )

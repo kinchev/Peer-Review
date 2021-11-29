@@ -7,6 +7,7 @@ import com.telerik.peer.models.WorkItem;
 import com.telerik.peer.repositories.contracts.WorkItemRepository;
 import com.telerik.peer.services.contracts.WorkItemService;
 import org.hibernate.annotations.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class WorkItemServiceImpl implements WorkItemService {
     private static final String REVIEWER_DIFFERENT_FROM_ITEM_TEAM = "Reviewer different from item team!";
     WorkItemRepository workItemRepository;
 
+    @Autowired
     public WorkItemServiceImpl(WorkItemRepository workItemRepository) {
         this.workItemRepository = workItemRepository;
     }
