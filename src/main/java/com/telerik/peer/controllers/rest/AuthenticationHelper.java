@@ -4,6 +4,7 @@ import com.telerik.peer.exceptions.AuthenticationFailureException;
 import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.models.User;
 import com.telerik.peer.repositories.contracts.UserRepository;
+import com.telerik.peer.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,11 @@ public class AuthenticationHelper {
     public static final String AUTHORIZATION_HEADER_NAME = "Authorization";
     public static final String AUTHENTICATION_FAILURE_MESSAGE = "Wrong username or password.";
 
-    private final UserRepository userService;
+    private final UserService userService;
 
 
     @Autowired
-    public AuthenticationHelper(UserRepository userService) {
+    public AuthenticationHelper(UserService userService) {
         this.userService = userService;
     }
 

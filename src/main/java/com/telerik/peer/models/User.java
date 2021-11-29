@@ -29,7 +29,16 @@ public class User {
     @Column(name = "phone_number")
     private String number;
 
+    @Column(name = "photo_name")
+    private String photoName;
 
+    public String getPhotoName() {
+        return photoName;
+    }
+
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
+    }
 
     public boolean isAdmin() {
         return true;
