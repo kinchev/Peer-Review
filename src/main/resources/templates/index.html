@@ -27,7 +27,7 @@
 
   <!-- Template Main CSS File -->
   <link  th:href="@{/assets/css/style.css}" rel="stylesheet">
-
+  <link rel="next" href="login.html">
   <!-- =======================================================
   * Template Name: Arsha - v4.7.0
   * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
@@ -40,6 +40,17 @@
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top ">
+<!--    <a th:unless="${isAuthenticated}"-->
+<!--       class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-3-base u-radius-50 u-btn-1"-->
+<!--       th:href="@{/auth/register}">REGISTER<br>-->
+<!--    </a>-->
+<!--    <a th:unless="${isAuthenticated}"-->
+<!--       class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-3-light-1 u-radius-50 u-btn-2"-->
+<!--       th:href="@{/auth/login}">LOGIN</a>-->
+
+<!--    <a th:if="${isAuthenticated}"-->
+<!--       class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-3-base u-radius-50 u-btn-1"-->
+<!--       th:href="@{/auth/logout}" href="#">LOGOUT</a>-->
     <div class="container d-flex align-items-center">
 
       <h1 class="logo me-auto"><a href="index.html">Arsha</a></h1>
@@ -71,7 +82,8 @@
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-          <li><a class="getstarted scrollto" href="#about">Get Started</a></li>
+          <li><a class="getstarted scrollto" th:href="@{/auth/register}">SING IN</a></li>
+          <li><a class="getstarted scrollto" th:href="@{/auth/login}">LOG IN</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -678,7 +690,7 @@
               <div class="address">
                 <i class="bi bi-geo-alt"></i>
                 <h4>Location:</h4>
-                <p>A108 Adam Street, New York, NY 535022</p>
+                <p>30, ул. „Кръстю Раковски“ str, 1729 София</p>
               </div>
 
               <div class="email">
@@ -693,9 +705,8 @@
                 <p>+1 5589 55488 55s</p>
               </div>
 
-              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
+              <iframe src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=30,%20%D1%83%D0%BB.%20%E2%80%9E%D0%9A%D1%80%D1%8A%D1%81%D1%82%D1%8E%20%D0%A0%D0%B0%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%E2%80%9C%20str,%201729%20%D0%A1%D0%BE%D1%84%D0%B8%D1%8F+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" th:href="@{https://www.google.com/maps/place/%D0%A2%D0%B5%D0%BB%D0%B5%D1%80%D0%B8%D0%BA+%D0%90%D0%BA%D0%B0%D0%B4%D0%B5%D0%BC%D0%B8%D1%8F/@42.6500099,23.3770951,17z/data=!3m1!4b1!4m5!3m4!1s0x40aa86940322e46b:0x9dcf2a89d173b821!8m2!3d42.6499775!4d23.3792576?hl=bg}" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
             </div>
-
           </div>
 
           <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
@@ -707,16 +718,18 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label for="name">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email" required>
+                  <label for="email"></label><input type="email" class="form-control" name="email" id="email" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="name">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject" required>
+                <label  for="subject"></label><input type="text" class="form-control" name="subject" id="subject" required>
               </div>
               <div class="form-group">
                 <label for="name">Message</label>
-                <textarea class="form-control" name="message" rows="10" required></textarea>
+                <label>
+                  <textarea class="form-control" name="message" rows="10" required></textarea>
+                </label>
               </div>
               <div class="my-3">
                 <div class="loading">Loading</div>
@@ -744,7 +757,9 @@
             <h4>Join Our Newsletter</h4>
             <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
             <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
+              <label>
+                <input type="email" name="email">
+              </label><input type="submit" value="Subscribe">
             </form>
           </div>
         </div>

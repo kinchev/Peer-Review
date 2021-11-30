@@ -1,6 +1,5 @@
 package com.telerik.peer.controllers.mvc;
 
-import com.telerik.peer.services.contracts.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +22,6 @@ public class HomeMvcController {
 //    }
     @GetMapping
     public String homePage(Model model) {
-        return "index1";
+        return "index";
     }
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/user")
+
 public class UserMvcController {
 
     private final UserService userService;
@@ -41,9 +41,9 @@ public class UserMvcController {
 
 
     @GetMapping("/{id}")
-    public String showSingleUser(@PathVariable int id, Model model) {
+    public String showSingleUser(@PathVariable int id, Model model,HttpSession session) {
         try {
-            User user = userService.getById(id);
+            User user = authenticationHelper.tryGetUser(session);
             model.addAttribute("user", user);
             return "user";
         } catch (EntityNotFoundException e) {
