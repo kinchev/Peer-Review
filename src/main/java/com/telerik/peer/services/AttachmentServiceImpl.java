@@ -13,21 +13,21 @@ import java.util.List;
 public class AttachmentServiceImpl implements AttachmentService {
     AttachmentRepository attachmentRepository;
 
+    @Autowired
     public AttachmentServiceImpl(AttachmentRepository attachmentRepository) {
         this.attachmentRepository = attachmentRepository;
     }
 
-    @Autowired
 
 
     @Override
     public List<Attachment> getAll() {
-        return null;
+        return attachmentRepository.getAll();
     }
 
     @Override
     public Attachment getById(long id) {
-        return null;
+        return attachmentRepository.getById(id);
     }
 
     @Override
@@ -36,12 +36,12 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public void create(Attachment entity) {
+    public void create(Attachment attachment) {
 
     }
 
     @Override
-    public void update(Attachment entity, User owner) {
+    public void update(Attachment attachment, User owner) {
 
     }
 

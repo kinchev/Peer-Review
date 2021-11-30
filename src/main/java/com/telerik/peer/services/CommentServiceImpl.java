@@ -21,16 +21,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> getAll() {
-        return null;
+        return commentRepository.getAll();
     }
 
     @Override
     public Comment getById(long id) {
-        return null;
+        return commentRepository.getById(id);
     }
 
     @Override
     public void delete(long id, User owner) {
+        
 
     }
 

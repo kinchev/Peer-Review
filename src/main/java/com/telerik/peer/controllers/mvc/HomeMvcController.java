@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller()
 @RequestMapping("/")
 public class HomeMvcController {
-    private final UserService userService;
-
-    public HomeMvcController(UserService userService) {
-        this.userService = userService;
-    }
+//    private final UserService userService;
+//
+//    public HomeMvcController(UserService userService) {
+//        this.userService = userService;
+//    }
 
 
     //
@@ -23,6 +23,6 @@ public class HomeMvcController {
 //    }
     @GetMapping
     public String homePage(Model model) {
-        return "index";
+        return "index1";
     }
 }
