@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/auth")
@@ -99,9 +100,10 @@ public class AuthenticationController {
         String fileName;
         try {
             user = userMapper.createUserFromRegisterDto(register);
-            fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             user.setPhotoName(fileName);
             userService.create(user);
+
         } catch (DuplicateEntityException e) {
             bindingResult.rejectValue("username", "username_error", e.getMessage());
             return "register";

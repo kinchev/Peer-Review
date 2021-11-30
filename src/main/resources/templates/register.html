@@ -42,7 +42,7 @@
                 <label class="error" th:errors="*{number}"></label>
             </label>
             <label>
-                <input type="file" name="image">
+                <input type="file" name="file" th:field="*{photo}"> >
             </label>
 
             <input class="login" type="submit" value="REGISTRATION"/>
