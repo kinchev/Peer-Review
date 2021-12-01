@@ -58,6 +58,29 @@ public class WorkItem {
 //    private Set<Comment> comments = new HashSet<>();
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public User getReviewer() {
+        return reviewer;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
 
     public WorkItem() {
     }

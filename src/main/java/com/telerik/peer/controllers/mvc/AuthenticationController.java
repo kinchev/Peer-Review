@@ -86,8 +86,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public String handleRegister(@Valid @ModelAttribute("register") RegisterDto register,
                                  BindingResult bindingResult,
-                                 @RequestParam("image") MultipartFile multipartFile,
-                                 HttpSession session) throws IOException {
+                                 @RequestParam("file") MultipartFile multipartFile) throws IOException {
         if (bindingResult.hasErrors()) {
             return "register";
         }

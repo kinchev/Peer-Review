@@ -92,7 +92,7 @@ public class UserMvcController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteUser(@PathVariable int id, Model model) {
+    public String deleteUser(@PathVariable long id, Model model) {
         try {
             User user = userService.getById(id);
             userService.delete(id, user);

@@ -31,7 +31,7 @@
                 <input placeholder='Confirm Password' type="password" th:field="*{passwordConfirm}">
             </label>
             <label class="error" th:errors="*{passwordConfirm}">Password error placeholder</label>
-            <label>6
+            <label>
                 <label>
                     <input placeholder='Email' type="text" th:field="*{email}">
                 </label>
@@ -42,7 +42,7 @@
                 <label class="error" th:errors="*{number}"></label>
             </label>
             <label>
-                <input type="file" name="file" th:field="*{photo}"> >
+                <input type="file" th:field="*{file}">
             </label>
 
             <input class="login" type="submit" value="REGISTRATION"/>

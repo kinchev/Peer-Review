@@ -42,9 +42,9 @@ public class UserMapper {
 
     private void dtoToObject(UserDto userDto, User user) {
         user.setUsername(userDto.getUsername());
-        user.setEmail(userDto.getEmail());
         user.setNumber(userDto.getNumber());
         user.setPassword(user.getPassword());
+        user.setEmail(userDto.getEmail());
         user.setPhotoName(user.getPhotoName());
     }
 

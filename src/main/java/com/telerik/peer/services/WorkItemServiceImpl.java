@@ -43,7 +43,7 @@ public class WorkItemServiceImpl implements WorkItemService {
     @Override
     public void create(WorkItem workitem) {
         if (titleExists(workitem, workitem.getId())) {
-            throw new DuplicateEntityException("Entity", "title", workitem.getTitle());
+            throw new DuplicateEntityException("workitem", "title", workitem.getTitle());
         }
         if (userAndCreatorAreTheSame(workitem)) {
             throw new InvalidUserInputException(REVIEWER_AND_CREATOR_ARE_THE_SAME_ERROR);
@@ -79,24 +79,25 @@ public class WorkItemServiceImpl implements WorkItemService {
 
     @Override
     public <V> WorkItem getByField(String fieldName, V value) {
-        return null;
+        return workItemRepository.getByField(fieldName, value);
     }
 
     private boolean isReviewerDifferentFromItemTeam(WorkItem workitem) {
-//    return workitem.getTeam().getMembers().stream().anyMatch(member->member.equals(workitem.getReviewers()));
-        return true;
+    return workitem.getTeam().getMembers().stream().anyMatch(member->member.equals(workitem.getReviewer()));
+
     }
 
-    //
+
     private boolean userAndCreatorAreTheSame(WorkItem workitem) {
-//        return workitem.getCreator().getId() == workitem.getReviewers().getId();
-        return true;
+        return workitem.getCreator().getId() == workitem.getReviewer().getId();
+
     }
 
-    //
-    private boolean titleExists(WorkItem workitem, Long id) {
-//        Stream<WorkItem> duplicateWorkitem=getAll().stream().filter(item->item.getTitle().equalsIgnoreCase(workitem.getTitle()));
-//        return duplicateWorkitem.isPresent() && duplicateWorkitem.get().getId() !=workitemToUpdate;
-        return true;
+//
+//    //
+    private boolean titleExists(WorkItem workitem, long workitemToUpdate) {
+        Optional<WorkItem> duplicateWorkitem=getAll().stream().filter(item->item.getTitle().equalsIgnoreCase(workitem.getTitle())).findFirst();
+        return duplicateWorkitem.isPresent() && duplicateWorkitem.get().getId() !=workitemToUpdate;
+
     }
 }
