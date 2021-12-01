@@ -22,12 +22,9 @@ public class UserMapper {
 
     public UserDto userToDto(User user) {
         UserDto userDto = new UserDto();
-        userDto.setUsername(user.getUsername());
-        userDto.setPassword(user.getPassword());
+        userDto.setUsername(user.getUsername());;
         userDto.setNumber(user.getNumber());
         userDto.setEmail(user.getEmail());
-
-
         return userDto;
     }
 
@@ -45,10 +42,10 @@ public class UserMapper {
 
     private void dtoToObject(UserDto userDto, User user) {
         user.setUsername(userDto.getUsername());
-        user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
-        user.setNumber(user.getNumber());
-
+        user.setNumber(userDto.getNumber());
+        user.setPassword(user.getPassword());
+        user.setPhotoName(user.getPhotoName());
     }
 
 

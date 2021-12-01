@@ -14,6 +14,7 @@
 
 
 -- Dumping database structure for peer_review
+DROP DATABASE IF EXISTS `peer_review`;
 CREATE DATABASE IF NOT EXISTS `peer_review` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `peer_review`;
 
@@ -21,26 +22,28 @@ USE `peer_review`;
 CREATE TABLE IF NOT EXISTS `attachments` (
                                              `attachment_id` int(11) NOT NULL AUTO_INCREMENT,
                                              `file_name` varchar(100) NOT NULL,
-                                             PRIMARY KEY (`attachment_id`)
+                                             `workitem_id` int(11) NOT NULL,
+                                             PRIMARY KEY (`attachment_id`),
+                                             KEY `attachments_workitems_fk` (`workitem_id`),
+                                             CONSTRAINT `attachments_workitems_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table peer_review.attachments: ~0 rows (approximately)
-/*!40000 ALTER TABLE `attachments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `attachments` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table peer_review.comments
 CREATE TABLE IF NOT EXISTS `comments` (
                                           `comment_id` int(11) NOT NULL AUTO_INCREMENT,
                                           `reviewer_id` int(11) NOT NULL,
                                           `comment_text` varchar(256) NOT NULL,
+                                          `workitem_id` int(11) NOT NULL,
                                           PRIMARY KEY (`comment_id`),
                                           KEY `comments_reviewer_fk` (`reviewer_id`),
-                                          CONSTRAINT `comments_reviewer_fk` FOREIGN KEY (`reviewer_id`) REFERENCES `users` (`user_id`)
+                                          KEY `comments_workitems_fk` (`workitem_id`),
+                                          CONSTRAINT `comments_reviewer_fk` FOREIGN KEY (`reviewer_id`) REFERENCES `users` (`user_id`),
+                                          CONSTRAINT `comments_workitems_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table peer_review.comments: ~0 rows (approximately)
-/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table peer_review.review_requests
 CREATE TABLE IF NOT EXISTS `review_requests` (
@@ -57,9 +60,16 @@ CREATE TABLE IF NOT EXISTS `review_requests` (
                                                  CONSTRAINT `review_requests_reviewer_fk` FOREIGN KEY (`reviewer_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table peer_review.review_requests: ~0 rows (approximately)
-/*!40000 ALTER TABLE `review_requests` DISABLE KEYS */;
-/*!40000 ALTER TABLE `review_requests` ENABLE KEYS */;
+-- Data exporting was unselected.
+
+-- Dumping structure for table peer_review.statuses
+CREATE TABLE IF NOT EXISTS `statuses` (
+                                          `status_id` int(11) NOT NULL AUTO_INCREMENT,
+                                          `status` varchar(50) NOT NULL,
+                                          PRIMARY KEY (`status_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
 
 -- Dumping structure for table peer_review.teams
 CREATE TABLE IF NOT EXISTS `teams` (
@@ -71,9 +81,7 @@ CREATE TABLE IF NOT EXISTS `teams` (
                                        CONSTRAINT `teams_users_fk` FOREIGN KEY (`owner_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table peer_review.teams: ~0 rows (approximately)
-/*!40000 ALTER TABLE `teams` DISABLE KEYS */;
-/*!40000 ALTER TABLE `teams` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table peer_review.teams_users
 CREATE TABLE IF NOT EXISTS `teams_users` (
@@ -85,9 +93,7 @@ CREATE TABLE IF NOT EXISTS `teams_users` (
                                              CONSTRAINT `teams_users_users_fk` FOREIGN KEY (`member_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table peer_review.teams_users: ~0 rows (approximately)
-/*!40000 ALTER TABLE `teams_users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `teams_users` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table peer_review.teams_workitems
 CREATE TABLE IF NOT EXISTS `teams_workitems` (
@@ -99,9 +105,7 @@ CREATE TABLE IF NOT EXISTS `teams_workitems` (
                                                  CONSTRAINT `teams_workitems_workitems_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table peer_review.teams_workitems: ~0 rows (approximately)
-/*!40000 ALTER TABLE `teams_workitems` DISABLE KEYS */;
-/*!40000 ALTER TABLE `teams_workitems` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table peer_review.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -113,58 +117,22 @@ CREATE TABLE IF NOT EXISTS `users` (
                                        `photo_name` varchar(100) DEFAULT NULL,
                                        PRIMARY KEY (`user_id`),
                                        KEY `users_images_fk` (`photo_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table peer_review.users: ~3 rows (approximately)
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-REPLACE INTO `users` (`user_id`, `username`, `password`, `email`, `phone_number`, `photo_name`) VALUES
-                                                                                                    (1, 'aaa', 'aaa', 'dsadasdat', 'aaaaaaaaaa', '1'),
-                                                                                                    (2, 'aaaa', 'aaaa', 'k_kinchev@abv.bg', '0884545632', '2'),
-                                                                                                    (3, 'aaaaa', 'aaaaa', 'k_kincheva@abv.bg', '0884545631', '3');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table peer_review.workitems
 CREATE TABLE IF NOT EXISTS `workitems` (
                                            `id` int(11) NOT NULL AUTO_INCREMENT,
                                            `title` varchar(80) NOT NULL,
                                            `description` longtext NOT NULL,
-                                           PRIMARY KEY (`id`)
+                                           `status_id` int(11) NOT NULL,
+                                           PRIMARY KEY (`id`),
+                                           KEY `workitems_statuses_fk` (`status_id`),
+                                           CONSTRAINT `workitems_statuses_fk` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`status_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table peer_review.workitems: ~0 rows (approximately)
-/*!40000 ALTER TABLE `workitems` DISABLE KEYS */;
-/*!40000 ALTER TABLE `workitems` ENABLE KEYS */;
-
--- Dumping structure for table peer_review.workitems_attachments
-CREATE TABLE IF NOT EXISTS `workitems_attachments` (
-                                                       `id` int(11) NOT NULL AUTO_INCREMENT,
-                                                       `workitem_id` int(11) NOT NULL,
-                                                       `attachment_id` int(11) NOT NULL,
-                                                       PRIMARY KEY (`id`),
-                                                       KEY `workitems_attachments_workitems_fk` (`workitem_id`),
-                                                       CONSTRAINT `workitems_attachments_attachments_fk` FOREIGN KEY (`id`) REFERENCES `attachments` (`attachment_id`),
-                                                       CONSTRAINT `workitems_attachments_workitems_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- Dumping data for table peer_review.workitems_attachments: ~0 rows (approximately)
-/*!40000 ALTER TABLE `workitems_attachments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `workitems_attachments` ENABLE KEYS */;
-
--- Dumping structure for table peer_review.workitems_comments
-CREATE TABLE IF NOT EXISTS `workitems_comments` (
-                                                    `id` int(11) NOT NULL AUTO_INCREMENT,
-                                                    `workitem_id` int(11) NOT NULL,
-                                                    `comment_id` int(11) NOT NULL,
-                                                    PRIMARY KEY (`id`),
-                                                    KEY `workitems_comments_comments_fk` (`comment_id`),
-                                                    KEY `workitems_comments_worktems_fk` (`workitem_id`),
-                                                    CONSTRAINT `workitems_comments_comments_fk` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`comment_id`),
-                                                    CONSTRAINT `workitems_comments_worktems_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- Dumping data for table peer_review.workitems_comments: ~0 rows (approximately)
-/*!40000 ALTER TABLE `workitems_comments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `workitems_comments` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;

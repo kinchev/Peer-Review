@@ -17,19 +17,16 @@ public class UserServiceImpl implements UserService {
     private static final String MODIFY_USER_ERROR_MESSAGE = "Only the user owner or admin can modify an user.";
     private final UserRepository userRepository;
 
-
     @Autowired
-    public UserServiceImpl( UserRepository userRepository) {
-
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-
     }
 
 
     @Override
     public void delete(long id, User owner) {
         User userToDelete = userRepository.getById(id);
-        if (!owner.equals(userToDelete)){
+        if (!owner.equals(userToDelete)) {
             throw new UnauthorizedOperationException(MODIFY_USER_ERROR_MESSAGE);
         }
         userRepository.delete(id);
@@ -50,7 +47,6 @@ public class UserServiceImpl implements UserService {
         }
         userRepository.create(entity);
     }
-
 
 
     @Override
@@ -75,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public <V> User getByField(String fieldName, V value) {
-        return null;
+        return userRepository.getByField(fieldName, value);
     }
 
     @Override
@@ -87,8 +83,6 @@ public class UserServiceImpl implements UserService {
     public User getById(long id) {
         return userRepository.getById(id);
     }
-
-
 
 
 }

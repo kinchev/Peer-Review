@@ -1,6 +1,7 @@
 package com.telerik.peer.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -19,6 +20,10 @@ public class Comment {
 
     @Column(name = "comment_text")
     private String comment;
+
+    @ManyToOne
+    @JoinColumn(name = "workitem_id")
+    private WorkItem workItem;
 
     public Comment() {
     }
@@ -45,5 +50,13 @@ public class Comment {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public WorkItem getWorkItem() {
+        return workItem;
+    }
+
+    public void setWorkItem(WorkItem workItem) {
+        this.workItem = workItem;
     }
 }

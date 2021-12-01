@@ -33,7 +33,6 @@ public abstract class AbstractReadRepository<T> implements CRUDRepository<T> {
         }
     }
 
-
     @Override
     public T getById(long id) {
         return getByField("id", id);

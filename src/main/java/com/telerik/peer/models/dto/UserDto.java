@@ -8,18 +8,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-public class UserDto implements Serializable {
+public class UserDto {
 
     @NotBlank
-    @UniqueElements
     @Size(min = 2, max = 20, message = "Username must be between 2 and 20 characters.")
     private String username;
 
-    @NotBlank
-    @Size(min = 2, max = 50, message = "Password should be between 8 and 50 characters.")
-    private String password;
-
-    @UniqueElements
     @Email(message = "This is not a valid mail.Please try again.")
     private String email;
 
@@ -27,7 +21,7 @@ public class UserDto implements Serializable {
     @Size(min=10, max=10, message = "Number should contain 10 digits.")
     private String number;
 
-    private long imageId;
+
 
     public UserDto() {
     }
@@ -38,14 +32,6 @@ public class UserDto implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
@@ -64,11 +50,4 @@ public class UserDto implements Serializable {
         this.number = number;
     }
 
-    public long getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(long imageId) {
-        this.imageId = imageId;
-    }
 }

@@ -58,12 +58,12 @@ public class AuthenticationController {
         try {
             User user = authenticationHelper.verifyAuthentication(login.getUsername(), login.getPassword());
             session.setAttribute("currentUser", login.getUsername());
-            if (user.isAdmin()) {
-
-                return "redirect:/admin";
-            } else {
-                return "redirect:/user";
-            }
+//            if (user.isAdmin()) {
+//
+//                return "redirect:/admin";
+//            } else {
+                return "redirect:/";
+//            }
         } catch (AuthenticationFailureException e) {
             bindingResult.rejectValue("email", "auth_error", e.getMessage());
             return "login";
@@ -109,7 +109,7 @@ public class AuthenticationController {
             return "register";
         }
 
-        String uploadDir = "resources/user-photos/" + user.getId();
+        String uploadDir = "src/main/resources/user-photos/" + user.getId();
         FileUploadHelper.saveFile(uploadDir, fileName, multipartFile);
 
         return "redirect:/auth/login";

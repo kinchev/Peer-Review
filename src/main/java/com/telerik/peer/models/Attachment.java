@@ -15,6 +15,10 @@ public class Attachment {
     @Column(name = "file_name")
     private String fileName;
 
+    @ManyToOne
+    @JoinColumn(name = "workitem_id")
+    private WorkItem workItem;
+
     public Attachment() {
     }
 
@@ -32,5 +36,13 @@ public class Attachment {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public WorkItem getWorkItem() {
+        return workItem;
+    }
+
+    public void setWorkItem(WorkItem workItem) {
+        this.workItem = workItem;
     }
 }

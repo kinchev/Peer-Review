@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update User</title>
+
+    <link rel="stylesheet" href="/static/css/styles.css" th:href="@{/css/styles.css}">
+
+
+</head>
+<body>
+
+<div>
+    <h1>UPDATE USER PROFILE</h1></div>
+
+<form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${user}" method="post">
+
+
+    <div class="form">
+        <label>
+            <input placeholder='Username' type="text" th:field="*{username}">
+        </label>
+        <br/>
+        <label class="error" th:errors="*{username}"></label>
+        <br/>
+        <label>
+            <input placeholder='Email' type="text" th:field="*{email}">
+        </label>
+        <label class="error" th:errors="*{email}"></label>
+        <br/>
+        <label>
+            <input placeholder='Phone number' type="text" th:field="*{number}">
+        </label>
+        <label class="error" th:errors="*{number}"></label>
+        <br/>
+
+        <input class="login" type="submit" value="UPDATE PROFILE"/>
+    </div>
+</form>
+
+
+</body>
+</html>
