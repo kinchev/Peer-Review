@@ -100,4 +100,9 @@ public class WorkItemServiceImpl implements WorkItemService {
         return duplicateWorkitem.isPresent() && duplicateWorkitem.get().getId() !=workitemToUpdate;
 
     }
+
+    @Override
+    public List<WorkItem> filter(Optional<String> title, Optional<String> status, Optional<String> sortBy) {
+        return workItemRepository.filter(title, status, sortBy);
+    }
 }

@@ -2,6 +2,7 @@ package com.telerik.peer.models;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -35,10 +36,7 @@ public class WorkItem {
     private Team team;
 
 
-//    @ManyToOne
-//    @JoinColumn(name = "status_id")
-//    @Enumerated(EnumType.STRING)
-//    private Status status;
+
 
 
 //    @ManyToMany(fetch = FetchType.EAGER)
@@ -57,6 +55,16 @@ public class WorkItem {
 //    )
 //    private Set<Comment> comments = new HashSet<>();
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;

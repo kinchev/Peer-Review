@@ -21,12 +21,11 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<Team> getAll() {
-        return null;
+        return teamRepository.getAll();
     }
-
     @Override
     public Team getById(long id) {
-        return null;
+        return teamRepository.getById(id);
     }
 
     @Override
@@ -46,6 +45,6 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public <V> Team getByField(String fieldName, V value) {
-        return null;
+        return teamRepository.getByField(fieldName, value);
     }
 }

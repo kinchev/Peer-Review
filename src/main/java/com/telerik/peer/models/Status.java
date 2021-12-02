@@ -1,12 +1,13 @@
 package com.telerik.peer.models;
 
 public enum Status {
-    Pending,
-    Under_Review,
-    Change_Requested,
-    Accepted,
-    Rejected;
+    PENDING,
+    UNDER_REVIEW,
+    CHANGE_REQUESTED,
+    ACCEPTED,
+    REJECTED;
 
     Status() {
     }
+
 }
