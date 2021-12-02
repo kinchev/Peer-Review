@@ -6,32 +6,52 @@ import java.io.Serializable;
 
 public class WorkItemDto implements Serializable {
 
-    private int teamId;
+    private String title;
 
-    private int creatorId;
+    private long teamId;
+
+    private String description;
+
+    private long creatorId;
 
     private Status status;
 
-    private int reviewerId;
+    private long reviewerId;
 
-    private String comment;
+    private long commentId;
 
     public WorkItemDto() {
     }
 
-    public int getTeamId() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public long getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(int teamId) {
+    public void setTeamId(long teamId) {
         this.teamId = teamId;
     }
 
-    public int getCreatorId() {
+    public long getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(int creatorId) {
+    public void setCreatorId(long creatorId) {
         this.creatorId = creatorId;
     }
 
@@ -43,19 +63,19 @@ public class WorkItemDto implements Serializable {
         this.status = status;
     }
 
-    public int getReviewerId() {
+    public long getReviewerId() {
         return reviewerId;
     }
 
-    public void setReviewerId(int reviewerId) {
+    public void setReviewerId(long reviewerId) {
         this.reviewerId = reviewerId;
     }
 
-    public String getComment() {
-        return comment;
+    public long getCommentId() {
+        return commentId;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setCommentId(long commentId) {
+        this.commentId = commentId;
     }
 }

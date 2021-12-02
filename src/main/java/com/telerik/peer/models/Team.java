@@ -40,7 +40,7 @@ public class Team {
     public Team() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

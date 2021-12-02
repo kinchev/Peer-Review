@@ -35,10 +35,17 @@ public class WorkItem {
     @JoinColumn(name = "teams_id")
     private Team team;
 
+    @OneToOne
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
 
+    public Comment getComment() {
+        return comment;
+    }
 
-
-
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    @JoinTable(
 //            name = "workitems_users",
