@@ -1,6 +1,7 @@
 package com.telerik.peer.controllers.mvc;
 
 import com.telerik.peer.controllers.rest.AuthenticationHelper;
+import com.telerik.peer.exceptions.AuthenticationFailureException;
 import com.telerik.peer.exceptions.DuplicateEntityException;
 import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.mappers.UserMapper;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -33,11 +35,21 @@ public class UserMvcController {
         this.authenticationHelper = authenticationHelper;
     }
 
-
-
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
+    }
+
+    @GetMapping
+    public String showAllUsers(Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/login";
+        }
+        model.addAttribute("users", userService.getAll());
+        return "users";
     }
 
 
