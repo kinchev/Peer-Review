@@ -45,7 +45,8 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAll() {
+    public List<User> getAll(@RequestHeader HttpHeaders headers) {
+        authenticationHelper.tryGetUser(headers);
         return userService.getAll();
     }
 
@@ -53,9 +54,7 @@ public class UserController {
     @PostMapping
     public User create(@Valid @RequestBody RegisterDto registerDto) {
         try {
-
             User user = userMapper.createUserFromRegisterDto(registerDto);
-
             userService.create(user);
             return user;
         } catch (DuplicateEntityException e) {

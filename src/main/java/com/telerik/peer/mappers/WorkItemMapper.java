@@ -20,7 +20,8 @@ public class WorkItemMapper {
     private UserRepository userRepository;
 
     @Autowired
-    public WorkItemMapper(WorkItemRepository workItemRepository, TeamRepository teamRepository, CommentRepository commentRepository, UserRepository userRepository) {
+    public WorkItemMapper(WorkItemRepository workItemRepository, TeamRepository teamRepository,
+                          CommentRepository commentRepository, UserRepository userRepository) {
         this.workItemRepository = workItemRepository;
         this.teamRepository = teamRepository;
         this.commentRepository = commentRepository;
@@ -62,7 +63,6 @@ public class WorkItemMapper {
         workItem.setReviewer(userReviewer);
         workItem.setDescription(workItem.getDescription());
         workItem.setStatus(workItemDto.getStatus());
-        ;
 
     }
 }
