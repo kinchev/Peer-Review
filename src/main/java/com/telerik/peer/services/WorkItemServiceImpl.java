@@ -2,11 +2,12 @@ package com.telerik.peer.services;
 
 import com.telerik.peer.exceptions.DuplicateEntityException;
 import com.telerik.peer.exceptions.InvalidUserInputException;
+import com.telerik.peer.models.Comment;
+import com.telerik.peer.models.Status;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
 import com.telerik.peer.repositories.contracts.WorkItemRepository;
 import com.telerik.peer.services.contracts.WorkItemService;
-import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ import java.util.stream.Stream;
 public class WorkItemServiceImpl implements WorkItemService {
     private static final String REVIEWER_AND_CREATOR_ARE_THE_SAME_ERROR = "Creator and reviewer are the same!";
     private static final String REVIEWER_DIFFERENT_FROM_ITEM_TEAM = "Reviewer different from item team!";
+    public static final String UPDATING_USER_IS_NOT_REVIEWER = "The status can be updated only by a work item reviewer.";
+    public static final String STATUS_REQUIRED = "This status requires a comment to be added";
+
     WorkItemRepository workItemRepository;
 
     @Autowired
@@ -66,7 +70,7 @@ public class WorkItemServiceImpl implements WorkItemService {
         }
 
         if (isReviewerDifferentFromItemTeam(workitem)) {
-            throw new InvalidUserInputException(REVIEWER_AND_CREATOR_ARE_THE_SAME_ERROR);
+            throw new InvalidUserInputException(REVIEWER_DIFFERENT_FROM_ITEM_TEAM);
 
         }
 //    if(isStatusChangeToReject(workitem,itemToUpdate)) {
@@ -78,31 +82,46 @@ public class WorkItemServiceImpl implements WorkItemService {
     }
 
     @Override
+    public WorkItem setStatus(WorkItem workItem, User updatingUser, Status status, Comment comment) {
+        if (!updatingUser.equals(workItem.getReviewer())) {
+            throw new InvalidUserInputException(UPDATING_USER_IS_NOT_REVIEWER);
+        }
+        if (statusRequiresComment(status) && comment.getComment() == null) {
+            throw new InvalidUserInputException(STATUS_REQUIRED);
+        }
+        workItem.setStatus(status);
+        workItem.setComment(comment);
+        workItemRepository.update(workItem);
+        return workItem;
+    }
+
+    @Override
     public <V> WorkItem getByField(String fieldName, V value) {
         return workItemRepository.getByField(fieldName, value);
     }
 
     private boolean isReviewerDifferentFromItemTeam(WorkItem workitem) {
-    return workitem.getTeam().getMembers().stream().anyMatch(member->member.equals(workitem.getReviewer()));
+        return workitem.getTeam().getMembers().stream().anyMatch(member -> member.equals(workitem.getReviewer()));
 
     }
-
 
     private boolean userAndCreatorAreTheSame(WorkItem workitem) {
         return workitem.getCreator().getId() == workitem.getReviewer().getId();
-
     }
 
-//
-//    //
-    private boolean titleExists(WorkItem workitem, long workitemToUpdate) {
-        Optional<WorkItem> duplicateWorkitem=getAll().stream().filter(item->item.getTitle().equalsIgnoreCase(workitem.getTitle())).findFirst();
-        return duplicateWorkitem.isPresent() && duplicateWorkitem.get().getId() !=workitemToUpdate;
+    private boolean statusRequiresComment(Status status) {
+        return status.getStatus_id() == 3 || status.getStatus_id() == 5;
+    }
 
+    private boolean titleExists(WorkItem workitem, long workitemToUpdate) {
+        Optional<WorkItem> duplicateWorkitem = getAll().stream().filter(item -> item.getTitle().equalsIgnoreCase(workitem.getTitle())).findFirst();
+        return duplicateWorkitem.isPresent() && duplicateWorkitem.get().getId() != workitemToUpdate;
     }
 
     @Override
     public List<WorkItem> filter(Optional<String> title, Optional<String> status, Optional<String> sortBy) {
         return workItemRepository.filter(title, status, sortBy);
     }
+
+
 }

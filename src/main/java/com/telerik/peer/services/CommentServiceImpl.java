@@ -31,18 +31,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void delete(long id, User owner) {
-        
-
+        commentRepository.delete(id);
     }
 
     @Override
     public void create(Comment entity) {
-
+        commentRepository.create(entity);
     }
 
     @Override
     public void update(Comment entity, User owner) {
-
+        commentRepository.update(entity);
     }
 
     @Override

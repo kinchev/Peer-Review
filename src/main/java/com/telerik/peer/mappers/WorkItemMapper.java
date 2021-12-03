@@ -1,14 +1,8 @@
 package com.telerik.peer.mappers;
 
-import com.telerik.peer.models.Comment;
-import com.telerik.peer.models.Team;
-import com.telerik.peer.models.User;
-import com.telerik.peer.models.WorkItem;
+import com.telerik.peer.models.*;
 import com.telerik.peer.models.dto.WorkItemDto;
-import com.telerik.peer.repositories.contracts.CommentRepository;
-import com.telerik.peer.repositories.contracts.TeamRepository;
-import com.telerik.peer.repositories.contracts.UserRepository;
-import com.telerik.peer.repositories.contracts.WorkItemRepository;
+import com.telerik.peer.repositories.contracts.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,16 +12,18 @@ public class WorkItemMapper {
     private TeamRepository teamRepository;
     private CommentRepository commentRepository;
     private UserRepository userRepository;
+    private StatusRepository statusRepository;
 
     @Autowired
     public WorkItemMapper(WorkItemRepository workItemRepository, TeamRepository teamRepository,
-                          CommentRepository commentRepository, UserRepository userRepository) {
+                          CommentRepository commentRepository, UserRepository userRepository,
+                          StatusRepository statusRepository) {
         this.workItemRepository = workItemRepository;
         this.teamRepository = teamRepository;
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;
+        this.statusRepository = statusRepository;
     }
-
 
     public WorkItemDto workitemToDto(WorkItem workItem) {
         WorkItemDto workItemDto = new WorkItemDto();
@@ -54,15 +50,15 @@ public class WorkItemMapper {
     private void dtoToObject(WorkItemDto workItemDto, WorkItem workItem) {
         User userReviewer = userRepository.getById(workItemDto.getReviewerId());
         User userCreator = userRepository.getById(workItemDto.getCreatorId());
-
         Comment comment = commentRepository.getById(workItemDto.getCommentId());
         Team team = teamRepository.getById(workItemDto.getTeamId());
+        Status status = statusRepository.getById(1);
         workItem.setTeam(team);
         workItem.setComment(comment);
         workItem.setCreator(userCreator);
         workItem.setReviewer(userReviewer);
-        workItem.setDescription(workItem.getDescription());
-        workItem.setStatus(workItemDto.getStatus());
+        workItem.setDescription(workItemDto.getDescription());
+        workItem.setStatus(status);
 
     }
 }
