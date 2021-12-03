@@ -12,7 +12,7 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "team_id")
-    private Long id;
+    private Long team_id;
 
     @Column(name = "team_name")
     private String teamName;
@@ -25,7 +25,7 @@ public class Team {
     @JoinTable(
             name = "teams_users",
             joinColumns = @JoinColumn(name = "team_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            inverseJoinColumns = @JoinColumn(name = "member_id")
     )
     private Set<User> members = new HashSet<>();
 
@@ -40,12 +40,12 @@ public class Team {
     public Team() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getTeam_id() {
+        return team_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTeam_id(Long team_id) {
+        this.team_id = team_id;
     }
 
     public String getTeamName() {
@@ -80,20 +80,20 @@ public class Team {
         this.workItems = workItems;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Team team = (Team) o;
-        return getId() == team.getId() &&
-                getTeamName().equals(team.getTeamName()) &&
-                getOwner().equals(team.getOwner());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getTeamName(), getOwner());
-    }
-
-
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Team team = (Team) o;
+//        return getId() == team.getId() &&
+//                getTeamName().equals(team.getTeamName()) &&
+//                getOwner().equals(team.getOwner());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(getId(), getTeamName(), getOwner());
+//    }
+//
+//
 }

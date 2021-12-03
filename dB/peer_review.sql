@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `attachments` (
   `workitem_id` int(11) NOT NULL,
   PRIMARY KEY (`attachment_id`),
   KEY `attachments_workitems_fk` (`workitem_id`),
-  CONSTRAINT `attachments_workitems_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (`id`)
+  CONSTRAINT `attachments_workitems_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (workitem_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   KEY `comments_reviewer_fk` (`reviewer_id`),
   KEY `comments_workitems_fk` (`workitem_id`),
   CONSTRAINT `comments_reviewer_fk` FOREIGN KEY (`reviewer_id`) REFERENCES `users` (`user_id`),
-  CONSTRAINT `comments_workitems_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (`id`)
+  CONSTRAINT `comments_workitems_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (workitem_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `review_requests` (
   KEY `review_requests_creator_fk` (`creator_id`),
   KEY `review_requests_reviewer_fk` (`reviewer_id`),
   CONSTRAINT `review_requests_creator_fk` FOREIGN KEY (`creator_id`) REFERENCES `users` (`user_id`),
-  CONSTRAINT `review_requests_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (`id`),
+  CONSTRAINT `review_requests_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (workitem_id),
   CONSTRAINT `review_requests_reviewer_fk` FOREIGN KEY (`reviewer_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `teams_workitems` (
   KEY `teams_workitems_teams_fk` (`team_id`),
   KEY `teams_workitems_workitems_fk` (`workitem_id`),
   CONSTRAINT `teams_workitems_teams_fk` FOREIGN KEY (`team_id`) REFERENCES `teams` (`team_id`),
-  CONSTRAINT `teams_workitems_workitems_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (`id`)
+  CONSTRAINT `teams_workitems_workitems_fk` FOREIGN KEY (`workitem_id`) REFERENCES `workitems` (workitem_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.

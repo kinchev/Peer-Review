@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+
 @Entity
 @Table(name = "workitems")
-
 public class WorkItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "workitem_id")
     private Long id;
 
     @Column(name = "title")
@@ -32,7 +32,7 @@ public class WorkItem {
 
 
     @OneToOne
-    @JoinColumn(name = "teams_id")
+    @JoinColumn(name = "team_id")
     private Team team;
 
     @OneToOne
@@ -62,7 +62,9 @@ public class WorkItem {
 //    )
 //    private Set<Comment> comments = new HashSet<>();
 
-    @Enumerated(EnumType.STRING)
+
+    @OneToOne
+    @JoinColumn(name = "status_id")
     private Status status;
 
     public Status getStatus() {

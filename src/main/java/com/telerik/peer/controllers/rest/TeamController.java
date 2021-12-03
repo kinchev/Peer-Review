@@ -80,7 +80,7 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
-    public Team update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody TeamDto teamDto) {
+    public Team update(@RequestHeader HttpHeaders headers, @PathVariable long id, @Valid @RequestBody TeamDto teamDto) {
         try {
             Team team = teamMapper.fromDto(teamDto, id);
             User updatingUser = authenticationHelper.tryGetUser(headers);
@@ -96,7 +96,7 @@ public class TeamController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+    public void delete(@RequestHeader HttpHeaders headers, @PathVariable long id) {
         try {
             User deletingUser = authenticationHelper.tryGetUser(headers);
             teamService.delete(id, deletingUser);

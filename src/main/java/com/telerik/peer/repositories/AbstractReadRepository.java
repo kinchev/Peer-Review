@@ -9,7 +9,7 @@ import java.util.List;
 
 import static java.lang.String.format;
 
-public abstract class AbstractReadRepository<T> implements CRUDRepository<T> {
+public abstract class  AbstractReadRepository<T> implements CRUDRepository<T> {
     private final Class<T> clazz;
     private final SessionFactory sessionFactory;
 

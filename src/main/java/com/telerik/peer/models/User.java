@@ -2,8 +2,7 @@ package com.telerik.peer.models;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import java.util.ArrayDeque;
-import java.util.Deque;
+
 import java.util.Objects;
 
 @Entity
