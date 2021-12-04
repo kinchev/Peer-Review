@@ -12,7 +12,7 @@ public class RegisterDto extends LoginDto {
     private String passwordConfirm;
 
     @NotBlank
-    @Email(message = "This is not a valid mail.Please try again.")
+//    @Email(message = "This is not a valid mail.Please try again.")
     private String email;
 
     @NotBlank

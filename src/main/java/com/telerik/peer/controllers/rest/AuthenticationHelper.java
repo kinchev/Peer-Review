@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,10 +23,13 @@ public class AuthenticationHelper {
 
     private final UserService userService;
 
+  PasswordEncoder passwordEncoder;
+
 
     @Autowired
     public AuthenticationHelper(UserService userService) {
         this.userService = userService;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     public User tryGetUser(HttpHeaders headers) {
@@ -53,10 +58,13 @@ public class AuthenticationHelper {
     public User verifyAuthentication(String username, String password) {
         try {
             User user = userService.getByField("username", username);
-            if (!user.getPassword().equals(password)) {
-                throw new AuthenticationFailureException(AUTHENTICATION_FAILURE_MESSAGE);
-            }
-            return user;
+//            String encodedPassword=this.passwordEncoder.matches(password,user.getPassword());
+
+
+           if(!passwordEncoder.matches(password, user.getPassword())) {
+               throw new AuthenticationFailureException(AUTHENTICATION_FAILURE_MESSAGE);
+           }
+           return user;
         } catch (EntityNotFoundException e) {
             throw new AuthenticationFailureException(AUTHENTICATION_FAILURE_MESSAGE);
         }

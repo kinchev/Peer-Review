@@ -10,6 +10,8 @@ import com.telerik.peer.models.dto.RegisterDto;
 import com.telerik.peer.services.contracts.UserService;
 import com.telerik.peer.utils.FileUploadHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -29,12 +31,15 @@ public class AuthenticationController {
     private final AuthenticationHelper authenticationHelper;
     private final UserMapper userMapper;
 
+     PasswordEncoder passwordEncoder;
+
 
     @Autowired
     public AuthenticationController(UserService userService, AuthenticationHelper authenticationHelper, UserMapper userMapper) {
         this.userService = userService;
         this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;
+        this.passwordEncoder=new BCryptPasswordEncoder();
 
     }
 
@@ -65,7 +70,7 @@ public class AuthenticationController {
                 return "redirect:/";
 //            }
         } catch (AuthenticationFailureException e) {
-            bindingResult.rejectValue("email", "auth_error", e.getMessage());
+            bindingResult.rejectValue("username", "auth_error", e.getMessage());
             return "login";
         }
 
