@@ -7,6 +7,8 @@ import com.telerik.peer.models.User;
 import com.telerik.peer.repositories.contracts.UserRepository;
 import com.telerik.peer.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +18,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private static final String MODIFY_USER_ERROR_MESSAGE = "Only the user owner or admin can modify an user.";
     private final UserRepository userRepository;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
 
@@ -36,6 +40,8 @@ public class UserServiceImpl implements UserService {
     public void create(User entity) {
         boolean duplicateExists = true;
         try {
+            String encodedPassword=this.passwordEncoder.encode(entity.getPassword());
+            entity.setPassword(encodedPassword);
             userRepository.getByField("username", entity.getUsername());
 
         } catch (EntityNotFoundException e) {
