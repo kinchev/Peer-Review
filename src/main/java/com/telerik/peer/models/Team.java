@@ -1,5 +1,7 @@
 package com.telerik.peer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -21,6 +23,7 @@ public class Team {
     @JoinColumn(name = "owner_id")
     private User owner;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "teams_users",
@@ -29,6 +32,7 @@ public class Team {
     )
     private Set<User> members = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "teams_workitems",
