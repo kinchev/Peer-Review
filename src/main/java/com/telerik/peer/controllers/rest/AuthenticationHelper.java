@@ -23,7 +23,7 @@ public class AuthenticationHelper {
 
     private final UserService userService;
 
-  PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
 
     @Autowired
@@ -39,32 +39,31 @@ public class AuthenticationHelper {
 
         try {
             String username = headers.getFirst(AUTHORIZATION_HEADER_NAME);
-            return userService.getByField("username",username);
+            return userService.getByField("username", username);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid user username.");
         }
     }
 
     public User tryGetUser(HttpSession session) {
-        String currentUser= (String) session.getAttribute("currentUser");
+        String currentUser = (String) session.getAttribute("currentUser");
 
         if (currentUser == null) {
             throw new AuthenticationFailureException("No user logged in.");
         }
 
-        return userService.getByField("username",currentUser);
+        return userService.getByField("username", currentUser);
     }
 
     public User verifyAuthentication(String username, String password) {
         try {
             User user = userService.getByField("username", username);
-//            String encodedPassword=this.passwordEncoder.matches(password,user.getPassword());
 
 
-           if(!passwordEncoder.matches(password, user.getPassword())) {
-               throw new AuthenticationFailureException(AUTHENTICATION_FAILURE_MESSAGE);
-           }
-           return user;
+            if (!passwordEncoder.matches(password, user.getPassword())) {
+                throw new AuthenticationFailureException(AUTHENTICATION_FAILURE_MESSAGE);
+            }
+            return user;
         } catch (EntityNotFoundException e) {
             throw new AuthenticationFailureException(AUTHENTICATION_FAILURE_MESSAGE);
         }

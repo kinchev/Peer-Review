@@ -26,17 +26,17 @@ public class WorkItemRepositoryImpl extends AbstractCRUDRepository<WorkItem> imp
     @Override
     public List<WorkItem> filter(Optional<String> title, Optional<String> status, Optional<String> sortBy) {
         try(Session session = sessionFactory.openSession()){
-            var queryString=new StringBuilder("from Workitem ");
+            var queryString=new StringBuilder("from WorkItem ");
             var filters=new ArrayList<String>();
             var params=new HashMap<String, Object>();
 
             title.ifPresent(value->{
 
-            filters.add("workitem.title like:title");
+            filters.add("title like: title");
             params.put("title",value);
             });
         status.ifPresent(value->{
-            filters.add("workitem.status like :status");
+            filters.add("status.status = :status");
             params.put("status",value);
         });
         if (!filters.isEmpty()){
@@ -66,7 +66,7 @@ public class WorkItemRepositoryImpl extends AbstractCRUDRepository<WorkItem> imp
                 result.append("reviewer.id ");
                 break;
             case "status":
-                result.append("status ");
+                result.append("workitem.status ");
                 break;
             default:
                 return "";

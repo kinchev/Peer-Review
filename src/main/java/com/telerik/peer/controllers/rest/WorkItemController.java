@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/workitems")
@@ -109,7 +110,7 @@ public class WorkItemController {
 
     @PutMapping("/{id}/status")
     public WorkItem setStatusWithComment(@RequestHeader HttpHeaders headers, @PathVariable long id,
-                              @RequestParam long statusId, @RequestParam(required = false) String commentToAdd) {
+                                         @RequestParam long statusId, @RequestParam(required = false) String commentToAdd) {
         try {
             User updatingUser = authenticationHelper.tryGetUser(headers);
             WorkItem workItem = workItemService.getById(id);
@@ -125,7 +126,7 @@ public class WorkItemController {
         }
     }
 
-    public Comment addComment (String commentToAdd, User user) {
+    public Comment addComment(String commentToAdd, User user) {
         Comment comment = new Comment();
         comment.setReviewer(user);
         comment.setComment(commentToAdd);
@@ -133,5 +134,18 @@ public class WorkItemController {
         return comment;
     }
 
+    @GetMapping("/filter")
+    public List<WorkItem> filter(@RequestHeader HttpHeaders headers,
+                                 @RequestParam(required = false) Optional<String> title,
+                                 @RequestParam(required = false) Optional<String> status,
+                                 @RequestParam(required = false) Optional<String> sortBy) {
+
+        try {
+            authenticationHelper.tryGetUser(headers);
+            return workItemService.filter(title, status, sortBy);
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
 
 }

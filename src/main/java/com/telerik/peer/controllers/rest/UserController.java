@@ -1,6 +1,6 @@
 package com.telerik.peer.controllers.rest;
 
-import com.telerik.peer.exceptions.DuplicateEntityException;
+import   com.telerik.peer.exceptions.DuplicateEntityException;
 import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.mappers.UserMapper;
