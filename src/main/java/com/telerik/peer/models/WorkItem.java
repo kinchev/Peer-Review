@@ -22,16 +22,16 @@ public class WorkItem {
     @Column(name = "description")
     private String description;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "reviewer_id")
     private User reviewer;
 
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
 

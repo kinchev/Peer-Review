@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 public class TeamDto {
 
     @NotBlank
-    @Size(min = 2, max = 20, message = "Team name must be between 3 and 30 characters.")
+    @Size(min = 3, max = 30, message = "Team name must be between 3 and 30 characters.")
     private String teamName;
 
     @Positive(message = "Owner Id must be positive.")

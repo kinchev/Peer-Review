@@ -2,20 +2,29 @@ package com.telerik.peer.models.dto;
 
 import com.telerik.peer.models.Status;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 public class WorkItemDto implements Serializable {
 
+    @Size(min=10, max=80, message = "Title should be between 10 and 80 characters.")
     private String title;
 
+    @Positive(message = "Team Id should be positive.")
     private long teamId;
 
+    @NotBlank
+    @Size(min=20, message = "Description should be minimum 20 symbols.")
     private String description;
 
+    @Positive(message = "Creator Id should be positive.")
     private long creatorId;
 
     private Status status;
 
+    @Positive(message = "Reviewer Id should be positive.")
     private long reviewerId;
 
     private long commentId;

@@ -90,6 +90,9 @@ public class WorkItemServiceImpl implements WorkItemService {
             throw new InvalidUserInputException(STATUS_REQUIRED);
         }
         workItem.setStatus(status);
+        if (comment.getComment()!=null) {
+            comment.setComment("No comment");
+        }
         workItem.setComment(comment);
         workItemRepository.update(workItem);
         return workItem;
