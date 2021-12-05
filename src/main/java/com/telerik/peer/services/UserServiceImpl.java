@@ -51,6 +51,15 @@ public class UserServiceImpl implements UserService {
         if (duplicateExists) {
             throw new DuplicateEntityException("User", "username", entity.getUsername());
         }
+        boolean duplicateMailExists = true;
+        try {
+            userRepository.getByField("email", entity.getEmail());
+        } catch (EntityNotFoundException e) {
+            duplicateMailExists = false;
+        }
+        if (duplicateMailExists) {
+            throw new DuplicateEntityException("User", "email", entity.getEmail());
+        }
         userRepository.create(entity);
     }
 

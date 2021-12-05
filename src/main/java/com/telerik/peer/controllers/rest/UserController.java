@@ -1,12 +1,14 @@
 package com.telerik.peer.controllers.rest;
 
-import   com.telerik.peer.exceptions.DuplicateEntityException;
+import com.telerik.peer.exceptions.DuplicateEntityException;
 import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.mappers.UserMapper;
+import com.telerik.peer.models.ReviewRequest;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.dto.RegisterDto;
 import com.telerik.peer.models.dto.UserDto;
+import com.telerik.peer.services.contracts.ReviewRequestService;
 import com.telerik.peer.services.contracts.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,12 +27,14 @@ public class UserController {
 
     private final UserMapper userMapper;
     private final AuthenticationHelper authenticationHelper;
+    private final ReviewRequestService reviewRequestService;
 
-    public UserController(UserService userService, UserMapper userMapper, AuthenticationHelper authenticationHelper) {
+    public UserController(UserService userService, UserMapper userMapper,
+                          AuthenticationHelper authenticationHelper, ReviewRequestService reviewRequestService) {
         this.userService = userService;
-
         this.userMapper = userMapper;
         this.authenticationHelper = authenticationHelper;
+        this.reviewRequestService = reviewRequestService;
     }
 
 
@@ -63,7 +67,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserDto userDto) {
+    public User update(@RequestHeader HttpHeaders headers, @PathVariable long id, @Valid @RequestBody UserDto userDto) {
         try {
             User user = userMapper.fromDto(userDto, id);
             User updatingUser = authenticationHelper.tryGetUser(headers);
@@ -79,7 +83,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+    public void delete(@RequestHeader HttpHeaders headers, @PathVariable long id) {
         try {
             User updatingUser = authenticationHelper.tryGetUser(headers);
             userService.delete(id, updatingUser);
@@ -90,5 +94,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{id}/requests/creator")
+    public List<ReviewRequest> getReviewRequestByCreator(@RequestHeader HttpHeaders headers, @PathVariable long id) {
+        authenticationHelper.tryGetUser(headers);
+        return reviewRequestService.getReviewRequestByCreator(id);
+    }
+
+    @GetMapping("/{id}/requests/reviewer")
+    public List<ReviewRequest> getReviewRequestByReviewer(@RequestHeader HttpHeaders headers, @PathVariable long id) {
+        authenticationHelper.tryGetUser(headers);
+        return reviewRequestService.getReviewRequestByReviewer(id);
+    }
 
 }

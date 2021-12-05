@@ -1,5 +1,7 @@
 package com.telerik.peer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
 
@@ -32,6 +34,7 @@ public class User {
     private String photoName;
 
     @Transient
+    @JsonIgnore
     public String getPhotoPath() {
         return id + "/" + photoName;
     }

@@ -2,6 +2,7 @@ package com.telerik.peer.controllers.rest;
 
 import com.telerik.peer.exceptions.DuplicateEntityException;
 import com.telerik.peer.exceptions.EntityNotFoundException;
+import com.telerik.peer.exceptions.InvalidUserInputException;
 import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.mappers.ReviewRequestMapper;
 import com.telerik.peer.models.ReviewRequest;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/reviewRequests")
+@RequestMapping("/api/review-requests")
 public class ReviewRequestController {
 
     private final ReviewRequestService reviewRequestService;
@@ -61,7 +62,7 @@ public class ReviewRequestController {
             ReviewRequest reviewRequest = reviewRequestMapper.fromDto(reviewRequestDto);
             reviewRequestService.create(reviewRequest);
             return reviewRequest;
-        } catch (DuplicateEntityException e) {
+        } catch (InvalidUserInputException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
@@ -77,7 +78,7 @@ public class ReviewRequestController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (UnauthorizedOperationException e) {
+        } catch (InvalidUserInputException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
 
@@ -90,7 +91,7 @@ public class ReviewRequestController {
             reviewRequestService.delete(id, deletingUser);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (UnauthorizedOperationException e) {
+        } catch (InvalidUserInputException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }

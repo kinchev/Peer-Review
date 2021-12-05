@@ -34,7 +34,7 @@ public class UserMapper {
         return user;
     }
 
-    public User fromDto(UserDto userDto, int id) {
+    public User fromDto(UserDto userDto, long id) {
         User user = userService.getById(id);
         dtoToObject(userDto, user);
         return user;

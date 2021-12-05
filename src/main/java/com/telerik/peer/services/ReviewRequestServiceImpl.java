@@ -15,6 +15,7 @@ public class ReviewRequestServiceImpl implements ReviewRequestService {
 
     public static final String NOT_SAME_CREATOR = "The creator of the review request must be same as the creator of the workitem";
     public static final String NOT_REVIEWER_FROM_THE_LIST = "The reviewer of the review request must be form the list of the work item's reviewers";
+    public static final String ONLY_THE_CREATOR_CAN_DELETE = "Only the creator can delete the review request";
     private final ReviewRequestRepository reviewRequestRepository;
 
     @Autowired
@@ -34,6 +35,10 @@ public class ReviewRequestServiceImpl implements ReviewRequestService {
 
     @Override
     public void delete(long id, User owner) {
+        ReviewRequest reviewRequest = reviewRequestRepository.getById(id);
+        if (reviewRequest.getCreator().getId() != owner.getId()) {
+            throw new InvalidUserInputException(ONLY_THE_CREATOR_CAN_DELETE);
+        }
         reviewRequestRepository.delete(id);
     }
 
@@ -59,10 +64,19 @@ public class ReviewRequestServiceImpl implements ReviewRequestService {
     }
 
     private boolean creatorIsSame(ReviewRequest reviewRequest) {
-        return reviewRequest.getWorkItem().getCreator() == reviewRequest.getCreator();
+        return reviewRequest.getWorkItem().getCreator().getId() == reviewRequest.getCreator().getId();
     }
     private boolean reviewerIsSame(ReviewRequest reviewRequest) {
-        return reviewRequest.getWorkItem().getReviewer() == reviewRequest.getReviewer();
+        return reviewRequest.getWorkItem().getReviewer().getId() == reviewRequest.getReviewer().getId();
     }
 
+    @Override
+    public List<ReviewRequest> getReviewRequestByCreator(long userId) {
+        return reviewRequestRepository.getReviewRequestByCreator(userId);
+    }
+
+    @Override
+    public List<ReviewRequest> getReviewRequestByReviewer(long userId) {
+        return reviewRequestRepository.getReviewRequestByReviewer(userId);
+    }
 }
