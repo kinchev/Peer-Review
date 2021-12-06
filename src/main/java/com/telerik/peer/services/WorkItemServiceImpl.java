@@ -46,14 +46,14 @@ public class WorkItemServiceImpl implements WorkItemService {
 
     @Override
     public void create(WorkItem workitem) {
-        if (titleExists(workitem, workitem.getId())) {
-            throw new DuplicateEntityException("workitem", "title", workitem.getTitle());
-        }
+//        if (titleExists(workitem, workitem.getId())) {
+//            throw new DuplicateEntityException("workitem", "title", workitem.getTitle());
+//        }
         if (userAndCreatorAreTheSame(workitem)) {
             throw new InvalidUserInputException(REVIEWER_AND_CREATOR_ARE_THE_SAME_ERROR);
         }
         if (isReviewerDifferentFromItemTeam(workitem)) {
-            throw new InvalidUserInputException(String.format(REVIEWER_DIFFERENT_FROM_ITEM_TEAM, workitem.getTeam().getTeamName()));
+            throw new InvalidUserInputException(REVIEWER_DIFFERENT_FROM_ITEM_TEAM);
         }
         workItemRepository.create(workitem);
     }

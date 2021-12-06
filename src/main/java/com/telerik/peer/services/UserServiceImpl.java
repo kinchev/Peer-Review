@@ -19,7 +19,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private static final String MODIFY_USER_ERROR_MESSAGE = "Only the user owner or admin can modify an user.";
     private final UserRepository userRepository;
-    PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {

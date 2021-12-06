@@ -31,15 +31,13 @@ public class AuthenticationController {
     private final AuthenticationHelper authenticationHelper;
     private final UserMapper userMapper;
 
-     PasswordEncoder passwordEncoder;
-
 
     @Autowired
     public AuthenticationController(UserService userService, AuthenticationHelper authenticationHelper, UserMapper userMapper) {
         this.userService = userService;
         this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;
-        this.passwordEncoder=new BCryptPasswordEncoder();
+
 
     }
 
@@ -67,7 +65,7 @@ public class AuthenticationController {
 //
 //                return "redirect:/admin";
 //            } else {
-                return "redirect:/";
+            return "user";
 //            }
         } catch (AuthenticationFailureException e) {
             bindingResult.rejectValue("username", "auth_error", e.getMessage());
@@ -120,4 +118,4 @@ public class AuthenticationController {
     }
 
 
-    }
+}

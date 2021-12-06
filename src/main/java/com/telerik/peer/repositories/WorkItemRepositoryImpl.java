@@ -59,7 +59,7 @@ public class WorkItemRepositoryImpl extends AbstractCRUDRepository<WorkItem> imp
 
         switch (params[0]) {
             case "id":
-                result.append("workitem.id ");
+                result.append("id ");
                 break;
             case "title":
                 result.append("title ");
@@ -68,7 +68,7 @@ public class WorkItemRepositoryImpl extends AbstractCRUDRepository<WorkItem> imp
                 result.append("reviewer.id ");
                 break;
             case "status":
-                result.append("workitem.status ");
+                result.append("status.status ");
                 break;
             default:
                 return "";

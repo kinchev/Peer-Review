@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class WorkItemMapper {
-    private WorkItemRepository workItemRepository;
-    private TeamRepository teamRepository;
-    private CommentRepository commentRepository;
-    private UserRepository userRepository;
-    private StatusRepository statusRepository;
+    private final WorkItemRepository workItemRepository;
+    private final TeamRepository teamRepository;
+    private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
+    private final StatusRepository statusRepository;
 
     @Autowired
     public WorkItemMapper(WorkItemRepository workItemRepository, TeamRepository teamRepository,
@@ -30,9 +30,10 @@ public class WorkItemMapper {
         workItemDto.setCommentId(workItem.getComment().getId());
         workItemDto.setTeamId(workItem.getTeam().getTeam_id());
         workItemDto.setCreatorId(workItem.getCreator().getId());
-        workItemDto.setStatus(workItem.getStatus());
+
+        workItemDto.setTitle(workItem.getTitle());
         workItemDto.setReviewerId(workItem.getReviewer().getId());
-        workItemDto.setDescription(workItemDto.getDescription());
+        workItemDto.setDescription(workItem.getDescription());
         return workItemDto;
 
     }
@@ -42,11 +43,13 @@ public class WorkItemMapper {
         dtoToObject(workItemDto, workItem);
         return workItem;
     }
-    public WorkItem fromDto(WorkItemDto workItemDto,long id) {
-        WorkItem workItem=workItemRepository.getById(id);
-        dtoToObject(workItemDto,workItem);
+
+    public WorkItem fromDto(WorkItemDto workItemDto, long id) {
+        WorkItem workItem = workItemRepository.getById(id);
+        dtoToObject(workItemDto, workItem);
         return workItem;
     }
+
     private void dtoToObject(WorkItemDto workItemDto, WorkItem workItem) {
         User userReviewer = userRepository.getById(workItemDto.getReviewerId());
         User userCreator = userRepository.getById(workItemDto.getCreatorId());
@@ -54,6 +57,7 @@ public class WorkItemMapper {
         Team team = teamRepository.getById(workItemDto.getTeamId());
         Status status = statusRepository.getById(1);
         workItem.setTeam(team);
+        workItem.setTitle(workItemDto.getTitle());
         workItem.setComment(comment);
         workItem.setCreator(userCreator);
         workItem.setReviewer(userReviewer);

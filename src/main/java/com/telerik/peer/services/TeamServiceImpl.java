@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class TeamServiceImpl implements TeamService {
     public static final String ONLY_OWNER_AUTHORIZED = "Only the team owner is authorized to do this action!";
-    TeamRepository teamRepository;
+    private final TeamRepository teamRepository;
 
     @Autowired
     public TeamServiceImpl(TeamRepository teamRepository) {

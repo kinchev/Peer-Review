@@ -5,8 +5,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
-import java.sql.Array;
-import java.util.Arrays;
+
 
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)

@@ -23,7 +23,7 @@ public class AuthenticationHelper {
 
     private final UserService userService;
 
-    PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Autowired

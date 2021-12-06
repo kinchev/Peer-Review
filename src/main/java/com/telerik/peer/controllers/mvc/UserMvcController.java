@@ -34,7 +34,7 @@ public class UserMvcController {
         this.userMapper = userMapper;
         this.authenticationHelper = authenticationHelper;
     }
-
+//
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
@@ -49,7 +49,7 @@ public class UserMvcController {
             return "redirect:/login";
         }
         model.addAttribute("users", userService.getAll());
-        return "users";
+        return "user";
     }
 
 

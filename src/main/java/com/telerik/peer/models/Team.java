@@ -16,7 +16,7 @@ public class Team {
     @Column(name = "team_id")
     private Long team_id;
 
-    @Column(name = "team_name")
+    @Column(name = "name")
     private String teamName;
 
     @ManyToOne

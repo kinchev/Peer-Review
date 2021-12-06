@@ -65,8 +65,8 @@ public class WorkItemController {
         }
     }
 
-    @PostMapping
 
+    @PostMapping
     public WorkItem create(@RequestHeader HttpHeaders headers, @Valid @RequestBody WorkItemDto workItemDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
