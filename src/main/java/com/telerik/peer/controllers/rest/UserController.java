@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -105,5 +106,16 @@ public class UserController {
         authenticationHelper.tryGetUser(headers);
         return reviewRequestService.getReviewRequestByReviewer(id);
     }
+
+    @GetMapping("/search")
+    public List<User> search(@RequestHeader HttpHeaders headers,
+                             @RequestParam(required = false) Optional<String> username,
+                             @RequestParam(required = false) Optional<String> email,
+                             @RequestParam(required = false) Optional<String> number
+    ) {
+            authenticationHelper.tryGetUser(headers);
+            return userService.search(username, email, number);
+    }
+
 
 }
