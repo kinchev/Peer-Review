@@ -5,6 +5,7 @@ import com.telerik.peer.repositories.contracts.WorkItemRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class WorkItemRepositoryImpl extends AbstractCRUDRepository<WorkItem> implements WorkItemRepository {
     private final SessionFactory sessionFactory;
 
+    @Autowired
     public WorkItemRepositoryImpl(SessionFactory sessionFactory) {
         super(WorkItem.class, sessionFactory);
         this.sessionFactory = sessionFactory;

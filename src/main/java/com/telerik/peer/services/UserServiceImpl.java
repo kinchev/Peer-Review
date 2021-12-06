@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
         if (duplicateExists) {
             throw new DuplicateEntityException("User", "username", entity.getUsername());
         }
+
         boolean duplicateMailExists = true;
         try {
             userRepository.getByField("email", entity.getEmail());
@@ -61,13 +62,14 @@ public class UserServiceImpl implements UserService {
         if (duplicateMailExists) {
             throw new DuplicateEntityException("User", "email", entity.getEmail());
         }
+
         userRepository.create(entity);
     }
 
 
     @Override
     public void update(User entity, User owner) {
-        if (!owner.equals(entity)) {
+        if (owner.getId() != entity.getId()) {
             throw new UnauthorizedOperationException(MODIFY_USER_ERROR_MESSAGE);
         }
         boolean duplicateExists = true;
@@ -82,6 +84,20 @@ public class UserServiceImpl implements UserService {
         if (duplicateExists) {
             throw new DuplicateEntityException("User", "username", entity.getUsername());
         }
+
+        boolean duplicateMailExists = true;
+        try {
+            User exisingUser = userRepository.getByField("email", entity.getEmail());
+            if (exisingUser.getId() == entity.getId()) {
+                duplicateMailExists = false;
+            }
+        } catch (EntityNotFoundException e) {
+            duplicateMailExists = false;
+        }
+        if (duplicateMailExists) {
+            throw new DuplicateEntityException("User", "email", entity.getEmail());
+        }
+
         userRepository.update(entity);
     }
 

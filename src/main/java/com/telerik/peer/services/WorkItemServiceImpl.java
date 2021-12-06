@@ -22,7 +22,7 @@ public class WorkItemServiceImpl implements WorkItemService {
     public static final String UPDATING_USER_IS_NOT_REVIEWER = "The status can be updated only by a work item reviewer.";
     public static final String STATUS_REQUIRED = "This status requires a comment to be added";
 
-    WorkItemRepository workItemRepository;
+    private final WorkItemRepository workItemRepository;
 
     @Autowired
     public WorkItemServiceImpl(WorkItemRepository workItemRepository) {
