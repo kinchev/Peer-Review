@@ -1,8 +1,7 @@
 package com.telerik.peer.models;
 
 import javax.persistence.*;
-
-
+import java.util.Objects;
 
 @Entity
 @Table(name = "workitems")
@@ -43,6 +42,7 @@ public class WorkItem {
     public void setComment(Comment comment) {
         this.comment = comment;
     }
+    
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    @JoinTable(
 //            name = "workitems_users",
@@ -123,19 +123,19 @@ public class WorkItem {
         this.team = team;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        WorkItem workitem = (WorkItem) o;
-//        return getId() == workitem.getId() &&
-//                getTitle().equals(workitem.getTitle()) &&
-//                getDescription().equals(workitem.getDescription());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(getId(), getTitle(), getDescription());
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WorkItem workitem = (WorkItem) o;
+        return getId() == workitem.getId() &&
+                getTitle().equals(workitem.getTitle()) &&
+                getDescription().equals(workitem.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitle(), getDescription());
+    }
 
 }

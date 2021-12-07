@@ -24,7 +24,7 @@ public class Team {
     private User owner;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "teams_users",
             joinColumns = @JoinColumn(name = "team_id"),
@@ -33,7 +33,7 @@ public class Team {
     private Set<User> members = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany (fetch = FetchType.EAGER)
     @JoinTable(
             name = "teams_workitems",
             joinColumns = @JoinColumn(name = "team_id"),
@@ -98,6 +98,5 @@ public class Team {
     public int hashCode() {
         return Objects.hash(getTeamId(), getTeamName(), getOwner());
     }
-
 
 }
