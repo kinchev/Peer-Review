@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller()
+@Controller
 @RequestMapping("/user")
 public class UserHomeMvcController {
 //    private final UserService userService;
@@ -21,7 +21,7 @@ public class UserHomeMvcController {
 //        return session.getAttribute("currentUser") != null;
 //    }
     @GetMapping
-    public String homePage(Model model) {
+    public String homePageUser(Model model) {
         return "user2";
     }
 }

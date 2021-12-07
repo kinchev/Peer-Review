@@ -13,7 +13,7 @@
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <!-- Select2 -->
   <link href="vendor/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css">
-  <!-- Bootstrap DatePicker -->  
+  <!-- Bootstrap DatePicker -->
   <link href="vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" >
   <!-- Bootstrap Touchspin -->
   <link href="vendor/bootstrap-touchspin/css/jquery.bootstrap-touchspin.css" rel="stylesheet" >
@@ -333,8 +333,8 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Select2</h6>
                 </div>
-                <div class="card-body">        
-                  <p>Select2 is a jQuery based replacement for select boxes</p>          
+                <div class="card-body">
+                  <p>Select2 is a jQuery based replacement for select boxes</p>
                   <div class="form-group">
                     <label for="select2Single">Single Select Box</label>
                     <select class="select2-single form-control" name="state" id="select2Single">
@@ -547,28 +547,28 @@
                   <div class="form-group">
                     <label for="clockPicker1">Simple ClockPicker</label>
                     <div class="input-group clockpicker" id="clockPicker1">
-                      <input type="text" class="form-control" value="06:30">                     
+                      <input type="text" class="form-control" value="06:30">
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                      </div>                      
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="clockPicker2">Simple ClockPicker with Auto Close</label>
                     <div class="input-group clockpicker" id="clockPicker2">
-                      <input type="text" class="form-control" value="12:30">                     
+                      <input type="text" class="form-control" value="12:30">
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                      </div>                      
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="clockPicker2">ClockPicker with Auto Check Minutes</label>
                     <div class="input-group" id="clockPicker3">
-                      <input class="form-control" placeholder="Now" value="">                     
+                      <input class="form-control" placeholder="Now" value="">
                       <div class="input-group-append">
                         <button class="btn btn-primary" id="check-minutes">Check the Minutes</button>
-                      </div>                      
+                      </div>
                     </div>
                   </div>
                   <p>For documentations Clockpicker you can visit <a href="http://weareoutman.github.io/clockpicker/" target="_blank">here.</a></p>
@@ -599,7 +599,7 @@
               </div>
             </div>
           </div>
-          
+
         </div>
         <!---Container Fluid-->
       </div>
@@ -648,7 +648,7 @@
       $('.select2-single-placeholder').select2({
         placeholder: "Select a Province",
         allowClear: true
-      });      
+      });
 
       // Select2 Multiple
       $('.select2-multiple').select2();
@@ -658,39 +658,39 @@
         format: 'dd/mm/yyyy',
         todayBtn: 'linked',
         todayHighlight: true,
-        autoclose: true,        
+        autoclose: true,
       });
 
       $('#simple-date2 .input-group.date').datepicker({
         startView: 1,
-        format: 'dd/mm/yyyy',        
-        autoclose: true,     
-        todayHighlight: true,   
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        todayHighlight: true,
         todayBtn: 'linked',
       });
 
       $('#simple-date3 .input-group.date').datepicker({
         startView: 2,
-        format: 'dd/mm/yyyy',        
-        autoclose: true,     
-        todayHighlight: true,   
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        todayHighlight: true,
         todayBtn: 'linked',
       });
 
-      $('#simple-date4 .input-daterange').datepicker({        
-        format: 'dd/mm/yyyy',        
-        autoclose: true,     
-        todayHighlight: true,   
+      $('#simple-date4 .input-daterange').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        todayHighlight: true,
         todayBtn: 'linked',
-      });    
+      });
 
       // TouchSpin
 
       $('#touchSpin1').TouchSpin({
         min: 0,
-        max: 100,                
+        max: 100,
         boostat: 5,
-        maxboostedstep: 10,        
+        maxboostedstep: 10,
         initval: 0
       });
 
@@ -729,7 +729,7 @@
         align: 'left',
       });
 
-      $('#check-minutes').click(function(e){        
+      $('#check-minutes').click(function(e){
         e.stopPropagation();
         input.clockpicker('show').clockpicker('toggleView', 'minutes');
       });

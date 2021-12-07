@@ -65,7 +65,7 @@ public class AuthenticationController {
 //
 //                return "redirect:/admin";
 //            } else {
-            return "user";
+            return "user2";
 //            }
         } catch (AuthenticationFailureException e) {
             bindingResult.rejectValue("username", "auth_error", e.getMessage());
