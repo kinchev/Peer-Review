@@ -27,8 +27,8 @@ public class WorkItemMapper {
 
     public WorkItemDto workitemToDto(WorkItem workItem) {
         WorkItemDto workItemDto = new WorkItemDto();
-        workItemDto.setCommentId(workItem.getComment().getId());
-        workItemDto.setTeamId(workItem.getTeam().getTeam_id());
+        workItemDto.setComment(workItem.getComment());
+        workItemDto.setTeamId(workItem.getTeam().getTeamId());
         workItemDto.setCreatorId(workItem.getCreator().getId());
 
         workItemDto.setTitle(workItem.getTitle());
@@ -53,12 +53,11 @@ public class WorkItemMapper {
     private void dtoToObject(WorkItemDto workItemDto, WorkItem workItem) {
         User userReviewer = userRepository.getById(workItemDto.getReviewerId());
         User userCreator = userRepository.getById(workItemDto.getCreatorId());
-        Comment comment = commentRepository.getById(workItemDto.getCommentId());
         Team team = teamRepository.getById(workItemDto.getTeamId());
         Status status = statusRepository.getById(1);
         workItem.setTeam(team);
         workItem.setTitle(workItemDto.getTitle());
-        workItem.setComment(comment);
+        workItem.setComment(workItem.getComment());
         workItem.setCreator(userCreator);
         workItem.setReviewer(userReviewer);
         workItem.setDescription(workItemDto.getDescription());

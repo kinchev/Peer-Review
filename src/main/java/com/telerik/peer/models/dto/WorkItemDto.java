@@ -2,6 +2,8 @@ package com.telerik.peer.models.dto;
 
 
 
+import com.telerik.peer.models.Comment;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -27,7 +29,7 @@ public class WorkItemDto {
     @Positive(message = "Reviewer Id should be positive.")
     private long reviewerId;
 
-    private long commentId;
+    private Comment comment;
 
     public WorkItemDto() {
     }
@@ -74,11 +76,11 @@ public class WorkItemDto {
         this.reviewerId = reviewerId;
     }
 
-    public long getCommentId() {
-        return commentId;
+    public Comment getComment() {
+        return comment;
     }
 
-    public void setCommentId(long commentId) {
-        this.commentId = commentId;
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
 }

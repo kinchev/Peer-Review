@@ -73,9 +73,8 @@ public class WorkItemController {
             WorkItem workItem = workItemMapper.fromDto(workItemDto);
             workItemService.create(workItem);
             return workItem;
-        } catch (DuplicateEntityException e) {
+        } catch (DuplicateEntityException | InvalidUserInputException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-
         }
     }
 

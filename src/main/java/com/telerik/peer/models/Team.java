@@ -14,7 +14,7 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "team_id")
-    private Long team_id;
+    private Long teamId;
 
     @Column(name = "name")
     private String teamName;
@@ -44,12 +44,12 @@ public class Team {
     public Team() {
     }
 
-    public Long getTeam_id() {
-        return team_id;
+    public Long getTeamId() {
+        return teamId;
     }
 
-    public void setTeam_id(Long team_id) {
-        this.team_id = team_id;
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 
     public String getTeamName() {
@@ -84,20 +84,20 @@ public class Team {
         this.workItems = workItems;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Team team = (Team) o;
-//        return getId() == team.getId() &&
-//                getTeamName().equals(team.getTeamName()) &&
-//                getOwner().equals(team.getOwner());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(getId(), getTeamName(), getOwner());
-//    }
-//
-//
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return getTeamId() == team.getTeamId() &&
+                getTeamName().equals(team.getTeamName()) &&
+                getOwner().equals(team.getOwner());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTeamId(), getTeamName(), getOwner());
+    }
+
+
 }
