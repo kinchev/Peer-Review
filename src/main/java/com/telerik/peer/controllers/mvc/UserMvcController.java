@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserMvcController {
 
     private final UserService userService;
