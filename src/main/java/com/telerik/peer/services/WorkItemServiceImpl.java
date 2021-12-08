@@ -3,6 +3,7 @@ package com.telerik.peer.services;
 import com.telerik.peer.exceptions.DuplicateEntityException;
 import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.exceptions.InvalidUserInputException;
+import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.models.*;
 import com.telerik.peer.repositories.contracts.TeamRepository;
 import com.telerik.peer.repositories.contracts.WorkItemRepository;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @Service
 public class WorkItemServiceImpl implements WorkItemService {
     public static final String MODIFY_NOT_AUTHORIZED = "Only the owner or the reviewers are allowed to modify an item.";
+    public static final String ONLY_OWNER_AUTHORIZED = "Only the owner is authorised to change the reviewers.";
     private static final String REVIEWER_AND_CREATOR_ARE_THE_SAME_ERROR = "Creator and reviewer are the same!";
     private static final String REVIEWER_DIFFERENT_FROM_ITEM_TEAM = "Reviewer different from item team!";
     private static final String CREATOR_DIFFERENT_FROM_ITEM_TEAM = "Creator different from item team!";
@@ -71,8 +73,8 @@ public class WorkItemServiceImpl implements WorkItemService {
 
     @Override
     public void update(WorkItem workitem, User owner) {
-        if (workitem.getCreator().getId() != owner.getId() || workitem.getReviewer().getId() != owner.getId()) {
-            throw new UnsupportedOperationException(MODIFY_NOT_AUTHORIZED);
+        if (workitem.getCreator().getId() != owner.getId() && workitem.getReviewer().getId() != owner.getId()) {
+            throw new UnauthorizedOperationException(MODIFY_NOT_AUTHORIZED);
         }
         boolean duplicateExists = true;
         try {
@@ -87,8 +89,6 @@ public class WorkItemServiceImpl implements WorkItemService {
             throw new DuplicateEntityException("Workitem", "title", workitem.getTitle());
         }
 
-        validateCreatorAndReviewer(workitem);
-
 //    if(isStatusChangeToReject(workitem,itemToUpdate)) {
 //        if(workitem.getComment()==null){
 //            throw  new InvalidUserInputException("Empty comment");
@@ -99,20 +99,25 @@ public class WorkItemServiceImpl implements WorkItemService {
     }
 
     @Override
-    public WorkItem setStatus(WorkItem workItem, User updatingUser, Status status, Comment comment) {
+    public void setStatus(WorkItem workItem, User updatingUser, Status status, Comment comment) {
         if (!updatingUser.equals(workItem.getReviewer())) {
             throw new InvalidUserInputException(UPDATING_USER_IS_NOT_REVIEWER);
         }
         if (statusRequiresComment(status) && comment.getComment() == null) {
             throw new InvalidUserInputException(STATUS_REQUIRED);
         }
-        workItem.setStatus(status);
-        if (comment.getComment() != null) {
-            comment.setComment("No comment");
-        }
         workItem.setComment(comment);
         workItemRepository.update(workItem);
-        return workItem;
+    }
+
+    @Override
+    public void changeReviewer(WorkItem workitem, User updatingUser, User newReviewer) {
+        if (workitem.getCreator().getId() != updatingUser.getId()) {
+            throw new UnauthorizedOperationException(ONLY_OWNER_AUTHORIZED);
+        }
+        workitem.setReviewer(newReviewer);
+        validateCreatorAndReviewer(workitem);
+        workItemRepository.update(workitem);
     }
 
     @Override
@@ -136,8 +141,6 @@ public class WorkItemServiceImpl implements WorkItemService {
             throw new InvalidUserInputException(REVIEWER_AND_CREATOR_ARE_THE_SAME_ERROR);
         }
     }
-
-
 
     private boolean statusRequiresComment(Status status) {
         return status.getStatus_id() == 3 || status.getStatus_id() == 5;

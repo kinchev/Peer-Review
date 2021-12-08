@@ -2,6 +2,7 @@ package com.telerik.peer.mappers;
 
 import com.telerik.peer.models.*;
 import com.telerik.peer.models.dto.WorkItemDto;
+import com.telerik.peer.models.dto.WorkItemUpdateDto;
 import com.telerik.peer.repositories.contracts.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -44,9 +45,9 @@ public class WorkItemMapper {
         return workItem;
     }
 
-    public WorkItem fromDto(WorkItemDto workItemDto, long id) {
+    public WorkItem fromDto(WorkItemUpdateDto workItemDto, long id) {
         WorkItem workItem = workItemRepository.getById(id);
-        dtoToObject(workItemDto, workItem);
+        dtoUpdateToObject(workItemDto, workItem);
         return workItem;
     }
 
@@ -62,6 +63,11 @@ public class WorkItemMapper {
         workItem.setReviewer(userReviewer);
         workItem.setDescription(workItemDto.getDescription());
         workItem.setStatus(status);
-
     }
+
+        private void dtoUpdateToObject(WorkItemUpdateDto workItemDto, WorkItem workItem) {
+            workItem.setTitle(workItemDto.getTitle());
+            workItem.setDescription(workItemDto.getDescription());
+    }
+
 }

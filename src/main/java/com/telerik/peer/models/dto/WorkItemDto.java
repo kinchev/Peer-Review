@@ -24,8 +24,6 @@ public class WorkItemDto {
     @Positive(message = "Creator Id should be positive.")
     private long creatorId;
 
-
-
     @Positive(message = "Reviewer Id should be positive.")
     private long reviewerId;
 

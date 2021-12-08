@@ -23,7 +23,7 @@ public class Team {
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    @JsonIgnore
+
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "teams_users",

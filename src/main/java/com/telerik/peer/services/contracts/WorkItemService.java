@@ -13,6 +13,9 @@ public interface WorkItemService extends CRUDService<WorkItem> {
 
     List<WorkItem> filter(Optional<String> title, Optional<String> status, Optional<String> sortBy);
 
-    WorkItem setStatus(WorkItem workItem, User updatingUser, Status status, Comment comment);
+    void setStatus(WorkItem workItem, User updatingUser, Status status, Comment comment);
+
+    void changeReviewer(WorkItem workItem, User updatingUser, User newReviewer);
+
 
 }

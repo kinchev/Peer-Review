@@ -62,6 +62,10 @@ public class TeamServiceImpl implements TeamService {
         if (duplicateExists) {
             throw new DuplicateEntityException("Team", "name", entity.getTeamName());
         }
+        User owner = entity.getOwner();
+        var members = entity.getMembers();
+        members.add(owner);
+        entity.setMembers(members);
         teamRepository.create(entity);
     }
 
@@ -104,7 +108,11 @@ public class TeamServiceImpl implements TeamService {
     public void removeMemberFromTeam(Team team, User user, User userToRemove) {
         var newMemberList = team.getMembers();
         if (!newMemberList.contains(userToRemove)) {
-            throw new EntityNotFoundException("User", "username", userToRemove.getUsername());
+            throw new EntityNotFoundException
+                    (String.format("The user with id %d is not a member of team %d", userToRemove.getId(), team.getTeamId()));
+        }
+        if (userToRemove.equals(team.getOwner())) {
+            throw new UnauthorizedOperationException("The team owner cannot be removed");
         }
         newMemberList.remove(userToRemove);
         team.setMembers(newMemberList);
