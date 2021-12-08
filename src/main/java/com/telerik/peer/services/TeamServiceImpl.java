@@ -3,6 +3,7 @@ package com.telerik.peer.services;
 import com.telerik.peer.exceptions.DuplicateEntityException;
 import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.exceptions.InvalidUserInputException;
+import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
@@ -61,14 +62,32 @@ public class TeamServiceImpl implements TeamService {
         if (duplicateExists) {
             throw new DuplicateEntityException("Team", "name", entity.getTeamName());
         }
+        User owner = entity.getOwner();
+        var members = entity.getMembers();
+        members.add(owner);
+        entity.setMembers(members);
         teamRepository.create(entity);
     }
 
     @Override
     public void update(Team entity, User user) {
         if (!user.equals(entity.getOwner())) {
-            throw new UnsupportedOperationException(ONLY_OWNER_AUTHORIZED);
+            throw new UnauthorizedOperationException(ONLY_OWNER_AUTHORIZED);
         }
+        boolean duplicateMailExists = true;
+        try {
+            Team existingTeam = teamRepository.getByField("name", entity.getTeamName());
+            if (existingTeam.getTeamId() == entity.getTeamId()) {
+                duplicateMailExists = false;
+            }
+        } catch (EntityNotFoundException e) {
+            duplicateMailExists = false;
+        }
+        if (duplicateMailExists) {
+            throw new DuplicateEntityException("Team", "name", entity.getTeamName());
+        }
+
+
         teamRepository.update(entity);
     }
 
@@ -89,7 +108,11 @@ public class TeamServiceImpl implements TeamService {
     public void removeMemberFromTeam(Team team, User user, User userToRemove) {
         var newMemberList = team.getMembers();
         if (!newMemberList.contains(userToRemove)) {
-            throw new EntityNotFoundException("User", "username", userToRemove.getUsername());
+            throw new EntityNotFoundException
+                    (String.format("The user with id %d is not a member of team %d", userToRemove.getId(), team.getTeamId()));
+        }
+        if (userToRemove.equals(team.getOwner())) {
+            throw new UnauthorizedOperationException("The team owner cannot be removed");
         }
         newMemberList.remove(userToRemove);
         team.setMembers(newMemberList);

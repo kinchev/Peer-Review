@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Set;
 
 public class WorkItemDto {
 
@@ -24,12 +25,10 @@ public class WorkItemDto {
     @Positive(message = "Creator Id should be positive.")
     private long creatorId;
 
-
-
     @Positive(message = "Reviewer Id should be positive.")
     private long reviewerId;
 
-    private Comment comment;
+    private Set<Comment> comments;
 
     public WorkItemDto() {
     }
@@ -66,8 +65,6 @@ public class WorkItemDto {
         this.creatorId = creatorId;
     }
 
-
-
     public long getReviewerId() {
         return reviewerId;
     }
@@ -76,11 +73,11 @@ public class WorkItemDto {
         this.reviewerId = reviewerId;
     }
 
-    public Comment getComment() {
-        return comment;
+    public Set<Comment> getComments() {
+        return comments;
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }

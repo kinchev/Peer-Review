@@ -10,6 +10,7 @@ import com.telerik.peer.models.Status;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
 import com.telerik.peer.models.dto.WorkItemDto;
+import com.telerik.peer.models.dto.WorkItemUpdateDto;
 import com.telerik.peer.services.contracts.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -79,7 +80,7 @@ public class WorkItemController {
     }
 
     @PutMapping("/{id}")
-    public WorkItem update(@RequestHeader HttpHeaders headers, @PathVariable long id, @Valid @RequestBody WorkItemDto workItemDto) {
+    public WorkItem update(@RequestHeader HttpHeaders headers, @PathVariable long id, @Valid @RequestBody WorkItemUpdateDto workItemDto) {
         try {
             User updatingUser = authenticationHelper.tryGetUser(headers);
             WorkItem workItem = workItemMapper.fromDto(workItemDto, id);
@@ -114,9 +115,7 @@ public class WorkItemController {
             User updatingUser = authenticationHelper.tryGetUser(headers);
             WorkItem workItem = workItemService.getById(id);
             Status status = statusService.getById(statusId);
-            Comment comment = addComment(commentToAdd, updatingUser);
-
-            workItemService.setStatus(workItem, updatingUser, status, comment);
+            workItemService.setStatus(workItem, updatingUser, status, commentToAdd);
             return workItem;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -125,12 +124,36 @@ public class WorkItemController {
         }
     }
 
-    public Comment addComment(String commentToAdd, User user) {
-        Comment comment = new Comment();
-        comment.setReviewer(user);
-        comment.setComment(commentToAdd);
-        commentService.create(comment);
-        return comment;
+    @PutMapping("/{id}/comment")
+    public WorkItem setWorkItemComment(@RequestHeader HttpHeaders headers, @PathVariable long id,
+                                       @RequestParam String commentToAdd) {
+        try {
+            User updatingUser = authenticationHelper.tryGetUser(headers);
+            WorkItem workItem = workItemService.getById(id);
+            workItemService.setWorkItemComment(workItem, updatingUser, commentToAdd);
+            return workItem;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/reviewer/{reviewerId}")
+    public WorkItem changeReviewer(@RequestHeader HttpHeaders headers, @PathVariable long id,
+                                   @PathVariable long reviewerId) {
+        try {
+            User updatingUser = authenticationHelper.tryGetUser(headers);
+            WorkItem workItem = workItemService.getById(id);
+            User newReviewer = userService.getById(reviewerId);
+
+            workItemService.changeReviewer(workItem, updatingUser, newReviewer);
+            return workItem;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (InvalidUserInputException | UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
 
     @GetMapping("/filter")

@@ -28,7 +28,7 @@ public abstract class  AbstractReadRepository<T> implements CRUDRepository<T> {
             return session
                     .createQuery(query, clazz)
                     .setParameter("value", value)
-                    .uniqueResultOptional()
+                    .list().stream().findFirst()
                     .orElseThrow(() -> new EntityNotFoundException(notFoundErrorMessage));
         }
     }

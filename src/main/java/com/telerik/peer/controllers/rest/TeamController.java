@@ -132,8 +132,6 @@ public class TeamController {
             User userToAdd = userService.getById(userId);
             teamService.removeMemberFromTeam(team, updatingUser, userToAdd);
             return team;
-        } catch (DuplicateEntityException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (UnauthorizedOperationException e) {
