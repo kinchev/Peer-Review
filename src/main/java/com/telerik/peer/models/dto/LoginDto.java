@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class LoginDto {
@@ -14,7 +15,8 @@ public class LoginDto {
     private String username;
 
     @NotBlank
-    @Size(min = 2, max = 50, message = "Password should be between 8 and 50 characters.")
+    @Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "Password should be at least characters and contains 1 upper letter,digit and special symbol.")
+//    @Size(min = 2, max = 50, message = "Password should be between 8 and 50 characters.")
     private String password;
 
     public LoginDto() {

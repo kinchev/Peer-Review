@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="/static/assets/img/logo.png" th:href="@{/assets/img/logo.png}" rel="icon">
+<!--  <link href="/static/assets/img/logo.png" th:href="@{/assets/img/logo.png}" rel="icon">-->
   <title>RuangAdmin - Dashboard</title>
   <link  th:href="@{/assets/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
@@ -22,13 +22,13 @@
     <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon">
-          <img src="/static/assets/img/logo.png" th:href="@{/assets/img/logo.png}">
+<!--          <img src="/static/assets/img/logo.png" th:href="@{/assets/img/logo.png}">-->
         </div>
         <div class="sidebar-brand-text mx-3">RuangAdmin</div>
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item active">
-        <a class="nav-link" th:href="user2.html">
+        <a class="nav-link" href="user2.html">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -45,12 +45,12 @@
         <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Bootstrap UI</h6>
-            <a class="collapse-item" th:href="alerts.html">Alerts</a>
-            <a class="collapse-item" th:href="buttons.html">Buttons</a>
-            <a class="collapse-item" th:href="dropdowns.html">Dropdowns</a>
-            <a class="collapse-item" th:href="modals.html">Modals</a>
-            <a class="collapse-item" th:href="popovers.html">Popovers</a>
-            <a class="collapse-item" th:href="progress-bar.html">Progress Bars</a>
+            <a class="collapse-item" href="alerts.html">Alerts</a>
+            <a class="collapse-item" href="buttons.html">Buttons</a>
+            <a class="collapse-item" href="dropdowns.html">Dropdowns</a>
+            <a class="collapse-item" href="modals.html">Modals</a>
+            <a class="collapse-item" href="popovers.html">Popovers</a>
+            <a class="collapse-item" href="progress-bar.html">Progress Bars</a>
           </div>
         </div>
       </li>
@@ -63,7 +63,7 @@
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Forms</h6>
-            <a class="collapse-item" th:href="form_basics.html">Form Basics</a>
+            <a class="collapse-item" href="form_basics.html">Form Basics</a>
             <a class="collapse-item" th:href="form_advanceds.html">Form Advanceds</a>
           </div>
         </div>
@@ -278,11 +278,13 @@
             </li>
             <div class="topbar-divider d-none d-sm-block"></div>
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <img class="img-profile rounded-circle" src="/static/assets/img/boy.png" th:href="@{/assets/img/boy.png}" style="max-width: 60px">
-                <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
-              </a>
+<!--              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"-->
+<!--                aria-haspopup="true" aria-expanded="false">-->
+
+<!--                <img class="img-profile rounded-circle"  th:src="@{/src/main/resources/user-photos/{path}(path=${user.getPhotoPath()})}" style="max-width: 160px">-->
+<!--                <span class="ml-2 d-none d-lg-inline text-white small" th:text="${user.getUsername()}">text</span>-->
+<!--              <a th:href="@{/}" title=""><img th:src="@{/user-photos/10/FONT.png}" width="128" height="128" alt="Test"></a>-->
+
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -657,11 +659,11 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <script src="/static/javascript/bootstrap.bundle.min.js" th:href="/javascript/bootstrap.bundle.min.js"></script>
-  <script src="/static/javascript/jquery.easing.min.js" th:href="/javascript/jquery.easing.min.js"></script>
-  <script src="/static/javascript/ruang-admin.min.js" th:href="/javascript/ruang-admin.min.js"></script>
-  <script src="/static/javascript/Chart.min.js" th:href="/javascript/Chart.min.js"></script>
-  <script src="/static/javascript/chart-area-demo.js" th:href="/javascript/chart-area-demo.js"></script>
+  <script src="/static/javascript/bootstrap.bundle.min.js" th:href="@{/javascript/bootstrap.bundle.min.js}"></script>
+  <script src="/static/javascript/jquery.easing.min.js" th:href="@{/javascript/jquery.easing.min.js}"></script>
+  <script src="/static/javascript/ruang-admin.min.js" th:href="@{/javascript/ruang-admin.min.js}"></script>
+  <script src="/static/javascript/Chart.min.js" th:href="@{/javascript/Chart.min.js}"></script>
+  <script src="/static/javascript/chart-area-demo.js" th:href="@{/javascript/chart-area-demo.js}"></script>
 </body>
 
 </html>
