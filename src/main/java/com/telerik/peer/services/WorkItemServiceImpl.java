@@ -5,8 +5,10 @@ import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.exceptions.InvalidUserInputException;
 import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.models.*;
+import com.telerik.peer.repositories.contracts.CommentRepository;
 import com.telerik.peer.repositories.contracts.TeamRepository;
 import com.telerik.peer.repositories.contracts.WorkItemRepository;
+import com.telerik.peer.services.contracts.ReviewRequestService;
 import com.telerik.peer.services.contracts.WorkItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,21 +18,26 @@ import java.util.Optional;
 
 @Service
 public class WorkItemServiceImpl implements WorkItemService {
-    public static final String MODIFY_NOT_AUTHORIZED = "Only the owner or the reviewers are allowed to modify an item.";
+    public static final String MODIFY_NOT_AUTHORIZED = "Only the item owner or the reviewers are allowed to do this action";
     public static final String ONLY_OWNER_AUTHORIZED = "Only the owner is authorised to change the reviewers.";
     private static final String REVIEWER_AND_CREATOR_ARE_THE_SAME_ERROR = "Creator and reviewer are the same!";
     private static final String REVIEWER_DIFFERENT_FROM_ITEM_TEAM = "Reviewer different from item team!";
     private static final String CREATOR_DIFFERENT_FROM_ITEM_TEAM = "Creator different from item team!";
     public static final String UPDATING_USER_IS_NOT_REVIEWER = "The status can be updated only by a work item reviewer.";
-    public static final String STATUS_REQUIRED = "This status requires a comment to be added";
+    public static final String COMMENT_REQUIRED = "This status requires a comment to be added";
 
     private final WorkItemRepository workItemRepository;
     private final TeamRepository teamRepository;
+    private final ReviewRequestService reviewRequestService;
+    private final CommentRepository commentRepository;
 
     @Autowired
-    public WorkItemServiceImpl(WorkItemRepository workItemRepository, TeamRepository teamRepository) {
+    public WorkItemServiceImpl(WorkItemRepository workItemRepository, TeamRepository teamRepository,
+                               ReviewRequestService reviewRequestService, CommentRepository commentRepository) {
         this.workItemRepository = workItemRepository;
         this.teamRepository = teamRepository;
+        this.reviewRequestService = reviewRequestService;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -69,6 +76,8 @@ public class WorkItemServiceImpl implements WorkItemService {
         workItems.add(workitem);
         team.setWorkItems(workItems);
         teamRepository.update(team);
+        ReviewRequest reviewRequest = createReviewRequest(workitem);
+        reviewRequestService.create(reviewRequest);
     }
 
     @Override
@@ -89,24 +98,36 @@ public class WorkItemServiceImpl implements WorkItemService {
             throw new DuplicateEntityException("Workitem", "title", workitem.getTitle());
         }
 
-//    if(isStatusChangeToReject(workitem,itemToUpdate)) {
-//        if(workitem.getComment()==null){
-//            throw  new InvalidUserInputException("Empty comment");
-//        }
-//        Comment comment=new Comment();
-
         workItemRepository.update(workitem);
     }
 
     @Override
-    public void setStatus(WorkItem workItem, User updatingUser, Status status, Comment comment) {
+    public void setStatus(WorkItem workItem, User updatingUser, Status status, String commentToAdd) {
         if (!updatingUser.equals(workItem.getReviewer())) {
             throw new InvalidUserInputException(UPDATING_USER_IS_NOT_REVIEWER);
         }
-        if (statusRequiresComment(status) && comment.getComment() == null) {
-            throw new InvalidUserInputException(STATUS_REQUIRED);
+        if (statusRequiresComment(status) && commentToAdd == null) {
+            throw new InvalidUserInputException(COMMENT_REQUIRED);
         }
-        workItem.setComment(comment);
+        workItem.setStatus(status);
+        if (commentToAdd != null) {
+            Comment comment = addComment(commentToAdd, updatingUser, workItem);
+            var comments = workItem.getComments();
+            comments.add(comment);
+            workItem.setComments(comments);
+        }
+        workItemRepository.update(workItem);
+    }
+
+    @Override
+    public void setWorkItemComment(WorkItem workItem, User updatingUser, String commentToAdd) {
+        if (workItem.getCreator().getId() !=updatingUser.getId() && workItem.getReviewer().getId() != updatingUser.getId()) {
+            throw new UnauthorizedOperationException(MODIFY_NOT_AUTHORIZED);
+        }
+        Comment comment = addComment(commentToAdd, updatingUser, workItem);
+        var comments = workItem.getComments();
+        comments.add(comment);
+        workItem.setComments(comments);
         workItemRepository.update(workItem);
     }
 
@@ -118,6 +139,8 @@ public class WorkItemServiceImpl implements WorkItemService {
         workitem.setReviewer(newReviewer);
         validateCreatorAndReviewer(workitem);
         workItemRepository.update(workitem);
+        ReviewRequest reviewRequest = createReviewRequest(workitem);
+        reviewRequestService.create(reviewRequest);
     }
 
     @Override
@@ -146,6 +169,22 @@ public class WorkItemServiceImpl implements WorkItemService {
         return status.getStatus_id() == 3 || status.getStatus_id() == 5;
     }
 
+    private ReviewRequest createReviewRequest(WorkItem workItem) {
+        ReviewRequest reviewRequest = new ReviewRequest();
+        reviewRequest.setWorkItem(workItem);
+        reviewRequest.setCreator(workItem.getCreator());
+        reviewRequest.setReviewer(workItem.getReviewer());
+        return reviewRequest;
+    }
+
+    public Comment addComment(String commentToAdd, User user, WorkItem workItem) {
+        Comment comment = new Comment();
+        comment.setAuthor(user);
+        comment.setComment(commentToAdd);
+        comment.setWorkItem(workItem);
+        commentRepository.create(comment);
+        return comment;
+    }
 
 }
 

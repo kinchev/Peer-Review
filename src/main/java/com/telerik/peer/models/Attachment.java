@@ -1,6 +1,8 @@
 package com.telerik.peer.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class Attachment {
     @Column(name = "file_name")
     private String fileName;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "workitem_id")
     private WorkItem workItem;

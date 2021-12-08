@@ -115,9 +115,7 @@ public class WorkItemController {
             User updatingUser = authenticationHelper.tryGetUser(headers);
             WorkItem workItem = workItemService.getById(id);
             Status status = statusService.getById(statusId);
-            Comment comment = addComment(commentToAdd, updatingUser);
-
-            workItemService.setStatus(workItem, updatingUser, status, comment);
+            workItemService.setStatus(workItem, updatingUser, status, commentToAdd);
             return workItem;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -126,12 +124,19 @@ public class WorkItemController {
         }
     }
 
-    public Comment addComment(String commentToAdd, User user) {
-        Comment comment = new Comment();
-        comment.setReviewer(user);
-        comment.setComment(commentToAdd);
-        commentService.create(comment);
-        return comment;
+    @PutMapping("/{id}/comment")
+    public WorkItem setWorkItemComment(@RequestHeader HttpHeaders headers, @PathVariable long id,
+                                       @RequestParam String commentToAdd) {
+        try {
+            User updatingUser = authenticationHelper.tryGetUser(headers);
+            WorkItem workItem = workItemService.getById(id);
+            workItemService.setWorkItemComment(workItem, updatingUser, commentToAdd);
+            return workItem;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
 
     @PutMapping("/{id}/reviewer/{reviewerId}")

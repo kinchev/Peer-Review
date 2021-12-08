@@ -1,7 +1,10 @@
 package com.telerik.peer.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "workitems")
@@ -26,39 +29,15 @@ public class WorkItem {
     @JoinColumn(name = "reviewer_id")
     private User reviewer;
 
-
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @OneToOne
-    @JoinColumn(name = "comment_id")
-    private Comment comment;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "workItem")
+    private Set<Comment> comments = new HashSet<>();
 
-    public Comment getComment() {
-        return comment;
-    }
-
-    public void setComment(Comment comment) {
-        this.comment = comment;
-    }
-    
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "workitems_users",
-//            joinColumns = @JoinColumn(name = "workitem_id"),
-//            inverseJoinColumns = @JoinColumn(name = "user_id")
-//    )
-//    private Set<User> reviewers = new HashSet<>();
-//
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "workitems_comments",
-//            joinColumns = @JoinColumn(name = "workitem_id"),
-//            inverseJoinColumns = @JoinColumn(name = "comment_id")
-//    )
-//    private Set<Comment> comments = new HashSet<>();
-
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "workItem")
+    private Set<Attachment> attachments = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "status_id")
@@ -121,6 +100,22 @@ public class WorkItem {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Set<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(Set<Attachment> attachments) {
+        this.attachments = attachments;
     }
 
     @Override
