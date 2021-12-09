@@ -105,15 +105,14 @@ public class AuthenticationController {
             fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             user.setPhotoName(fileName);
             userService.create(user);
-
         } catch (DuplicateEntityException e) {
             bindingResult.rejectValue("username", "username_error", e.getMessage());
             return "register";
         }
-
-        String uploadDir = "src/main/resources/user-photos/" + user.getId();
-        FileUploadHelper.saveFile(uploadDir, fileName, multipartFile);
-
+        if (!multipartFile.isEmpty()) {
+            String uploadDir = "src/main/resources/user-photos/" + user.getId();
+            FileUploadHelper.saveFile(uploadDir, fileName, multipartFile);
+        }
         return "redirect:/auth/login";
     }
 

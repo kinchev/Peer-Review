@@ -10,13 +10,18 @@ import com.telerik.peer.models.dto.RegisterDto;
 import com.telerik.peer.models.dto.UserDto;
 import com.telerik.peer.services.contracts.ReviewRequestService;
 import com.telerik.peer.services.contracts.UserService;
+import com.telerik.peer.utils.FileUploadHelper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -42,8 +47,8 @@ public class UserController {
     @GetMapping("{id}")
     public User getById(@RequestHeader HttpHeaders headers, @PathVariable long id) {
         try {
-            User user = authenticationHelper.tryGetUser(headers);
-            return userService.getByField("id", user);
+            authenticationHelper.tryGetUser(headers);
+            return userService.getById(id);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -64,6 +69,28 @@ public class UserController {
             return user;
         } catch (DuplicateEntityException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/photo")
+    public User uploadPhoto(@RequestHeader HttpHeaders headers, @PathVariable long id,
+                            @RequestParam(value = "file", required = false) MultipartFile multipartFile
+    ) throws IOException {
+        try {
+            User loggedUser = authenticationHelper.tryGetUser(headers);
+            User user = userService.getById(id);
+            if (!multipartFile.isEmpty()) {
+                String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+                user.setPhotoName(fileName);
+                String uploadDir = "src/main/resources/user-photos/" + user.getId();
+                FileUploadHelper.saveFile(uploadDir, fileName, multipartFile);
+            }
+            userService.update(user, loggedUser);
+            return user;
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -113,8 +140,8 @@ public class UserController {
                              @RequestParam(required = false) Optional<String> email,
                              @RequestParam(required = false) Optional<String> number
     ) {
-            authenticationHelper.tryGetUser(headers);
-            return userService.search(username, email, number);
+        authenticationHelper.tryGetUser(headers);
+        return userService.search(username, email, number);
     }
 
 
