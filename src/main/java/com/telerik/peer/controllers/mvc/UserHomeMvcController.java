@@ -9,10 +9,7 @@ import com.telerik.peer.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -37,10 +34,10 @@ public class UserHomeMvcController {
 //        return session.getAttribute("currentUser") != null;
 //    }
 
-    @GetMapping("/{id}")
-    public String showSingleUser(@PathVariable int id, Model model) {
+    @GetMapping
+    public String showSingleUser( Model model,HttpSession session) {
         try {
-            User user = userService.getById(id);
+            User user = authenticationHelper.tryGetUser(session);
             model.addAttribute("user", user);
             return "user2";
         } catch (EntityNotFoundException e) {
@@ -49,17 +46,17 @@ public class UserHomeMvcController {
         }
     }
 
-    @GetMapping
-    public String showAllUsers(Model model, HttpSession session) {
-        User user;
-        try {
-            user = authenticationHelper.tryGetUser(session);
-        } catch (AuthenticationFailureException e) {
-            return "redirect:/login";
-        }
-        model.addAttribute("users", userService.getAll());
-        return "user2";
-    }
+//    @GetMapping
+//    public String showAllUsers(Model model, HttpSession session) {
+//        User user;
+//        try {
+//            user = authenticationHelper.tryGetUser(session);
+//        } catch (AuthenticationFailureException e) {
+//            return "redirect:/login";
+//        }
+//        model.addAttribute("users", userService.getAll());
+//        return "user2";
+//    }
 
     @ModelAttribute("users")
     public List<User> populateUsers() {
