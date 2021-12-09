@@ -12,14 +12,19 @@ import com.telerik.peer.models.WorkItem;
 import com.telerik.peer.models.dto.WorkItemDto;
 import com.telerik.peer.models.dto.WorkItemUpdateDto;
 import com.telerik.peer.services.contracts.*;
+import com.telerik.peer.utils.FileUploadHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -32,12 +37,14 @@ public class WorkItemController {
     UserService userService;
     StatusService statusService;
     WorkItemMapper workItemMapper;
+    AttachmentService attachmentService;
 
     @Autowired
     public WorkItemController(AuthenticationHelper authenticationHelper,
                               WorkItemService workItemService, TeamService teamService,
                               CommentService commentService, UserService userService,
-                              WorkItemMapper workItemMapper, StatusService statusService) {
+                              WorkItemMapper workItemMapper, StatusService statusService,
+                              AttachmentService attachmentService) {
         this.authenticationHelper = authenticationHelper;
         this.workItemService = workItemService;
         this.teamService = teamService;
@@ -45,15 +52,14 @@ public class WorkItemController {
         this.userService = userService;
         this.workItemMapper = workItemMapper;
         this.statusService = statusService;
+        this.attachmentService = attachmentService;
     }
 
 
     @GetMapping
     public List<WorkItem> getAll(@RequestHeader HttpHeaders headers) {
-
         authenticationHelper.tryGetUser(headers);
         return workItemService.getAll();
-
     }
 
     @GetMapping("{id}")
@@ -65,7 +71,6 @@ public class WorkItemController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-
 
     @PostMapping
     public WorkItem create(@RequestHeader HttpHeaders headers, @Valid @RequestBody WorkItemDto workItemDto) {
@@ -93,7 +98,22 @@ public class WorkItemController {
         } catch (UnauthorizedOperationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
+    }
 
+    @PutMapping("/{id}/attachment")
+    public WorkItem uploadAttachment(@RequestHeader HttpHeaders headers, @PathVariable long id,
+                            @RequestParam(value = "file") MultipartFile multipartFile
+    ) throws IOException {
+            try {
+            User updatingUser = authenticationHelper.tryGetUser(headers);
+            WorkItem workItem = workItemService.getById(id);
+            attachmentService.create(updatingUser, workItem, multipartFile);
+            return workItem ;
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
