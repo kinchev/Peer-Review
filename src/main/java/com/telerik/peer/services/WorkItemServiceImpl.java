@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 public class WorkItemServiceImpl implements WorkItemService {
     public static final String MODIFY_NOT_AUTHORIZED = "Only the item owner or the reviewers are allowed to do this action";
-    public static final String ONLY_OWNER_AUTHORIZED = "Only the owner is authorised to change the reviewers.";
+    public static final String ONLY_OWNER_AUTHORIZED = "Only the item owner is allowed to do this action.";
     private static final String REVIEWER_AND_CREATOR_ARE_THE_SAME_ERROR = "Creator and reviewer are the same!";
     private static final String REVIEWER_DIFFERENT_FROM_ITEM_TEAM = "Reviewer different from item team!";
     private static final String CREATOR_DIFFERENT_FROM_ITEM_TEAM = "Creator different from item team!";
