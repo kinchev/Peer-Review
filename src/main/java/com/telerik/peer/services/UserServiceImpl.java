@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     public void create(User entity) {
         boolean duplicateExists = true;
         try {
-            String encodedPassword=this.passwordEncoder.encode(entity.getPassword());
+            String encodedPassword = this.passwordEncoder.encode(entity.getPassword());
             entity.setPassword(encodedPassword);
             userRepository.getByField("username", entity.getUsername());
 
@@ -120,4 +120,18 @@ public class UserServiceImpl implements UserService {
     public List<User> search(Optional<String> username, Optional<String> email, Optional<String> number) {
         return userRepository.search(username, email, number);
     }
+
+    @Override
+    public void changePassword(long id, String oldPassword, String newPassword, String passwordConfirm) {
+        User user = getById(id);
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new UnauthorizedOperationException("Wrong old password!");
+        }
+        if (!newPassword.equals(passwordConfirm)) {
+            throw new UnauthorizedOperationException("Confirm password does not match!");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.update(user);
+    }
+
 }
