@@ -10,7 +10,7 @@ public class ReviewRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="review_request_id")
-    private Long id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name="workitem_id")

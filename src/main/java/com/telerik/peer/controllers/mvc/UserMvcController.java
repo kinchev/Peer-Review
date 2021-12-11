@@ -4,11 +4,8 @@ import com.telerik.peer.controllers.rest.AuthenticationHelper;
 import com.telerik.peer.exceptions.AuthenticationFailureException;
 import com.telerik.peer.exceptions.DuplicateEntityException;
 import com.telerik.peer.exceptions.EntityNotFoundException;
-import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.mappers.UserMapper;
 import com.telerik.peer.models.User;
-import com.telerik.peer.models.dto.ChangePasswordDto;
-import com.telerik.peer.models.dto.LoginDto;
 import com.telerik.peer.models.dto.UserDto;
 import com.telerik.peer.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/users")

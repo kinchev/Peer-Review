@@ -1,7 +1,6 @@
 package com.telerik.peer.controllers.mvc;
 
 import com.telerik.peer.controllers.rest.AuthenticationHelper;
-import com.telerik.peer.exceptions.AuthenticationFailureException;
 import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.mappers.UserMapper;
 import com.telerik.peer.models.User;

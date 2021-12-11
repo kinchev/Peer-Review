@@ -45,9 +45,9 @@ public class TeamMvcController {
         return session.getAttribute("currentUser") != null;
     }
 
-    @ModelAttribute("users")
-    public List<User> populateUsers() {
-        return userService.getAll();
+    @ModelAttribute("teams")
+    public List<Team> populateUsers() {
+        return  teamService.getAll();
     }
 
     @GetMapping
@@ -58,7 +58,7 @@ public class TeamMvcController {
             return "redirect:/login";
         }
         model.addAttribute("teams", teamService.getAll());
-        return "teams";
+        return "user";
     }
 
     @GetMapping("/{id}")
@@ -72,7 +72,7 @@ public class TeamMvcController {
         try {
             Team team = teamService.getById(id);
             model.addAttribute("team", team);
-            return "team";
+            return "user";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
