@@ -38,32 +38,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void create(User user) {
+    public void create(User entity) {
         boolean duplicateExists = true;
         try {
-            String encodedPassword=this.passwordEncoder.encode(user.getPassword());
-            user.setPassword(encodedPassword);
-            userRepository.getByField("username", user.getUsername());
+            String encodedPassword = this.passwordEncoder.encode(entity.getPassword());
+            entity.setPassword(encodedPassword);
+            userRepository.getByField("username", entity.getUsername());
 
         } catch (EntityNotFoundException e) {
             duplicateExists = false;
 
         }
         if (duplicateExists) {
-            throw new DuplicateEntityException("User", "username", user.getUsername());
+            throw new DuplicateEntityException("User", "username", entity.getUsername());
         }
 
         boolean duplicateMailExists = true;
         try {
-            userRepository.getByField("email", user.getEmail());
+            userRepository.getByField("email", entity.getEmail());
         } catch (EntityNotFoundException e) {
             duplicateMailExists = false;
         }
         if (duplicateMailExists) {
-            throw new DuplicateEntityException("User", "email", user.getEmail());
+            throw new DuplicateEntityException("User", "email", entity.getEmail());
         }
 
-        userRepository.create(user);
+        userRepository.create(entity);
     }
 
 
@@ -120,4 +120,18 @@ public class UserServiceImpl implements UserService {
     public List<User> search(Optional<String> username, Optional<String> email, Optional<String> number) {
         return userRepository.search(username, email, number);
     }
+
+    @Override
+    public void changePassword(long id, String oldPassword, String newPassword, String passwordConfirm) {
+        User user = getById(id);
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new UnauthorizedOperationException("Wrong old password!");
+        }
+        if (!newPassword.equals(passwordConfirm)) {
+            throw new UnauthorizedOperationException("Confirm password does not match!");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.update(user);
+    }
+
 }
