@@ -39,7 +39,7 @@ public class UserHomeMvcController {
         try {
             User user = authenticationHelper.tryGetUser(session);
             model.addAttribute("user", user);
-            return "user2";
+            return "user";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";

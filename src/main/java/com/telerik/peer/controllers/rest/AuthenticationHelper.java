@@ -22,7 +22,6 @@ public class AuthenticationHelper {
     public static final String AUTHENTICATION_FAILURE_MESSAGE = "Wrong username or password.";
 
     private final UserService userService;
-
     private final PasswordEncoder passwordEncoder;
 
 
@@ -47,19 +46,17 @@ public class AuthenticationHelper {
 
     public User tryGetUser(HttpSession session) {
         String currentUser = (String) session.getAttribute("currentUser");
-
         if (currentUser == null) {
             throw new AuthenticationFailureException("No user logged in.");
         }
-
         return userService.getByField("username", currentUser);
     }
+
+
 
     public User verifyAuthentication(String username, String password) {
         try {
             User user = userService.getByField("username", username);
-
-
             if (!passwordEncoder.matches(password, user.getPassword())) {
                 throw new AuthenticationFailureException(AUTHENTICATION_FAILURE_MESSAGE);
             }
@@ -68,5 +65,7 @@ public class AuthenticationHelper {
             throw new AuthenticationFailureException(AUTHENTICATION_FAILURE_MESSAGE);
         }
     }
+
+
 
 }

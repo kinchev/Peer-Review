@@ -38,32 +38,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void create(User entity) {
+    public void create(User user) {
         boolean duplicateExists = true;
         try {
-            String encodedPassword=this.passwordEncoder.encode(entity.getPassword());
-            entity.setPassword(encodedPassword);
-            userRepository.getByField("username", entity.getUsername());
+            String encodedPassword=this.passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+            userRepository.getByField("username", user.getUsername());
 
         } catch (EntityNotFoundException e) {
             duplicateExists = false;
 
         }
         if (duplicateExists) {
-            throw new DuplicateEntityException("User", "username", entity.getUsername());
+            throw new DuplicateEntityException("User", "username", user.getUsername());
         }
 
         boolean duplicateMailExists = true;
         try {
-            userRepository.getByField("email", entity.getEmail());
+            userRepository.getByField("email", user.getEmail());
         } catch (EntityNotFoundException e) {
             duplicateMailExists = false;
         }
         if (duplicateMailExists) {
-            throw new DuplicateEntityException("User", "email", entity.getEmail());
+            throw new DuplicateEntityException("User", "email", user.getEmail());
         }
 
-        userRepository.create(entity);
+        userRepository.create(user);
     }
 
 

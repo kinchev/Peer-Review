@@ -1,175 +1,155 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title th:text="${user.getUsername()}">User Profile </title>-->
-<!--    <link rel="stylesheet" th:href="@{/css/feather.css}">-->
-<!--    <link rel="stylesheet" th:href="@{/css/materialdesignicons.min.css}">-->
-<!--    <link rel="stylesheet" th:href="@{/css/themify-icons.css}">-->
-<!--    <link rel="stylesheet" th:href="@{/css/typicons.css}">-->
-<!--    <link rel="stylesheet" th:href="@{/css/simple-line-icons.css}">-->
-<!--    <link rel="stylesheet" th:href="@{/css/vendor.bundle.base.css}">-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<!--    <link rel="stylesheet" th:href="@{/css/styles.css}">-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" th:href="@{https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css}" rel='stylesheet'>
+    <link rel="stylesheet" href="/static/assets/css/styles.css" th:href="@{/assets/css/styles.css}">
+    <title>Document</title>
+
+</head>
+
+<body>
+<div class="sidebar close">
 
 
-<!--</head>-->
-<!--<body>-->
-<!--<ul>-->
-<!--    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>-->
-<!--&lt;!&ndash;    <li><h3><a href="#" th:href="@{/users}" th:text="#{navigation.all-users}">Browse all users</a></h3></li>&ndash;&gt;-->
-<!--</ul>-->
-<!--<div>-->
-<!--<h2 th:text="#{user.label.username} + ': ' + ${user.getUsername()}">Username</h2>-->
-<!--<h3 th:text="${user.getEmail()}">Email</h3>-->
-<!--<h3 th:text="${user.getNumber()}">Number</h3>-->
-<!--</div>-->
+    <div class="logo-details">
+        <i class="bx bxl-java"></i>
+        <span class="logo_name">Peer Review</span>
+    </div>
 
-<!--<br/>-->
-<!--<img th:src="@{/src/main/resources/user-photos/{path}(path=${user.getPhotoPath()})}"  width="128" height="128" alt="Test" src="">-->
-<!--<br/>-->
-<!--<div class="card">-->
-<!--    <div class="card-body">-->
-<!--        <h4 class="card-title">Basic Table</h4>-->
-<!--        <p class="card-description">-->
-<!--            Add class <code>.table</code>-->
-<!--        </p>-->
-<!--        <div class="table-responsive">-->
-<!--            <table class="table">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th>Profile</th>-->
-<!--                    <th>VatNo.</th>-->
-<!--                    <th>Created</th>-->
-<!--                    <th>Status</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                <tr>-->
+    <ul class="nav-links">
+    <li>
+        <a href="#">
+            <i class="bx bx-grid-alt"></i>
+            <span class="link_name">Dashboard</span>
+        </a>
+        </li>
 
-<!--                    <td>Jacob</td>-->
-<!--                    <td>53275531</td>-->
-<!--                    <td>12 May 2017</td>-->
-<!--                    <td><label class="badge badge-danger" >Pending</label></td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td>Messsy</td>-->
-<!--                    <td>53275532</td>-->
-<!--                    <td>15 May 2017</td>-->
-<!--                    <td><label class="badge badge-warning">In progress</label></td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td>John</td>-->
-<!--                    <td>53275533</td>-->
-<!--                    <td>14 May 2017</td>-->
-<!--                    <td><label class="badge badge-info">Fixed</label></td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td>Peter</td>-->
-<!--                    <td>53275534</td>-->
-<!--                    <td>16 May 2017</td>-->
-<!--                    <td><label class="badge badge-success">Completed</label></td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td>Dave</td>-->
-<!--                    <td>53275535</td>-->
-<!--                    <td>20 May 2017</td>-->
-<!--                    <td><label class="badge badge-warning">In progress</label></td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<a th:href="@{/}" title=""><img th:src="@{/user-photos/10/FONT.png}" width="128" height="128" alt="Test"></a>-->
 
-<!--&lt;!&ndash;<div class="users-table table-wrapper">&ndash;&gt;-->
-<!--&lt;!&ndash;    <table class="posts-table">&ndash;&gt;-->
-<!--&lt;!&ndash;        <thead>&ndash;&gt;-->
-<!--&lt;!&ndash;        <tr class="users-table-info">&ndash;&gt;-->
-<!--&lt;!&ndash;            <th>&ndash;&gt;-->
-<!--&lt;!&ndash;                <label class="users-table__checkbox ms-20">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <input type="checkbox" class="check-all">Thumbnail&ndash;&gt;-->
-<!--&lt;!&ndash;                </label>&ndash;&gt;-->
-<!--&lt;!&ndash;            </th>&ndash;&gt;-->
-<!--&lt;!&ndash;            <th>Title</th>&ndash;&gt;-->
-<!--&lt;!&ndash;            <th>Author</th>&ndash;&gt;-->
-<!--&lt;!&ndash;            <th>Status</th>&ndash;&gt;-->
-<!--&lt;!&ndash;            <th>Date</th>&ndash;&gt;-->
-<!--&lt;!&ndash;            <th>Action</th>&ndash;&gt;-->
-<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;        </thead>&ndash;&gt;-->
-<!--&lt;!&ndash;        <tbody>&ndash;&gt;-->
-<!--&lt;!&ndash;        <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <label class="users-table__checkbox">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <input type="checkbox" class="check">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <div class="categories-table-img">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <picture><source srcset="./img/categories/01.webp" type="image/webp"><img src="./img/categories/01.jpg" alt="category"></picture>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                </label>&ndash;&gt;-->
-<!--&lt;!&ndash;            </td>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td>&ndash;&gt;-->
-<!--&lt;!&ndash;                Starting your traveling blog with Vasco&ndash;&gt;-->
-<!--&lt;!&ndash;            </td>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="pages-table-img">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <picture><source srcset="./img/avatar/avatar-face-04.webp" type="image/webp"><img src="./img/avatar/avatar-face-04.png" alt="User Name"></picture>&ndash;&gt;-->
-<!--&lt;!&ndash;                    Jenny Wilson&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </td>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td><span class="badge-pending">Pending</span></td>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td>17.04.2021</td>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td>&ndash;&gt;-->
-<!--&lt;!&ndash;                      <span class="p-relative">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <button class="dropdown-btn transparent-btn" type="button" title="More info">&ndash;&gt;-->
-<!--&lt;!&ndash;                          <div class="sr-only">More info</div>&ndash;&gt;-->
-<!--&lt;!&ndash;                          <i data-feather="more-horizontal" aria-hidden="true"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </button>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <ul class="users-item-dropdown dropdown">&ndash;&gt;-->
-<!--&lt;!&ndash;                          <li><a href="##">Edit</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                          <li><a href="##">Quick edit</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                          <li><a href="##">Trash</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </ul>&ndash;&gt;-->
-<!--&lt;!&ndash;                      </span>&ndash;&gt;-->
-<!--&lt;!&ndash;            </td>&ndash;&gt;-->
-<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;        <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <label class="users-table__checkbox">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <input type="checkbox" class="check">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <div class="categories-table-img">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <picture><source srcset="./img/categories/02.webp" type="image/webp"><img src="./img/categories/02.jpg" alt="category"></picture>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                </label>&ndash;&gt;-->
-<!--&lt;!&ndash;            </td>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td>&ndash;&gt;-->
-<!--&lt;!&ndash;                Start a blog to reach your creative peak&ndash;&gt;-->
-<!--&lt;!&ndash;            </td>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="pages-table-img">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <picture><source th:srcset="./img/avatar/avatar-face-03.webp" type="image/webp"><img src="./img/avatar/avatar-face-03.png" alt="User Name"></picture>&ndash;&gt;-->
-<!--&lt;!&ndash;                    Annette Black&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </td>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td><span class="badge-pending">Pending</span></td>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td>23.04.2021</td>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td>&ndash;&gt;-->
-<!--&lt;!&ndash;                      <span class="p-relative">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <button class="dropdown-btn transparent-btn" type="button" title="More info">&ndash;&gt;-->
-<!--&lt;!&ndash;                          <div class="sr-only">More info</div>&ndash;&gt;-->
-<!--&lt;!&ndash;                          <i data-feather="more-horizontal" aria-hidden="true"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </button>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <ul class="users-item-dropdown dropdown">&ndash;&gt;-->
-<!--&lt;!&ndash;                          <li><a href="##">Edit</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                          <li><a href="##">Quick edit</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                          <li><a href="##">Trash</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </ul>&ndash;&gt;-->
-<!--&lt;!&ndash;                      </span>&ndash;&gt;-->
-<!--&lt;!&ndash;            </td>&ndash;&gt;-->
-<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;        <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td>&ndash;&gt;-->
-<!--</body>-->
-<!--</html>-->
+
+
+
+
+
+        <li>
+            <div class="icon-link">
+                <a href="#">
+
+                    <i class="bx bxl-microsoft-teams"></i>
+                    <span class="link_name">Teams</span>
+                </a>
+                <i class='bx bxs-chevron-down arrow'></i>
+            </div>
+            <ul class="sub-menu ">
+                <li><a class="link_name" href="#">Teams</a></li>
+
+                <li><a href="#">User`s Teams</a></li>
+                <li><a href="#">Create team</a></li>
+                <li><a href="#">Leave Team</a></li>
+                <li><a href="#">Reviewers</a></li>
+                <li><a href="#">Team`s member</a></li>
+            </ul>
+        </li>
+
+
+
+
+
+
+    <li>
+        <div class="icon-link">
+            <a href="#">
+                <i class="bx bx-collection"></i>
+                <span class="link_name">Members</span>
+            </a>
+            <i class='bx bxs-chevron-down arrow'></i>
+        </div>
+        <ul class="sub-menu blank">
+            <li><a class="link_name" href="#">Members</a></li>
+            <li><a href="#">Member`s Teams</a></li>
+            <li><a href="#">Add Member</a></li>
+            <li><a href="#">Remove Member</a></li>
+        </ul>
+    </li>
+
+
+
+
+        <li>
+        <div class="icon-link">
+            <a href="#">
+                <i class='bx bx-collection'></i>
+                <span class="link_name">Review Request</span>
+            </a>
+            <i class='bx bxs-chevron-down arrow'></i>
+        </div>
+        <ul class="sub-menu">
+            <li><a class="link_name" href="#">Review Request</a></li>
+            <li><a href="#">Member`s Teams</a></li>
+            <li><a href="#">Add Member</a></li>
+            <li><a href="#">Remove Member</a></li>
+        </ul>
+    </li>
+
+
+
+
+
+
+    <li>
+        <a href="#">
+            <i class='bx bxs-message-rounded'></i>
+            <span class="link_name">Messages</span>
+        </a>
+        <ul class="sub-menu blank">
+            <li><a class="link_name" href="#">Change Password</a></li>
+        </ul>
+    </li>
+
+
+
+
+
+        <li>
+        <a href="#">
+            <i class='bx bx-grid-alt'></i>
+            <span class="link_name">Password</span>
+        </a>
+        <ul class="sub-menu blank">
+            <li><a class="link_name" href="#">Change Password</a></li>
+        </ul>
+    </li>
+
+
+
+
+
+
+        <li>
+        <a href="#">
+            <i class='bx bxs-log-out' ></i>
+            <span class="link_name">Log Out</span>
+        </a>
+        <ul class="sub-menu blank">
+            <li><a class="link_name" href="#"></a></li>
+        </ul>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    </ul>
+</div>
+</body>
+</html>
+
+
