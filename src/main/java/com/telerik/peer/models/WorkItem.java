@@ -43,6 +43,8 @@ public class WorkItem {
     @JoinColumn(name = "status_id")
     private Status status;
 
+    public WorkItem() {
+    }
     public Status getStatus() {
         return status;
     }
@@ -51,7 +53,7 @@ public class WorkItem {
         this.status = status;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -75,10 +77,8 @@ public class WorkItem {
         return team;
     }
 
-    public WorkItem() {
-    }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

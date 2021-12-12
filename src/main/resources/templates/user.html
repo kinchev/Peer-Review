@@ -5,11 +5,10 @@
     <meta charset="UTF-8">
     <!--<title> Drop Down Sidebar Menu | CodingLab </title>-->
     <link rel="stylesheet" href="/static/assets/css/styles.css" th:href="@{/assets/css/styles.css}">    <!-- Boxiocns CDN Link -->
-    <script th:src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script th:src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" th:href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" th:href="@{https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css}" rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
 </head>
 <body>
 <div class="sidebar close">
@@ -34,7 +33,7 @@
 
 
         <li>
-            <div class="iocn-link">
+            <div class="icon-link">
                 <a href="#">
                     <i class='bx bx-collection' ></i>
                     <span class="link_name">Category</span>
@@ -53,7 +52,7 @@
 
 
         <li>
-            <div class="iocn-link">
+            <div class="icon-link">
                 <a href="#">
                     <i class="bx bxl-microsoft-teams"></i>
                     <span class="link_name">Teams</span>
@@ -62,17 +61,21 @@
             </div>
             <ul class="sub-menu">
                 <li><a class="link_name" href="#">Teams</a></li>
-                <li><a >Create Team</a></li>
+                <li><a href="#" >Create Team</a></li>
                 <li><a href="#">User`s Teams</a></li>
-                <li><a href="#">Reviews</a></li>
+                <li><a href="#">Review Requests</a></li>
                 <li><a href="#">Add Member</a></li>
+                <li><a href="#">Remove Member</a></li>
                 <li><a href="#">All Members</a></li>
+                <li><a href="#">Update</a></li>
             </ul>
         </li>
 
 
+
+
         <li>
-            <div class="iocn-link">
+            <div class="icon-link">
                 <a href="#">
                     <i class='bx bx-plug' ></i>
                     <span class="link_name">WorkItems</span>
@@ -83,9 +86,29 @@
                 <li><a class="link_name" href="#">WorkItems</a></li>
                 <li><a href="#">Create WorkItem</a></li>
                 <li><a href="#">Upload Files</a></li>
+                <li><a href="#">Update</a></li>
+            </ul>
+        </li>
+
+
+
+        <li>
+            <div class="icon-link">
+                <a href="#">
+                    <i class='bx bx-plug' ></i>
+                    <span class="link_name">Review Requests </span>
+                </a>
+                <i class='bx bxs-chevron-down arrow' ></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Review Requests</a></li>
+                <li><a href="#">Review Requests Sent</a></li>
+                <li><a href="#">Review Requests Receive</a></li>
                 <li><a href="#"></a></li>
             </ul>
         </li>
+
+
 
 
 
@@ -105,7 +128,7 @@
         <li>
             <a href="#">
                 <i class='bx bx-line-chart' ></i>
-                <span class="link_name">Chart</span>
+                <span class="link_name">Review Requests Sent</span>
             </a>
             <ul class="sub-menu blank">
                 <li><a class="link_name" href="#">Chart</a></li>
@@ -163,40 +186,40 @@
 
 
 
-        <li>
-            <div class="profile-details">
-                <div class="profile-content">
-                    <img th:href="@{/user-photos/{path}(path=${user.getPhotoPath()})}" alt="" src="/user-photos">
-                </div>
-                <div class="name-job">
-                    <div class="profile_name">Prem Shahi</div>
-                    <div class="job">Web Desginer</div>
-                </div>
-                <i class='bx bx-log-out' ></i>
-            </div>
-        </li>
+<!--        <li>-->
+<!--            <div class="profile-details">-->
+<!--                <div class="profile-content">-->
+<!--                    <img th:href="@{/src/main/resources/user-photos/{path}(path=${user.getPhotoPath()})}" alt="" src="/user-photos">-->
+<!--                </div>-->
+<!--                <div class="name-job">-->
+<!--                    <div class="profile_name">Prem Shahi</div>-->
+<!--                    <div class="job">Web Desginer</div>-->
+<!--                </div>-->
+<!--                <i class='bx bx-log-out' ></i>-->
+<!--            </div>-->
+<!--        </li>-->
     </ul>
 </div>
-<div class="asd" >
-    <thead>
-    <tr>
-        <th scope="col" th:text="#{team.name}"></th>
-        <th scope="col" th:text="#{team.owner}"></th>
+<!--<div class="asd" >-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th scope="col" th:text="#{team.name}"></th>-->
+<!--        <th scope="col" th:text="#{team.owner}"></th>-->
 
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="team:${teams}">
-        <td class="cell">
-            <!--                <a href="#" th:href="@{/shipments/{id}(id=${shipment.getId()})}" th:text="${shipment.getId()}">Shipment</a>-->
-        </td>
-        <td class="cell" th:text="${team.getTeamName()}">Origin Warehouse</td>
-        <td class="cell" th:text="${team.getOwner().getUsername()}">Destination Warehouse</td>
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="team:${teams}">-->
+<!--        <td class="cell">-->
+<!--            &lt;!&ndash;                <a href="#" th:href="@{/shipments/{id}(id=${shipment.getId()})}" th:text="${shipment.getId()}">Shipment</a>&ndash;&gt;-->
+<!--        </td>-->
+<!--        <td class="cell" th:text="${team.getTeamName()}">Origin Warehouse</td>-->
+<!--        <td class="cell" th:text="${team.getOwner().getUsername()}">Destination Warehouse</td>-->
 
-    </tr>
-    </tbody>
+<!--    </tr>-->
+<!--    </tbody>-->
 
-</div>
+<!--</div>-->
 
 <section class="home-section">
     <nav>
@@ -205,11 +228,13 @@
             <span class="dashboard">Dashboard</span>
         </div>
         <div class="search-box">
-            <input type="text" placeholder="Search...">
+            <label>
+                <input type="text" placeholder="Search...">
+            </label>
             <i class='bx bx-search' ></i>
         </div>
         <div class="profile-details">
-            <img th:src="@{/resources/user-photos/{path}(path=${user.getPhotoPath()})}" alt="" src="/user-photos">
+            <img th:src="@{/src/main/resources/user-photos/{path}(path=${user.getPhotoPath()})}" alt="" >
             <span class="admin_name" th:text="${user.getUsername()}">text</span>
             <i class='bx bx-chevron-down' ></i>
         </div>

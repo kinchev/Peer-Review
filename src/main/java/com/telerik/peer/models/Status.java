@@ -9,7 +9,7 @@ public class Status {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name="status_id")
-  private Long status_id;
+  private long status_id;
 
   @Column(name="status")
   private String status;

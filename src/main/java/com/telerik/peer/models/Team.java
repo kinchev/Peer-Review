@@ -44,11 +44,11 @@ public class Team {
     public Team() {
     }
 
-    public Long getTeamId() {
+    public long getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(Long teamId) {
+    public void setTeamId(long teamId) {
         this.teamId = teamId;
     }
 
