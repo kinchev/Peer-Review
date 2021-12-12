@@ -41,10 +41,9 @@
                 </label>
                 <label class="error" th:errors="*{number}"></label>
             </label>
-            <label>
-                <input type="file" th:field="*{file}">
+            <label class choose-file>
+                <input type="file" name="file" >
             </label>
-
             <input class="login" type="submit" value="REGISTRATION"/>
 
         </div>

@@ -1,6 +1,7 @@
 package com.telerik.peer.controllers.mvc;
 
 import com.telerik.peer.controllers.rest.AuthenticationHelper;
+import com.telerik.peer.exceptions.AuthenticationFailureException;
 import com.telerik.peer.exceptions.DuplicateEntityException;
 import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.mappers.UserMapper;
@@ -104,6 +105,11 @@ public class UserMvcController {
         }
     }
 
+    @GetMapping("/users")
+    public String showAllUsers(Model model) {
+        model.addAttribute("users", userService.getAll());
+        return "users";
+    }
 
 
 }

@@ -20,9 +20,6 @@ public class RegisterDto extends LoginDto {
     @Column(name = "phone_number")
     private String number;
 
-    private String photo;
-
-
     public RegisterDto() {
     }
 
@@ -51,11 +48,4 @@ public class RegisterDto extends LoginDto {
         this.number = number;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 }
