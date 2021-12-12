@@ -1,5 +1,7 @@
 package com.telerik.peer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -11,25 +13,27 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "team_id")
+    private long teamId;
 
-    @Column(name = "team_name")
+    @Column(name = "name")
     private String teamName;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "teams_users",
             joinColumns = @JoinColumn(name = "team_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            inverseJoinColumns = @JoinColumn(name = "member_id")
     )
     private Set<User> members = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToMany (fetch = FetchType.EAGER)
     @JoinTable(
             name = "teams_workitems",
             joinColumns = @JoinColumn(name = "team_id"),
@@ -40,12 +44,12 @@ public class Team {
     public Team() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getTeamId() {
+        return teamId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 
     public String getTeamName() {
@@ -85,15 +89,14 @@ public class Team {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Team team = (Team) o;
-        return getId() == team.getId() &&
+        return getTeamId() == team.getTeamId() &&
                 getTeamName().equals(team.getTeamName()) &&
                 getOwner().equals(team.getOwner());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTeamName(), getOwner());
+        return Objects.hash(getTeamId(), getTeamName(), getOwner());
     }
-
 
 }

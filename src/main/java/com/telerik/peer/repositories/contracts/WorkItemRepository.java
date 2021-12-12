@@ -2,6 +2,9 @@ package com.telerik.peer.repositories.contracts;
 
 import com.telerik.peer.models.WorkItem;
 
-public interface WorkItemRepository extends CRUDRepository<WorkItem> {
+import java.util.List;
+import java.util.Optional;
 
+public interface WorkItemRepository extends CRUDRepository<WorkItem> {
+List<WorkItem> filter(Optional<String> title,Optional<String> status,Optional<String> sortBy);
 }

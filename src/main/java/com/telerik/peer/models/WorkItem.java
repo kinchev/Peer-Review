@@ -2,18 +2,18 @@ package com.telerik.peer.models;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "workitems")
-
 public class WorkItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "workitem_id")
+    private long id;
 
     @Column(name = "title")
     private String title;
@@ -21,42 +21,35 @@ public class WorkItem {
     @Column(name = "description")
     private String description;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "reviewer_id")
     private User reviewer;
 
-
-    @OneToOne
-    @JoinColumn(name = "teams_id")
+    @ManyToOne
+    @JoinColumn(name = "team_id")
     private Team team;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "workItem")
+    private Set<Comment> comments = new HashSet<>();
 
-//    @ManyToOne
-//    @JoinColumn(name = "status_id")
-//    @Enumerated(EnumType.STRING)
-//    private Status status;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "workItem")
+    private Set<Attachment> attachments = new HashSet<>();
 
+    @OneToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "workitems_users",
-//            joinColumns = @JoinColumn(name = "workitem_id"),
-//            inverseJoinColumns = @JoinColumn(name = "user_id")
-//    )
-//    private Set<User> reviewers = new HashSet<>();
-//
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "workitems_comments",
-//            joinColumns = @JoinColumn(name = "workitem_id"),
-//            inverseJoinColumns = @JoinColumn(name = "comment_id")
-//    )
-//    private Set<Comment> comments = new HashSet<>();
+    public Status getStatus() {
+        return status;
+    }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;
@@ -109,19 +102,35 @@ public class WorkItem {
         this.team = team;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        WorkItem workitem = (WorkItem) o;
-//        return getId() == workitem.getId() &&
-//                getTitle().equals(workitem.getTitle()) &&
-//                getDescription().equals(workitem.getDescription());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(getId(), getTitle(), getDescription());
-//    }
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Set<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(Set<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WorkItem workitem = (WorkItem) o;
+        return getId() == workitem.getId() &&
+                getTitle().equals(workitem.getTitle()) &&
+                getDescription().equals(workitem.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitle(), getDescription());
+    }
 
 }

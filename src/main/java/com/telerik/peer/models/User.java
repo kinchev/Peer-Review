@@ -1,9 +1,10 @@
 package com.telerik.peer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
-import java.util.ArrayDeque;
-import java.util.Deque;
+
 import java.util.Objects;
 
 @Entity
@@ -20,6 +21,7 @@ public class User {
     @Column(name = "username")
     private String username;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 
@@ -33,6 +35,7 @@ public class User {
     private String photoName;
 
     @Transient
+    @JsonIgnore
     public String getPhotoPath() {
         return id + "/" + photoName;
     }
@@ -100,14 +103,13 @@ public class User {
         User user = (User) o;
         return getId() == user.getId() &&
                 getUsername().equals(user.getUsername()) &&
-                getPassword().equals(user.getPassword()) &&
                 getEmail().equals(user.getEmail()) &&
                 getNumber().equals(user.getNumber());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUsername(), getPassword(), getEmail(), getNumber());
+        return Objects.hash(getId(), getUsername(), getEmail(), getNumber());
     }
 
 

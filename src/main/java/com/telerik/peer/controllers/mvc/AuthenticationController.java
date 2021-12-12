@@ -3,13 +3,17 @@ package com.telerik.peer.controllers.mvc;
 import com.telerik.peer.controllers.rest.AuthenticationHelper;
 import com.telerik.peer.exceptions.AuthenticationFailureException;
 import com.telerik.peer.exceptions.DuplicateEntityException;
+import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.mappers.UserMapper;
 import com.telerik.peer.models.User;
+import com.telerik.peer.models.dto.ChangePasswordDto;
 import com.telerik.peer.models.dto.LoginDto;
 import com.telerik.peer.models.dto.RegisterDto;
 import com.telerik.peer.services.contracts.UserService;
 import com.telerik.peer.utils.FileUploadHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -36,6 +40,7 @@ public class AuthenticationController {
         this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;
 
+
     }
 
     public boolean isAdmin() {
@@ -51,7 +56,8 @@ public class AuthenticationController {
 
     //грижи се да се login in...HttpSession
     @PostMapping("/login")
-    public String handleLogin(@Valid @ModelAttribute("login") LoginDto login, BindingResult bindingResult, HttpSession session) {
+    public String handleLogin(@Valid @ModelAttribute("login") LoginDto login,
+                              BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "login";
         }
@@ -62,10 +68,10 @@ public class AuthenticationController {
 //
 //                return "redirect:/admin";
 //            } else {
-                return "redirect:/";
+            return "redirect:/user";
 //            }
         } catch (AuthenticationFailureException e) {
-            bindingResult.rejectValue("email", "auth_error", e.getMessage());
+            bindingResult.rejectValue("username", "auth_error", e.getMessage());
             return "login";
         }
 
@@ -102,17 +108,49 @@ public class AuthenticationController {
             fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             user.setPhotoName(fileName);
             userService.create(user);
-
         } catch (DuplicateEntityException e) {
             bindingResult.rejectValue("username", "username_error", e.getMessage());
             return "register";
         }
-
-        String uploadDir = "src/main/resources/user-photos/" + user.getId();
-        FileUploadHelper.saveFile(uploadDir, fileName, multipartFile);
-
+        if (!multipartFile.isEmpty()) {
+            String uploadDir = "src/main/resources/user-photos/" + user.getId();
+            FileUploadHelper.saveFile(uploadDir, fileName, multipartFile);
+        }
         return "redirect:/auth/login";
     }
 
-
+    @GetMapping("/changePassword")
+    public String showChangePasswordPage(Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/login";
+        }
+        model.addAttribute("changePassword", new ChangePasswordDto());
+        return "change-password";
     }
+
+    @PostMapping("/changePassword")
+    public String handleChangePassword(@Valid @ModelAttribute("changePassword") ChangePasswordDto changePassword,
+                                       BindingResult errors, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/login";
+        }
+        if (errors.hasErrors()) {
+            return "change-password";
+        }
+        try {
+            userService.changePassword(user.getId(), changePassword.getOldPassword(),
+                    changePassword.getPassword(), changePassword.getPasswordConfirm());
+            return "redirect:/auth/login";
+        } catch (UnauthorizedOperationException e) {
+            errors.rejectValue("password", "ChangePassword-error", e.getMessage());
+            return "change-password";
+        }
+    }
+
+}

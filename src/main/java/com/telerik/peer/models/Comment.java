@@ -1,5 +1,7 @@
 package com.telerik.peer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,16 +13,16 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private Long id;
-
+    private long id;
 
     @OneToOne
-    @JoinColumn(name = "reviewer_id")
-    private User reviewer;
+    @JoinColumn(name = "author_id")
+    private User author;
 
     @Column(name = "comment_text")
     private String comment;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "workitem_id")
     private WorkItem workItem;
@@ -36,12 +38,12 @@ public class Comment {
         this.id = id;
     }
 
-    public User getReviewer() {
-        return reviewer;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setReviewer(User reviewer) {
-        this.reviewer = reviewer;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public String getComment() {

@@ -9,7 +9,7 @@ import java.util.List;
 
 import static java.lang.String.format;
 
-public abstract class AbstractReadRepository<T> implements CRUDRepository<T> {
+public abstract class  AbstractReadRepository<T> implements CRUDRepository<T> {
     private final Class<T> clazz;
     private final SessionFactory sessionFactory;
 
@@ -28,7 +28,7 @@ public abstract class AbstractReadRepository<T> implements CRUDRepository<T> {
             return session
                     .createQuery(query, clazz)
                     .setParameter("value", value)
-                    .uniqueResultOptional()
+                    .list().stream().findFirst()
                     .orElseThrow(() -> new EntityNotFoundException(notFoundErrorMessage));
         }
     }
