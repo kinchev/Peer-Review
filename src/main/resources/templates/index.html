@@ -53,7 +53,7 @@
 <!--       th:href="@{/auth/logout}" href="#">LOGOUT</a>-->
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a th:href="index.html">Arsha</a></h1>
+      <h1 class="logo me-auto" style = "color:white" >PEER REVIEW</h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -83,8 +83,9 @@
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-          <li><a class="getstarted scrollto" th:href="@{/auth/register}">SING IN</a></li>
-          <li><a class="getstarted scrollto" th:href="@{/auth/login}">LOG IN</a></li>
+          <li><a th:unless="${isAuthenticated}" class="getstarted scrollto" th:href="@{/auth/register}">SING IN</a></li>
+          <li><a th:unless="${isAuthenticated}" class="getstarted scrollto" th:href="@{/auth/login}">LOGIN</a></li>
+          <li><a th:if="${isAuthenticated}" class="getstarted scrollto" th:href="@{/auth/logout}">LOGOUT</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
