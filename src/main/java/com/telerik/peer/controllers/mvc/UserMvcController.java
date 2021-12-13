@@ -42,7 +42,29 @@ public class UserMvcController {
     }
 
 
+        @GetMapping
+    public String showSingleUser( Model model,HttpSession session) {
+        try {
+            User user = authenticationHelper.tryGetUser(session);
+            model.addAttribute("user", user);
+            return "user";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        }
+    }
 
+//    @GetMapping
+//    public String showAllUsers(Model model, HttpSession session) {
+//        User user;
+//        try {
+//            user = authenticationHelper.tryGetUser(session);
+//        } catch (AuthenticationFailureException e) {
+//            return "redirect:/login";
+//        }
+//        model.addAttribute("users", userService.getAll());
+//        return "user2";
+//    }
     @GetMapping("/{id}")
     public String showSingleUser(@PathVariable int id, Model model) {
         try {
@@ -105,10 +127,10 @@ public class UserMvcController {
         }
     }
 
-    @GetMapping("/users")
+    @GetMapping("/user")
     public String showAllUsers(Model model) {
         model.addAttribute("users", userService.getAll());
-        return "users";
+        return "user";
     }
 
 

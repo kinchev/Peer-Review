@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class Helper {
 
-    private static User createMockUser() {
+    public static User createMockUser() {
         var mockUser = new User();
 
         mockUser.setId(1);
@@ -30,7 +30,7 @@ public class Helper {
         mockUser2.setPhotoName("photo2");
         return mockUser2;
     }
-    private static Team createMockTeam(){
+    public static Team createMockTeam(){
         var mockTeam=new Team();
         mockTeam.setTeamId(1);
         mockTeam.setTeamName("TeamName");
@@ -39,14 +39,16 @@ public class Helper {
         mockTeam.setMembers(createMockMemberSet());
         return mockTeam;
     }
-    private static WorkItem createMockWorkItem(){
+    public static WorkItem createMockWorkItem(){
         var mockWorkItem=new WorkItem();
         mockWorkItem.setId(1);
         mockWorkItem.setTitle("title");
         mockWorkItem.setDescription("description");
         mockWorkItem.setCreator(createMockUser());
-        mockWorkItem.setReviewer(createMockUser());
-        mockWorkItem.setTeam(createMockTeam());
+
+        User reviewer=createMockUser();
+        reviewer.setId(2);
+        mockWorkItem.setReviewer(reviewer);
         mockWorkItem.setComments(createMockCommentSet());
         mockWorkItem.setAttachments(createMockAttachmentSet());
         return mockWorkItem;
