@@ -14,7 +14,7 @@
 
 
 
-<div class="sidebar close">
+<div th:fragment="sidebar" class="sidebar close">
 
 
     <div class="logo-details">
@@ -75,8 +75,6 @@
         </li>
 
 
-
-
         <li>
             <div class="icon-link">
                 <a href="#">
@@ -92,7 +90,6 @@
                 <li><a href="#">Update</a></li>
             </ul>
         </li>
-
 
 
         <li>
@@ -112,9 +109,6 @@
         </li>
 
 
-
-
-
         <li>
             <a href="#">
                 <i class='bx bx-pie-chart-alt-2' ></i>
@@ -126,8 +120,6 @@
         </li>
 
 
-
-
         <li>
             <a href="#">
                 <i class='bx bx-line-chart' ></i>
@@ -137,18 +129,6 @@
                 <li><a class="link_name" href="#">Chart</a></li>
             </ul>
         </li>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         <li>
@@ -169,12 +149,6 @@
                 <li><a class="link_name" href="#">History</a></li>
             </ul>
         </li>
-
-
-
-
-
-
 
 
         <li>
@@ -224,7 +198,7 @@
 
 <!--</div>-->
 
-<section class="home-section">
+<section th:fragment="home-section" class="home-section">
     <nav>
         <div class="sidebar-button">
             <i class='bx bx-menu sidebarBtn'></i>
