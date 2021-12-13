@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/team")
+@RequestMapping("/teams")
 public class TeamMvcController {
 
     private final TeamService teamService;
@@ -46,16 +46,22 @@ public class TeamMvcController {
     }
 
     @ModelAttribute("teams")
-    public List<Team> populateUsers() {
-        return  teamService.getAll();
+    public List<Team> populateTeams() {
+        return teamService.getAll();
+    }
+
+    @ModelAttribute("users")
+    public List<User> populateUsers() {
+        return userService.getAll();
     }
 
     @GetMapping
     public String showAllTeams(Model model, HttpSession session) {
+        User user;
         try {
-            User user = authenticationHelper.tryGetUser(session);
+            user = authenticationHelper.tryGetUser(session);
         } catch (AuthenticationFailureException e) {
-            return "redirect:/login";
+            return "redirect:/auth/login";
         }
         model.addAttribute("teams", teamService.getAll());
         return "user";
@@ -67,7 +73,7 @@ public class TeamMvcController {
         try {
             user = authenticationHelper.tryGetUser(session);
         } catch (AuthenticationFailureException e) {
-            return "redirect:/login";
+            return "redirect:/auth/login";
         }
         try {
             Team team = teamService.getById(id);

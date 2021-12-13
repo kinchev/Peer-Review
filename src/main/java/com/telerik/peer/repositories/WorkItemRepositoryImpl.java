@@ -24,52 +24,71 @@ public class WorkItemRepositoryImpl extends AbstractCRUDRepository<WorkItem> imp
 
     }
 
-
     @Override
-    public List<WorkItem> filter(Optional<String> title, Optional<String> status, Optional<String> sortBy) {
-        try(Session session = sessionFactory.openSession()){
-            var queryString=new StringBuilder("from WorkItem ");
-            var filters=new ArrayList<String>();
-            var params=new HashMap<String, Object>();
+    public List<WorkItem> filter(Optional<String> title, Optional<String> status,
+                                 Optional<String> creator, Optional<String> reviewerId,
+                                 Optional<String> team, Optional<String> sortBy) {
+        try (Session session = sessionFactory.openSession()) {
+            var queryString = new StringBuilder("from WorkItem ");
+            var filters = new ArrayList<String>();
+            var params = new HashMap<String, Object>();
 
-            title.ifPresent(value->{
+            title.ifPresent(value -> {
 
-            filters.add("title like: title");
-            params.put("title",value);
+                filters.add("title like: title");
+                params.put("title", value);
             });
-        status.ifPresent(value->{
-            filters.add("status.status = :status");
-            params.put("status",value);
-        });
-        if (!filters.isEmpty()){
-            queryString.append("where ").append(String.join(" and ", filters));
+            status.ifPresent(value -> {
+                filters.add("status.status = :status");
+                params.put("status", value);
+            });
+            creator.ifPresent(value -> {
+                filters.add("creator.username like:creator");
+                params.put("creator", value);
+            });
+            creator.ifPresent(value -> {
+                filters.add("reviewer.username like:reviewer");
+                params.put("reviewer", value);
+            });
+            team.ifPresent(value -> {
+                filters.add("team.teamName like:team");
+                params.put("team", value);
+            });
 
-        }
-        sortBy.ifPresent(value->{
-            queryString.append(generateSortingString(value));
-        });
-            Query<WorkItem> query=session.createQuery(queryString.toString(),WorkItem.class);
+            if (!filters.isEmpty()) {
+                queryString.append("where ").append(String.join(" and ", filters));
+            }
+
+            sortBy.ifPresent(value -> {
+                queryString.append(generateSortingString(value));
+            });
+            Query<WorkItem> query = session.createQuery(queryString.toString(), WorkItem.class);
             query.setProperties(params);
             return query.list();
         }
     }
+
     private String generateSortingString(String value) {
         StringBuilder result = new StringBuilder(" order by ");
         var params = value.toLowerCase().split("_");
 
         switch (params[0]) {
-            case "id":
-                result.append("id ");
-                break;
             case "title":
                 result.append("title ");
-                break;
-            case "reviewer":
-                result.append("reviewer.id ");
                 break;
             case "status":
                 result.append("status.status ");
                 break;
+            case "creator":
+                result.append("creator.name ");
+                break;
+            case "reviewer":
+                result.append("reviewer.name ");
+                break;
+            case "team":
+                result.append("team.name ");
+                break;
+
             default:
                 return "";
         }

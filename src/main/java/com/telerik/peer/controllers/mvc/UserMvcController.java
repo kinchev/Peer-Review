@@ -78,36 +78,46 @@ public class UserMvcController {
     }
 
     @GetMapping("/{id}/update")
-    public String showEditUserPage(@PathVariable int id, Model model) {
+    public String showEditUserPage(@PathVariable int id, Model model, HttpSession session) {
+        User user;
         try {
-            User user = userService.getById(id);
-            UserDto userDto = userMapper.userToDto(user);
-            model.addAttribute("userId", id);
-            model.addAttribute("user", userDto);
-            return "user-update";
-        } catch (EntityNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
-            return "not-found";
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
         }
-    }
+            try {
+                UserDto userDto = userMapper.userToDto(user);
+                model.addAttribute("userId", id);
+//                model.addAttribute("userDto", userDto);
+                model.addAttribute("user", user);
+                return "user-update";
+            } catch (EntityNotFoundException e) {
+                model.addAttribute("error", e.getMessage());
+                return "not-found";
+            }
+        }
 
     @PostMapping("/{id}/update")
-    public String updateUser(@PathVariable int id,
-                             @Valid @ModelAttribute("user") UserDto userDto,
+    public String updateUser(@PathVariable long id,
+                             @Valid @ModelAttribute("user") User user,
                              BindingResult errors,
-                             Model model) {
+                             Model model,
+                             HttpSession session) {
+        User userToUpdate = userService.getById(id);
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        }
         if (errors.hasErrors()) {
             return "user-update";
         }
-
         try {
-            User user = userMapper.fromDto(userDto, id);
-            userService.update(user, user);
-
+            userService.update(userToUpdate, user);
             return "redirect:/";
-//        } catch (DuplicateEntityException e) {
-//            errors.rejectValue("name", "duplicate_user", e.getMessage());
-//            return "user-update";
+        } catch (DuplicateEntityException e) {
+            errors.rejectValue("name", "duplicate_user", e.getMessage());
+            return "user-update";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";

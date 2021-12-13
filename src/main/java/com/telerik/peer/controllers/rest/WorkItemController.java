@@ -180,11 +180,14 @@ public class WorkItemController {
     public List<WorkItem> filter(@RequestHeader HttpHeaders headers,
                                  @RequestParam(required = false) Optional<String> title,
                                  @RequestParam(required = false) Optional<String> status,
+                                 @RequestParam(required = false) Optional<String> creator,
+                                 @RequestParam(required = false) Optional<String> reviewer,
+                                 @RequestParam(required = false) Optional<String> team,
                                  @RequestParam(required = false) Optional<String> sortBy) {
 
         try {
             authenticationHelper.tryGetUser(headers);
-            return workItemService.filter(title, status, sortBy);
+            return workItemService.filter(title, status, creator, reviewer, team, sortBy);
         } catch (UnauthorizedOperationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }

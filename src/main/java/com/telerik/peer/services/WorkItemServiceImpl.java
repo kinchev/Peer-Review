@@ -149,8 +149,10 @@ public class WorkItemServiceImpl implements WorkItemService {
     }
 
     @Override
-    public List<WorkItem> filter(Optional<String> title, Optional<String> status, Optional<String> sortBy) {
-        return workItemRepository.filter(title, status, sortBy);
+    public List<WorkItem> filter(Optional<String> title, Optional<String> status,
+                                 Optional<String> creator, Optional<String> reviewer,
+                                 Optional<String> team, Optional<String> sortBy) {
+        return workItemRepository.filter(title, status, creator, reviewer, team, sortBy);
     }
 
     private void validateCreatorAndReviewer(WorkItem workitem) {

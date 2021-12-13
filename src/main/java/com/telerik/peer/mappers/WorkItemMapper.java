@@ -26,17 +26,22 @@ public class WorkItemMapper {
         this.statusRepository = statusRepository;
     }
 
+    public WorkItemUpdateDto workItemToUpdateDto(WorkItem workItem) {
+        WorkItemUpdateDto dto = new WorkItemUpdateDto();
+        dto.setTitle(workItem.getTitle());
+        dto.setDescription(workItem.getDescription());
+        return dto;
+    }
+
+
     public WorkItemDto workitemToDto(WorkItem workItem) {
         WorkItemDto workItemDto = new WorkItemDto();
         workItemDto.setComments(workItem.getComments());
         workItemDto.setTeamId(workItem.getTeam().getTeamId());
         workItemDto.setCreatorId(workItem.getCreator().getId());
-
         workItemDto.setTitle(workItem.getTitle());
         workItemDto.setReviewerId(workItem.getReviewer().getId());
-        workItemDto.setDescription(workItem.getDescription());
-        return workItemDto;
-
+        workItemDto.setDescription(workItem.getDescription());return workItemDto;
     }
 
     public WorkItem fromDto(WorkItemDto workItemDto) {

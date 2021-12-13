@@ -22,7 +22,6 @@ public class UserDto {
     private String number;
 
 
-
     public UserDto() {
     }
 
@@ -49,5 +48,6 @@ public class UserDto {
     public void setNumber(String number) {
         this.number = number;
     }
+
 
 }
