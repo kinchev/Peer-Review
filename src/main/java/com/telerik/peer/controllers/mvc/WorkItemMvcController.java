@@ -1,10 +1,7 @@
 package com.telerik.peer.controllers.mvc;
 
 import com.telerik.peer.controllers.rest.AuthenticationHelper;
-import com.telerik.peer.exceptions.AuthenticationFailureException;
-import com.telerik.peer.exceptions.DuplicateEntityException;
-import com.telerik.peer.exceptions.EntityNotFoundException;
-import com.telerik.peer.exceptions.UnauthorizedOperationException;
+import com.telerik.peer.exceptions.*;
 import com.telerik.peer.mappers.WorkItemMapper;
 import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
@@ -26,7 +23,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/workItem")
+@RequestMapping("/workItems")
 public class WorkItemMvcController {
 
     private final WorkItemService workItemService;
@@ -52,7 +49,7 @@ public class WorkItemMvcController {
     }
 
     @ModelAttribute("users")
-    public List<User> populateWarehouses() {
+    public List<User> populateUsers() {
         return userService.getAll();
     }
 
@@ -102,7 +99,7 @@ public class WorkItemMvcController {
 
 
     @GetMapping("/{id}")
-    public String showSingleWorkitem(@PathVariable int id, Model model,
+    public String showSingleWorkItem(@PathVariable int id, Model model,
                                      HttpSession session) {
         User user;
         try {
@@ -123,7 +120,7 @@ public class WorkItemMvcController {
     }
 
     @GetMapping("/new")
-    public String showNewWorkitemPage(Model model, HttpSession session) {
+    public String showNewWorkItemPage(Model model, HttpSession session) {
         User user;
         try {
             user = authenticationHelper.tryGetUser(session);
@@ -136,7 +133,7 @@ public class WorkItemMvcController {
     }
 
     @PostMapping("/new")
-    public String createWorkitem(@Valid @ModelAttribute("workItem") WorkItemDto workItemDto,
+    public String createWorkItem(@Valid @ModelAttribute("workItem") WorkItemDto workItemDto,
                                  BindingResult errors,
                                  Model model,
                                  HttpSession session) {
@@ -157,6 +154,9 @@ public class WorkItemMvcController {
             return "redirect:/workItems";
         } catch (DuplicateEntityException e) {
             errors.rejectValue("title", "duplicate_workItem", e.getMessage());
+            return "workItem-new";
+        } catch (InvalidUserInputException e) {
+            errors.rejectValue("creatorId", "team_mismatch", e.getMessage());
             return "workItem-new";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());

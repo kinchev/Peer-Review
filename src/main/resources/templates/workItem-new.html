@@ -10,7 +10,7 @@
 
 <h3>CREATE NEW WORK ITEM</h3>
 
-<form th:fragment="workItem-form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${workItem}" method="post">
+<form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${workItem}" method="post">
 
     <label th:text="#{workItem.label.title}">Title</label>
     <br>
@@ -26,6 +26,18 @@
         <input type="text" th:field="*{description}"/>
     </label>
     <label class="error" th:errors="*{description}"></label>
+    <br><br>
+
+    <label th:text="#{workItem.label.team}">Team</label>
+    <br/>
+    <select th:field="*{teamId}">
+        <option th:each="team : ${teams}"
+                th:value="${team.getTeamId()}"
+                th:text="${team.getTeamName()}">
+            Team
+        </option>
+    </select>
+    <label class="error" th:errors="*{teamId}">error placeholder</label>
     <br><br>
 
     <label th:text="#{workItem.label.creator}">Creator</label>
@@ -50,16 +62,6 @@
         </option>
     </select>
     <label class="error" th:errors="*{reviewerId}">error placeholder</label>
-    <br><br>
-
-    <label th:text="#{workItem.label.status}">Status</label>
-    <br>
-    <label>
-        <input type="text" th:field="*{status}"/>
-    </label>
-    <label class="error" th:errors="*{status}"></label>
-    <br><br>
-
     <br><br>
 
     <input type="submit" value="Save"/>

@@ -95,7 +95,7 @@ public class WorkItemServiceImpl implements WorkItemService {
             duplicateExists = false;
         }
         if (duplicateExists) {
-            throw new DuplicateEntityException("Workitem", "title", workitem.getTitle());
+            throw new DuplicateEntityException("Work Item", "title", workitem.getTitle());
         }
 
         workItemRepository.update(workitem);

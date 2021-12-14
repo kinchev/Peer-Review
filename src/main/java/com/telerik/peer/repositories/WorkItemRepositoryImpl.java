@@ -26,7 +26,7 @@ public class WorkItemRepositoryImpl extends AbstractCRUDRepository<WorkItem> imp
 
     @Override
     public List<WorkItem> filter(Optional<String> title, Optional<String> status,
-                                 Optional<String> creator, Optional<String> reviewerId,
+                                 Optional<String> creator, Optional<String> reviewer,
                                  Optional<String> team, Optional<String> sortBy) {
         try (Session session = sessionFactory.openSession()) {
             var queryString = new StringBuilder("from WorkItem ");
@@ -36,7 +36,7 @@ public class WorkItemRepositoryImpl extends AbstractCRUDRepository<WorkItem> imp
             title.ifPresent(value -> {
 
                 filters.add("title like: title");
-                params.put("title", value);
+                params.put("title", "%" + value + "%");
             });
             status.ifPresent(value -> {
                 filters.add("status.status = :status");
@@ -46,7 +46,7 @@ public class WorkItemRepositoryImpl extends AbstractCRUDRepository<WorkItem> imp
                 filters.add("creator.username like:creator");
                 params.put("creator", value);
             });
-            creator.ifPresent(value -> {
+            reviewer.ifPresent(value -> {
                 filters.add("reviewer.username like:reviewer");
                 params.put("reviewer", value);
             });
