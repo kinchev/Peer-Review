@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/static/css/styles.css" th:href="@{/css/styles.css}">
+<script src="/static/javascript/parcel.js" th:href="@{/javascript/parcel.js}"></script>
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Work Item id '+${workItem.getId()}">WorkItem</title>
+</head>
+<body class="one">
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+    <li><h3><a href="#" th:href="@{/workItems}" th:text="#{navigation.all-workItems}">Browse all WorkItems</a></h3></li>
+</ul>
+
+<h3 th:text="'Title: ' + ${workItem.title}">Title</h3>
+<h3 th:text="'Description: ' + ${workItem.description}">Description</h3>
+<h3 th:text="'Creator: ' + ${workItem.creator}">Creator</h3>
+<h3 th:text="'Reviewer: ' + ${workItem.reviewer}">Reviewer</h3>
+<h3 th:text="'Status: ' + ${workItem.status}">Status</h3>
+
+<h3>
+    <a href="#" th:href="@{__${#httpServletRequest.requestURI}__/update}">Update</a>
+    <a href="#" th:href="@{__${#httpServletRequest.requestURI}__/delete}">Delete</a>
+</h3>
+
+</body>
+</html>

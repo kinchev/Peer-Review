@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New WorkItem Form</title>
+    <link href="../static/css/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+
+</head>
+<body>
+
+<h3>CREATE NEW WORK ITEM</h3>
+
+<form th:fragment="workItem-form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${workItem}" method="post">
+
+    <label th:text="#{workItem.label.title}">Title</label>
+    <br>
+    <label>
+        <input type="text" th:field="*{title}"/>
+    </label>
+    <label class="error" th:errors="*{title}"></label>
+    <br><br>
+
+    <label th:text="#{workItem.label.description}">Description</label>
+    <br>
+    <label>
+        <input type="text" th:field="*{description}"/>
+    </label>
+    <label class="error" th:errors="*{description}"></label>
+    <br><br>
+
+    <label th:text="#{workItem.label.creator}">Creator</label>
+    <br/>
+    <select th:field="*{creatorId}">
+        <option th:each="creator : ${users}"
+                th:value="${creator.id}"
+                th:text="${creator.username}">
+            Creator
+        </option>
+    </select>
+    <label class="error" th:errors="*{creatorId}">error placeholder</label>
+    <br><br>
+
+    <label th:text="#{workItem.label.reviewer}">Reviewer</label>
+    <br/>
+    <select th:field="*{reviewerId}">
+        <option th:each="reviewer : ${users}"
+                th:value="${reviewer.id}"
+                th:text="${reviewer.username}">
+            Reviewer
+        </option>
+    </select>
+    <label class="error" th:errors="*{reviewerId}">error placeholder</label>
+    <br><br>
+
+    <label th:text="#{workItem.label.status}">Status</label>
+    <br>
+    <label>
+        <input type="text" th:field="*{status}"/>
+    </label>
+    <label class="error" th:errors="*{status}"></label>
+    <br><br>
+
+    <br><br>
+
+    <input type="submit" value="Save"/>
+</form>
+</body>
+</html>

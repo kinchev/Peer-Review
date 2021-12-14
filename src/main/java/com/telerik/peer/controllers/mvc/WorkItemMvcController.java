@@ -69,7 +69,7 @@ public class WorkItemMvcController {
         } catch (AuthenticationFailureException e) {
             return "redirect:/auth/login";
         }
-        model.addAttribute("workitems", workItemService.getAll());
+        model.addAttribute("workItems", workItemService.getAll());
         model.addAttribute("user", user);
         return "workItems";
     }
