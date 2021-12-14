@@ -114,7 +114,7 @@ public class UserMvcController {
         }
         try {
             userService.update(userToUpdate, user);
-            return "redirect:/";
+            return "user-update";
         } catch (DuplicateEntityException e) {
             errors.rejectValue("name", "duplicate_user", e.getMessage());
             return "user-update";
@@ -130,7 +130,7 @@ public class UserMvcController {
             User user = userService.getById(id);
             userService.delete(id, user);
 
-            return "redirect:/";
+            return "user-delete";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update User</title>
+    <title>Delete User</title>
 
     <link rel="stylesheet"  th:href="@{/assets/css/styles.css}">
 
@@ -17,7 +17,7 @@
 <div th:replace="user :: home-section"></div>
 
 <div>
-    <h1>UPDATE USER PROFILE</h1></div>
+    <h1>DELETE USER PROFILE</h1></div>
 
 <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${user}" method="post">
     <div>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <!--<title> Drop Down Sidebar Menu | CodingLab </title>-->
-    <link rel="stylesheet" href="/static/assets/css/styles.css" th:href="@{/assets/css/styles.css}">    <!-- Boxiocns CDN Link -->
 
-    <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" th:href="@{https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css}" rel='stylesheet'>
+    <link rel="stylesheet"  th:href="@{/assets/css/styles.css}">    <!-- Boxiocns CDN Link -->
+
+    <link  th:href="@{https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css}" rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User</title>
 </head>
@@ -38,15 +38,15 @@
         <li>
             <div class="icon-link">
                 <a href="#">
-                    <i class='bx bx-collection' ></i>
-                    <span class="link_name">Category</span>
+                    <i class='bx bx-user'></i>
+                    <span class="link_name">User</span>
                 </a>
                 <i class='bx bxs-chevron-down arrow' ></i>
             </div>
             <ul class="sub-menu">
-                <li><a class="link_name" href="#">Category</a></li>
-                <li><a href="#">Submit WorkItem</a></li>
-                <li><a href="#">Assign Reviewers</a></li>
+                <li><a class="link_name" href="#">User</a></li>
+                <li><a href="user-update.html" th:href="@{/user/{id}/update(id=${user.getId()})}">User Update</a></li>
+                <li><a href="#" th:href="@{/user/{id}/delete(id=${user.getId()})}">User Delete</a></li>
 
             </ul>
         </li>
@@ -162,6 +162,8 @@
         </li>
 
 
+    </ul>
+</div>
 
 <!--        <li>-->
 <!--            <div class="profile-details">-->
@@ -175,8 +177,6 @@
 <!--                <i class='bx bx-log-out' ></i>-->
 <!--            </div>-->
 <!--        </li>-->
-    </ul>
-</div>
 <!--<div class="asd" >-->
 <!--    <thead>-->
 <!--    <tr>-->
