@@ -20,10 +20,8 @@
 <div>
     <h1>UPDATE USER PROFILE</h1></div>
 
-<form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${userDto}" method="post">
-
-
-    <div class="form">
+<form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${user}" method="post">
+    <div>
         <label>
             <input placeholder='Username' type="text" th:field="*{username}">
         </label>
@@ -45,6 +43,7 @@
     </div>
 </form>
 
+<br/>
 
 </body>
 </html>
