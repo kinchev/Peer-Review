@@ -1,5 +1,7 @@
 package com.telerik.peer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -42,6 +44,19 @@ public class WorkItem {
     @OneToOne
     @JoinColumn(name = "status_id")
     private Status status;
+//
+//    @Column(name = "attachment_name")
+//    private String attachmentName;
+//
+//    @Transient
+//    @JsonIgnore
+//    public String getAttachmentsPath() {
+//        return id+"/"+attachmentName;
+//    }
+//
+//    public void setAttachmentName(String attachmentName) {
+//        this.attachmentName = attachmentName;
+//    }
 
     public WorkItem() {
     }

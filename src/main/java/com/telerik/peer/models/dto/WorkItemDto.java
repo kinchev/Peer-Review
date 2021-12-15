@@ -30,6 +30,7 @@ public class WorkItemDto {
 
     private Set<Comment> comments;
 
+
     public WorkItemDto() {
     }
 

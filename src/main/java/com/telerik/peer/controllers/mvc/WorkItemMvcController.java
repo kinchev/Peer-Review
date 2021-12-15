@@ -53,10 +53,11 @@ public class WorkItemMvcController {
         return userService.getAll();
     }
 
-    @ModelAttribute("teams")
-    public List<Team> populateTeams() {
-        return teamService.getAll();
-    }
+//    @ModelAttribute("teams")
+//    public List<Team> populateTeams() {
+//        return teamService.getAll();
+//    }
+
 
     @GetMapping
     public String showAllWorkItems(HttpSession session, Model model) {

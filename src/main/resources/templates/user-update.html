@@ -2,47 +2,49 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update User</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/css/loginnew.css" th:href="@{/css/loginnew.css}">
+    <link rel="stylesheet" href="/static/css/styles.css" th:href="@{/css/styles.css}">
+    <script src="/static/javascript/loginnew.js" th:href="@{/javascript/loginnew.js}"></script>
 
-    <link rel="stylesheet"  th:href="@{/assets/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/styles.css}">
 
-    <link  th:href="@{https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css}" rel='stylesheet'>
+    <link th:href="@{https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css}" rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 <body>
 
-<div th:replace="user :: sidebar"></div>
+<!--<div th:replace="user :: sidebar"></div>-->
 
-<div th:replace="user :: home-section"></div>
+<!--<div th:replace="user :: home-section"></div>-->
 
-<div>
-    <h1>UPDATE USER PROFILE</h1></div>
 
-<form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${user}" method="post">
-    <div>
-        <label>
-            <input placeholder='Username' type="text" th:field="*{username}">
-        </label>
-        <br/>
-        <label class="error" th:errors="*{username}"></label>
-        <br/>
-        <label>
-            <input placeholder='Email' type="text" th:field="*{email}">
-        </label>
-        <label class="error" th:errors="*{email}"></label>
-        <br/>
-        <label>
-            <input placeholder='Phone number' type="text" th:field="*{number}">
-        </label>
-        <label class="error" th:errors="*{number}"></label>
-        <br/>
 
-        <input class="login" type="submit" value="UPDATE PROFILE"/>
-    </div>
-</form>
 
-<br/>
 
+
+    <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${user}" method="post">
+        <div class="panel">
+            <div class="state"><br><br>UPDATE</div>
+
+            <div class="form">
+                <label>
+                    <input placeholder='Username' type="text" th:field="*{username}">
+                </label>
+                <label class="error" th:errors="*{username}"></label>
+                <label>
+                    <input placeholder='Email' type="text" th:field="*{email}">
+                </label>
+                <label class="error" th:errors="*{email}">Phone Number error placeholder</label>
+                <label>
+                    <input placeholder='Phone Number' type="text" th:field="*{number}">
+                </label>
+                <label class="error" th:errors="*{number}"></label>
+                <input class="login" type="submit" value="UPDATE"/>
+            </div>
+
+        </div>
+    </form>
 </body>
 </html>

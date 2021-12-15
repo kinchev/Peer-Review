@@ -2,11 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="/static/css/styles.css" th:href="@{/css/styles.css}">
 <script src="/static/javascript/parcel.js" th:href="@{/javascript/parcel.js}"></script>
+<link rel="stylesheet"  th:href="@{/assets/css/styles.css}" media="screen">    <!-- Boxiocns CDN Link -->
+
+<link  th:href="@{https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css}" rel='stylesheet'>
+
 <head>
     <meta charset="UTF-8">
     <title th:text="'Work Item id '+${workItem.getId()}">WorkItem</title>
 </head>
 <body class="one">
+<div th:replace="user :: sidebar"></div>
+
+<div th:replace="user :: home-section"></div>
 <ul>
     <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
     <li><h3><a href="#" th:href="@{/workItems}" th:text="#{navigation.all-workItems}">Browse all WorkItems</a></h3></li>
