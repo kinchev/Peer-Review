@@ -18,7 +18,8 @@ public interface WorkItemService extends CRUDService<WorkItem> {
 
     void changeReviewer(WorkItem workItem, User updatingUser, User newReviewer);
 
+    List<WorkItem> showAllTeamActiveWorkItems(Team team);
 
-
+    List<WorkItem> showAllTeamClosedWorkItems(Team team);
 
 }

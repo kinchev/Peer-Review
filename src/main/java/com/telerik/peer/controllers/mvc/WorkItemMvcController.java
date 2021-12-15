@@ -69,38 +69,39 @@ public class WorkItemMvcController {
         }
         model.addAttribute("workItems", workItemService.getAll());
         model.addAttribute("user", user);
+        System.out.println(workItemService.getById(19).getCreator().getUsername());
         return "workItems";
     }
 
-    @GetMapping("/created")
-    public String showCreatedWorkItems(HttpSession session, Model model) {
-        User user;
-        try {
-            user = authenticationHelper.tryGetUser(session);
-        } catch (AuthenticationFailureException e) {
-            return "redirect:/login";
-        }
-        model.addAttribute("workItemsCreated", workItemService.getByField("creator", user.getUsername()));
-        model.addAttribute("user", user);
-        return "workItems";
-    }
-
-    @GetMapping("/reviewed")
-    public String showReviewedWorkItems(HttpSession session, Model model) {
-        User user;
-        try {
-            user = authenticationHelper.tryGetUser(session);
-        } catch (AuthenticationFailureException e) {
-            return "redirect:/auth/login";
-        }
-        model.addAttribute("workItemsReviewed", workItemService.getByField("reviewer", user.getUsername()));
-        model.addAttribute("user", user);
-        return "workItems";
-    }
+//    @GetMapping("/created")
+//    public String showCreatedWorkItems(HttpSession session, Model model) {
+//        User user;
+//        try {
+//            user = authenticationHelper.tryGetUser(session);
+//        } catch (AuthenticationFailureException e) {
+//            return "redirect:/login";
+//        }
+//        model.addAttribute("workItemsCreated", workItemService.getByField("creator", user.getUsername()));
+//        model.addAttribute("user", user);
+//        return "workItems";
+//    }
+//
+//    @GetMapping("/reviewed")
+//    public String showReviewedWorkItems(HttpSession session, Model model) {
+//        User user;
+//        try {
+//            user = authenticationHelper.tryGetUser(session);
+//        } catch (AuthenticationFailureException e) {
+//            return "redirect:/auth/login";
+//        }
+//        model.addAttribute("workItemsReviewed", workItemService.getByField("reviewer", user.getUsername()));
+//        model.addAttribute("user", user);
+//        return "workItems";
+//    }
 
 
     @GetMapping("/{id}")
-    public String showSingleWorkItem(@PathVariable int id, Model model,
+    public String showSingleWorkItem(@PathVariable long id, Model model,
                                      HttpSession session) {
         User user;
         try {
