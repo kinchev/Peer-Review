@@ -70,7 +70,7 @@ public class WorkItemMvcController {
         model.addAttribute("workItems", workItemService.getAll());
         model.addAttribute("user", user);
         System.out.println(workItemService.getById(19).getCreator().getUsername());
-        return "workItems";
+        return "table2";
     }
 
 //    @GetMapping("/created")

@@ -79,7 +79,7 @@ public class UserMvcController {
         }
         model.addAttribute("users", userService.getAll());
         model.addAttribute("user", user);
-        return "users";
+        return "user";
     }
 
         @GetMapping("/{id}")
