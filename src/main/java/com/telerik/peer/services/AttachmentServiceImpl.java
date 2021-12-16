@@ -34,9 +34,9 @@ public class AttachmentServiceImpl implements AttachmentService {
 
     @Override
     public void create(User updatingUser, WorkItem workItem, MultipartFile multipartFile) throws IOException {
-        if (workItem.getCreator().getId() != updatingUser.getId()) {
-            throw new UnauthorizedOperationException(ONLY_OWNER_AUTHORIZED);
-        }
+//        if (workItem.getCreator().getId() != updatingUser.getId()) {
+//            throw new UnauthorizedOperationException(ONLY_OWNER_AUTHORIZED);
+//        }
         Attachment attachment = new Attachment();
         if (!multipartFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));

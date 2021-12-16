@@ -8,18 +8,17 @@ import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
 import com.telerik.peer.models.dto.WorkItemDto;
 import com.telerik.peer.models.dto.WorkItemUpdateDto;
-import com.telerik.peer.services.contracts.CommentService;
-import com.telerik.peer.services.contracts.TeamService;
-import com.telerik.peer.services.contracts.UserService;
-import com.telerik.peer.services.contracts.WorkItemService;
+import com.telerik.peer.services.contracts.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -32,15 +31,17 @@ public class WorkItemMvcController {
     private final AuthenticationHelper authenticationHelper;
     private final TeamService teamService;
     private final CommentService commentService;
+    private final AttachmentService attachmentService;
 
     @Autowired
-    public WorkItemMvcController(WorkItemService workItemService, WorkItemMapper workItemMapper, UserService userService, AuthenticationHelper authenticationHelper, TeamService teamService, CommentService commentService) {
+    public WorkItemMvcController(WorkItemService workItemService, WorkItemMapper workItemMapper, UserService userService, AuthenticationHelper authenticationHelper, TeamService teamService, CommentService commentService, AttachmentService attachmentService) {
         this.workItemService = workItemService;
         this.workItemMapper = workItemMapper;
         this.userService = userService;
         this.authenticationHelper = authenticationHelper;
         this.teamService = teamService;
         this.commentService = commentService;
+        this.attachmentService = attachmentService;
     }
 
     @ModelAttribute("isAuthenticated")
@@ -130,7 +131,7 @@ public class WorkItemMvcController {
         try {
             user = authenticationHelper.tryGetUser(session);
         } catch (AuthenticationFailureException e) {
-            return "redirect:login";
+            return "redirect:/auth/login";
         }
         model.addAttribute("workItemDto", new WorkItemDto());
         model.addAttribute("user", user);
@@ -141,7 +142,8 @@ public class WorkItemMvcController {
     public String createWorkItem(@Valid @ModelAttribute("workItemDto") WorkItemDto workItemDto,
                                  BindingResult errors,
                                  Model model,
-                                 HttpSession session) {
+                                 HttpSession session,
+                                 @RequestParam("file") MultipartFile multipartFile) throws IOException {
         User user;
         try {
             user = authenticationHelper.tryGetUser(session);
@@ -156,6 +158,7 @@ public class WorkItemMvcController {
         try {
             WorkItem workItem = workItemMapper.fromDto(workItemDto);
             workItemService.create(workItem);
+            attachmentService.create(user, workItem, multipartFile);
             return "redirect:/workItems";
         } catch (DuplicateEntityException e) {
             errors.rejectValue("title", "duplicate_workItem", e.getMessage());
