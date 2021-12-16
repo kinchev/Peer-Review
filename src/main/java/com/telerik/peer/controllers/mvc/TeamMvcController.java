@@ -15,12 +15,10 @@ import com.telerik.peer.services.contracts.UserService;
 import com.telerik.peer.services.contracts.WorkItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -91,7 +89,7 @@ public class TeamMvcController {
             model.addAttribute("activeTeamWorkItems", activeTeamWorkItems);
             model.addAttribute("closedTeamWorkItems", closedTeamWorkItems);
 
-            return "user";
+            return "team-single";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
@@ -162,8 +160,8 @@ public class TeamMvcController {
         }
 
         try {
-            userService.delete(id, user);
-            return "redirect:/";
+            teamService.delete(id, user);
+            return "redirect:/teams";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";

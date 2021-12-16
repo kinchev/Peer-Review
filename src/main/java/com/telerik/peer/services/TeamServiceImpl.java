@@ -42,9 +42,12 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void delete(long id, User user) {
-        Team team = getById(id);
-        if (!user.equals(team.getOwner())) {
-            throw new UnsupportedOperationException(ONLY_OWNER_AUTHORIZED);
+        Team team = teamRepository.getById(id);
+        if (!team.getMembers().isEmpty()) {
+            throw new UnauthorizedOperationException("Team should have no members to be deleted!");
+        }
+        if (team.getOwner().getId() != user.getId()) {
+            throw new UnauthorizedOperationException(ONLY_OWNER_AUTHORIZED);
         }
         teamRepository.delete(id);
     }
@@ -70,7 +73,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void update(Team entity, User user) {
-        if (!user.equals(entity.getOwner())) {
+        if (entity.getOwner().getId() != user.getId()) {
             throw new UnauthorizedOperationException(ONLY_OWNER_AUTHORIZED);
         }
         boolean duplicateMailExists = true;
