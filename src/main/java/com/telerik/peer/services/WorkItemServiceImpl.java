@@ -86,9 +86,9 @@ public class WorkItemServiceImpl implements WorkItemService {
 
     @Override
     public void update(WorkItem workitem, User owner) {
-//        if (workitem.getCreator().getId() != owner.getId() && workitem.getReviewer().getId() != owner.getId()) {
-//            throw new UnauthorizedOperationException(MODIFY_NOT_AUTHORIZED);
-//        }
+        if (workitem.getCreator().getId() != owner.getId() && workitem.getReviewer().getId() != owner.getId()) {
+            throw new UnauthorizedOperationException(MODIFY_NOT_AUTHORIZED);
+        }
         boolean duplicateExists = true;
         try {
             WorkItem existingWorkitem = workItemRepository.getByField("title", workitem.getTitle());
