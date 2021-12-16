@@ -39,8 +39,6 @@ public class AuthenticationController {
         this.userService = userService;
         this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;
-
-
     }
 
     public boolean isAdmin() {
