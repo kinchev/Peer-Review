@@ -310,7 +310,7 @@
                     <td  th:text="${workItem.getReviewer().getUsername()}">Reviewer</td>
                     <td><span class="label label-success" th:text="${workItem.status.getStatus()}">text</span></td>
                     <td>
-                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a th:href="@{/workItems/{id}(id=${workItem.getId()})}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                         <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>
@@ -446,10 +446,10 @@
     </div>
 </div>
 <!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="modal fade" th:each="workitem:${workItems}" >
+<div th:id="editEmployeeModal+${workitem.getId()}" class="modal fade" th:each="workitem:${workItems}" >
     <div class="modal-dialog">
         <div class="modal-content">
-            <form th:object="${workItemDto}" th:action="@{/workItems/{id}/update(id=${workitem.getId()})} "method="post">
+            <form th:object="${workItemDto}" th:action="@{/workItems/{id}/update(id=${workitem.getId()})} " method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Workitem</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

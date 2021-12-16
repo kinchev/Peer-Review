@@ -68,7 +68,7 @@ public class WorkItemMvcController {
         }
         model.addAttribute("workItems", workItemService.getAll());
         model.addAttribute("user", user);
-        model.addAttribute("workItemDto",new WorkItemUpdateDto());
+        model.addAttribute("workItemDto", new WorkItemUpdateDto());
 
 
         return "workitems-all";
@@ -115,7 +115,7 @@ public class WorkItemMvcController {
             model.addAttribute("workItem", workItem);
 
             model.addAttribute("user", user);
-            return "workitems-all";
+            return "workitem-single";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
 
@@ -133,7 +133,7 @@ public class WorkItemMvcController {
         }
         model.addAttribute("workItem", new WorkItemDto());
         model.addAttribute("user", user);
-        return "workItem-new";
+        return "workitem-new";
     }
 
     @PostMapping("/new")
@@ -149,7 +149,7 @@ public class WorkItemMvcController {
         }
 
         if (errors.hasErrors()) {
-            return "workItem-new";
+            return "workitem-new";
         }
 
         try {
@@ -158,10 +158,10 @@ public class WorkItemMvcController {
             return "redirect:/workItems";
         } catch (DuplicateEntityException e) {
             errors.rejectValue("title", "duplicate_workItem", e.getMessage());
-            return "workItem-new";
+            return "workitem-new";
         } catch (InvalidUserInputException e) {
             errors.rejectValue("creatorId", "team_mismatch", e.getMessage());
-            return "workItem-new";
+            return "workitem-new";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
@@ -178,14 +178,14 @@ public class WorkItemMvcController {
         }
 
         try {
+
             WorkItem workItem = workItemService.getById(id);
             WorkItemUpdateDto dto = workItemMapper.workItemToUpdateDto(workItem);
             model.addAttribute("workItemId", id);
             model.addAttribute("workItem", dto);
-
             model.addAttribute("user", user);
 
-            return "workitems-all";
+            return "workitem-update";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";

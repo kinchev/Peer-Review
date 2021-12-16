@@ -52,7 +52,11 @@ public class WorkItemServiceImpl implements WorkItemService {
 
     @Override
     public void delete(long id, User owner) {
-
+        WorkItem workItem = getById(id);
+        if (workItem.getCreator().getId() != owner.getId()) {
+            throw new UnauthorizedOperationException(MODIFY_NOT_AUTHORIZED);
+        }
+        workItemRepository.delete(id);
     }
 
     @Override

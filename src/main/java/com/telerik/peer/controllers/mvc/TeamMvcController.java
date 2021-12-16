@@ -187,15 +187,12 @@ public class TeamMvcController {
             User userToAdd = userService.getById(userId);
             teamService.addMemberToTeam(team, user, userToAdd);
             return "redirect:/teams" + team.getTeamId();
-        } catch (DuplicateEntityException e) {
+        } catch (DuplicateEntityException | UnauthorizedOperationException e) {
             model.addAttribute("error", e.getMessage());
             return "access-denied";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
-        } catch (UnauthorizedOperationException e) {
-            model.addAttribute("error", e.getMessage());
-            return "access-denied";
         }
     }
 
@@ -213,15 +210,12 @@ public class TeamMvcController {
             User userToRemove = userService.getById(userId);
             teamService.removeMemberFromTeam(team, user, userToRemove);
             return "redirect:/teams" + team.getTeamId();
-        } catch (DuplicateEntityException e) {
+        } catch (DuplicateEntityException | UnauthorizedOperationException e) {
             model.addAttribute("error", e.getMessage());
             return "access-denied";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
-        } catch (UnauthorizedOperationException e) {
-            model.addAttribute("error", e.getMessage());
-            return "access-denied";
         }
     }
 

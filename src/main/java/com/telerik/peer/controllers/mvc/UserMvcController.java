@@ -59,40 +59,40 @@ public class UserMvcController {
         return session.getAttribute("currentUser") != null;
     }
 
-    public String showUserPersonalPage(Model model, HttpSession session) {
-        User user;
-        try {
-            user = authenticationHelper.tryGetUser(session);
-        } catch (AuthenticationFailureException e) {
-            return "redirect:/auth/login";
-        } catch (UnauthorizedOperationException e) {
-            model.addAttribute("error", e.getMessage());
-            return "access-denied";
-        }
-        List<ReviewRequest> sentReviewRequests = reviewRequestService.getReviewRequestByCreator(user.getId());
-        List<ReviewRequest> receivedReviewRequests = reviewRequestService.getReviewRequestByReviewer(user.getId());
-        List<ReviewRequest> activeReceivedRequests = reviewRequestService.getReviewRequestByReviewer(user.getId())
-                        . stream().filter(w -> w.getWorkItem().getStatus().getStatusId() > 3).collect(Collectors.toList());
-        model.addAttribute("user", user);
-        model.addAttribute("sentReviewRequests", sentReviewRequests);
-        model.addAttribute("receivedReviewRequests", receivedReviewRequests);
-        model.addAttribute("activeReceivedRequests", activeReceivedRequests);
-        return "user";
-    }
-
-
-//    @GetMapping
-//    public String showAllUsers(Model model, HttpSession session) {
+//    public String showUserPersonalPage(Model model, HttpSession session) {
 //        User user;
 //        try {
 //            user = authenticationHelper.tryGetUser(session);
 //        } catch (AuthenticationFailureException e) {
-//            return "redirect:/login";
+//            return "redirect:/auth/login";
+//        } catch (UnauthorizedOperationException e) {
+//            model.addAttribute("error", e.getMessage());
+//            return "access-denied";
 //        }
-//        model.addAttribute("users", userService.getAll());
+//        List<ReviewRequest> sentReviewRequests = reviewRequestService.getReviewRequestByCreator(user.getId());
+//        List<ReviewRequest> receivedReviewRequests = reviewRequestService.getReviewRequestByReviewer(user.getId());
+//        List<ReviewRequest> activeReceivedRequests = reviewRequestService.getReviewRequestByReviewer(user.getId())
+//                        . stream().filter(w -> w.getWorkItem().getStatus().getStatusId() > 3).collect(Collectors.toList());
 //        model.addAttribute("user", user);
+//        model.addAttribute("sentReviewRequests", sentReviewRequests);
+//        model.addAttribute("receivedReviewRequests", receivedReviewRequests);
+//        model.addAttribute("activeReceivedRequests", activeReceivedRequests);
 //        return "user";
 //    }
+
+
+    @GetMapping
+    public String showAllUsers(Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/login";
+        }
+        model.addAttribute("users", userService.getAll());
+        model.addAttribute("user", user);
+        return "user";
+    }
 
     @GetMapping("/{id}")
     public String showSingleUser(@PathVariable int id, Model model) {
