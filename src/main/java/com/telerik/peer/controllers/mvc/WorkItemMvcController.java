@@ -3,7 +3,6 @@ package com.telerik.peer.controllers.mvc;
 import com.telerik.peer.controllers.rest.AuthenticationHelper;
 import com.telerik.peer.exceptions.*;
 import com.telerik.peer.mappers.WorkItemMapper;
-import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
 import com.telerik.peer.models.dto.WorkItemDto;
@@ -69,8 +68,10 @@ public class WorkItemMvcController {
         }
         model.addAttribute("workItems", workItemService.getAll());
         model.addAttribute("user", user);
-        System.out.println(workItemService.getById(19).getCreator().getUsername());
-        return "table2";
+        model.addAttribute("workItemDto",new WorkItemUpdateDto());
+
+
+        return "workitems-all";
     }
 
 //    @GetMapping("/created")
@@ -112,8 +113,9 @@ public class WorkItemMvcController {
         try {
             WorkItem workItem = workItemService.getById(id);
             model.addAttribute("workItem", workItem);
+
             model.addAttribute("user", user);
-            return "workItem";
+            return "workitems-all";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
 
@@ -180,9 +182,10 @@ public class WorkItemMvcController {
             WorkItemUpdateDto dto = workItemMapper.workItemToUpdateDto(workItem);
             model.addAttribute("workItemId", id);
             model.addAttribute("workItem", dto);
+
             model.addAttribute("user", user);
 
-            return "workItem-update";
+            return "workitems-all";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
@@ -203,7 +206,7 @@ public class WorkItemMvcController {
         }
 
         if (errors.hasErrors()) {
-            return "workItem-update";
+            return "workitems-all";
         }
 
         try {
@@ -212,7 +215,7 @@ public class WorkItemMvcController {
             return "redirect:/workItems";
         } catch (DuplicateEntityException e) {
             errors.rejectValue("workItemTitle", "duplicate-workItem", e.getMessage());
-            return "workItem-update";
+            return "workitems-all";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";

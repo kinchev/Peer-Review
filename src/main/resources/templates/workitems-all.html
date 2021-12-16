@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:fragment="table">
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -262,7 +263,9 @@
     </script>
 </head>
 <body>
-<div class="container">
+
+
+<div class="container" th:fragment="sidebar2">
     <div class="table-responsive">
         <div class="table-wrapper">
             <div class="table-title">
@@ -408,7 +411,7 @@
     </div>
 </div>
 <!-- Edit Modal HTML -->
-<div id="addEmployeeModal" class="modal fade">
+<div id="addEmployeeModal" class="modal fade" >
     <div class="modal-dialog">
         <div class="modal-content">
             <form>
@@ -443,10 +446,10 @@
     </div>
 </div>
 <!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="modal fade">
+<div id="editEmployeeModal" class="modal fade" th:each="workitem:${workItems}" >
     <div class="modal-dialog">
         <div class="modal-content">
-            <form  >
+            <form th:object="${workItemDto}" th:action="@{/workItems/{id}/update(id=${workitem.getId()})} "method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Workitem</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -454,11 +457,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" required placeholder="Title">
+                        <input type="text" class="form-control" th:field="*{title}" required placeholder="Title">
                     </div>
                     <div class="form-group">
                         <label>Description</label>
-                        <input type="text" class="form-control" required  placeholder="">
+                        <input type="text" class="form-control" th:field="*{description}"  required  placeholder="Description">
                     </div>
 <!--                    <div class="form-group">-->
 <!--                        <label>Address</label>-->
