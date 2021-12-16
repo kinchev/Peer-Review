@@ -144,6 +144,16 @@ public class WorkItemServiceImpl implements WorkItemService {
     }
 
     @Override
+    public List<WorkItem> showAllTeamActiveWorkItems(Team team) {
+        return workItemRepository.showAllTeamActiveWorkItems(team);
+    }
+
+    @Override
+    public List<WorkItem> showAllTeamClosedWorkItems(Team team) {
+        return workItemRepository.showAllTeamClosedWorkItems(team);
+    }
+
+    @Override
     public <V> WorkItem getByField(String fieldName, V value) {
         return workItemRepository.getByField(fieldName, value);
     }
@@ -168,7 +178,7 @@ public class WorkItemServiceImpl implements WorkItemService {
     }
 
     private boolean statusRequiresComment(Status status) {
-        return status.getStatus_id() == 3 || status.getStatus_id() == 5;
+        return status.getStatusId() == 3 || status.getStatusId() == 5;
     }
 
     private ReviewRequest createReviewRequest(WorkItem workItem) {

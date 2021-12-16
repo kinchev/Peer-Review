@@ -1,5 +1,6 @@
 package com.telerik.peer.repositories;
 
+import com.telerik.peer.models.Team;
 import com.telerik.peer.models.WorkItem;
 import com.telerik.peer.repositories.contracts.WorkItemRepository;
 import org.hibernate.Session;
@@ -97,6 +98,29 @@ public class WorkItemRepositoryImpl extends AbstractCRUDRepository<WorkItem> imp
             result.append("desc");
         }
         return result.toString();
-
     }
+
+    @Override
+    public List<WorkItem> showAllTeamActiveWorkItems(Team team) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<WorkItem> query = session.createQuery(
+                    "from WorkItem where team.id = :teamId and status.statusId < 4", WorkItem.class);
+            query.setParameter("teamId", team.getTeamId());
+
+            return query.list();
+        }
+    }
+
+    @Override
+    public List<WorkItem> showAllTeamClosedWorkItems(Team team) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<WorkItem> query = session.createQuery(
+                    "from WorkItem where team.id = :teamId and status.statusId > 3", WorkItem.class);
+            query.setParameter("teamId", team.getTeamId());
+
+            return query.list();
+        }
+    }
+
+
 }

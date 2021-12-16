@@ -147,7 +147,8 @@ public class WorkItem {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getDescription());
+        return Objects.hash(getId(), getTitle(), getDescription(),
+                getReviewer(), getCreator(), getStatus());
     }
 
 }

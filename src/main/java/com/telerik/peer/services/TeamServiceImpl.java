@@ -25,7 +25,6 @@ public class TeamServiceImpl implements TeamService {
         this.teamRepository = teamRepository;
     }
 
-
     @Override
     public List<Team> getAll() {
         return teamRepository.getAll();

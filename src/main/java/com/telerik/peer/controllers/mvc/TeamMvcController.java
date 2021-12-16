@@ -8,10 +8,11 @@ import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.mappers.TeamMapper;
 import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
+import com.telerik.peer.models.WorkItem;
 import com.telerik.peer.models.dto.TeamDto;
-import com.telerik.peer.models.dto.UserDto;
 import com.telerik.peer.services.contracts.TeamService;
 import com.telerik.peer.services.contracts.UserService;
+import com.telerik.peer.services.contracts.WorkItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +28,16 @@ import java.util.List;
 public class TeamMvcController {
 
     private final TeamService teamService;
+    private final WorkItemService workItemService;
     private final TeamMapper teamMapper;
     private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public TeamMvcController(TeamService teamService, TeamMapper teamMapper,
+    public TeamMvcController(TeamService teamService, WorkItemService workItemService, TeamMapper teamMapper,
                              UserService userService, AuthenticationHelper authenticationHelper) {
         this.teamService = teamService;
+        this.workItemService = workItemService;
         this.teamMapper = teamMapper;
         this.userService = userService;
         this.authenticationHelper = authenticationHelper;
@@ -45,10 +48,10 @@ public class TeamMvcController {
         return session.getAttribute("currentUser") != null;
     }
 
-    @ModelAttribute("teams")
-    public List<Team> populateTeams() {
-        return teamService.getAll();
-    }
+//    @ModelAttribute("teams")
+//    public List<Team> populateTeams() {
+//        return teamService.getAll();
+//    }
 
     @ModelAttribute("users")
     public List<User> populateUsers() {
@@ -63,8 +66,9 @@ public class TeamMvcController {
         } catch (AuthenticationFailureException e) {
             return "redirect:/auth/login";
         }
+        model.addAttribute("user", user);
         model.addAttribute("teams", teamService.getAll());
-        return "team";
+        return "user";
     }
 
     @GetMapping("/{id}")
@@ -77,8 +81,14 @@ public class TeamMvcController {
         }
         try {
             Team team = teamService.getById(id);
+            List<WorkItem> activeTeamWorkItems = workItemService.showAllTeamActiveWorkItems(team);
+            List<WorkItem> closedTeamWorkItems = workItemService.showAllTeamClosedWorkItems(team);
+            model.addAttribute("user", user);
             model.addAttribute("team", team);
-            return "team";
+            model.addAttribute("activeTeamWorkItems", activeTeamWorkItems);
+            model.addAttribute("closedTeamWorkItems", closedTeamWorkItems);
+
+            return "user";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";

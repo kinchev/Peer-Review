@@ -9,7 +9,7 @@ public class Status {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name="status_id")
-  private long status_id;
+  private long statusId;
 
   @Column(name="status")
   private String status;
@@ -17,12 +17,12 @@ public class Status {
   public Status() {
   }
 
-  public Long getStatus_id() {
-    return status_id;
+  public long getStatusId() {
+    return statusId;
   }
 
-  public void setStatus_id(Long status_id) {
-    this.status_id = status_id;
+  public void setStatusId(long statusId) {
+    this.statusId = statusId;
   }
 
   public String getStatus() {
