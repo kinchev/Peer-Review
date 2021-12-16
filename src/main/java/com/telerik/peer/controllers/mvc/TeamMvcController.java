@@ -64,7 +64,7 @@ public class TeamMvcController {
             return "redirect:/auth/login";
         }
         model.addAttribute("teams", teamService.getAll());
-        return "user";
+        return "team";
     }
 
     @GetMapping("/{id}")
@@ -78,7 +78,7 @@ public class TeamMvcController {
         try {
             Team team = teamService.getById(id);
             model.addAttribute("team", team);
-            return "user";
+            return "team";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";

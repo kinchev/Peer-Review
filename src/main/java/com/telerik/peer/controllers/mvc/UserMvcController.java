@@ -42,7 +42,7 @@ public class UserMvcController {
     }
 
 
-        @GetMapping
+    @GetMapping
     public String showSingleUser( Model model,HttpSession session) {
         try {
             User user = authenticationHelper.tryGetUser(session);

@@ -53,10 +53,10 @@ public class WorkItemMvcController {
         return userService.getAll();
     }
 
-//    @ModelAttribute("teams")
-//    public List<Team> populateTeams() {
-//        return teamService.getAll();
-//    }
+    @ModelAttribute("teams")
+    public List<Team> populateTeams() {
+        return teamService.getAll();
+    }
 
 
     @GetMapping
@@ -69,7 +69,7 @@ public class WorkItemMvcController {
         }
         model.addAttribute("workItems", workItemService.getAll());
         model.addAttribute("user", user);
-        return "workItems";
+        return "table2";
     }
 
     @GetMapping("/created")
@@ -178,10 +178,10 @@ public class WorkItemMvcController {
             WorkItem workItem = workItemService.getById(id);
             WorkItemUpdateDto dto = workItemMapper.workItemToUpdateDto(workItem);
             model.addAttribute("workItemId", id);
-            model.addAttribute("workItem", dto);
+            model.addAttribute("workItem",dto );
             model.addAttribute("user", user);
 
-            return "workItem-update";
+            return "table2";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
@@ -206,9 +206,10 @@ public class WorkItemMvcController {
         }
 
         try {
+
             WorkItem workItem = workItemMapper.fromDto(dto, id);
             workItemService.update(workItem, user);
-            return "redirect:/workItems";
+            return "table2";
         } catch (DuplicateEntityException e) {
             errors.rejectValue("workItemTitle", "duplicate-workItem", e.getMessage());
             return "workItem-update";

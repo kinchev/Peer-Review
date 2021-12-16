@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>All WORKITEMS</title>
-    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/styles.css}" rel="stylesheet"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet"  th:href="@{/assets/css/styles.css}" media="screen">    <!-- Boxiocns CDN Link -->
 
@@ -20,57 +20,57 @@
     <h2 class="two" th:text="#{workItem.empty}">No WorkItems</h2>
 </div>
 
-<!--    <table class="table table-striped table-dark" th:unless="${workItems.isEmpty()}">-->
-<!--        <h2 class="two" th:text="#{workItem.title}">All Work Items</h2>-->
+    <table class="table table-striped table-dark" th:unless="${workItems.isEmpty()}">
+        <h2 class="two" th:text="#{workItem.title}">All Work Items</h2>
 
-<!--        <thead>-->
-<!--        <tr>-->
-<!--            <th scope="col" th:text="#{workItem.label.id}"></th>-->
-<!--            <th scope="col" th:text="#{workItem.label.title}"></th>-->
-<!--            <th scope="col" th:text="#{workItem.label.description}"></th>-->
-<!--            <th scope="col" th:text="#{workItem.label.creator}"></th>-->
-<!--            <th scope="col" th:text="#{workItem.label.reviewer}"></th>-->
-<!--            <th scope="col" th:text="#{workItem.label.status}"></th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="workItem : ${workItems}">-->
-<!--            <td class="cell">-->
-<!--                <a href="#" th:href="@{/workItems/{id}(id=${workItem.id})}" th:text="${workItem.id}">Id</a>-->
-<!--            </td>-->
-<!--            <td class="cell" th:text="${workItem.getTitle()}">Title</td>-->
-<!--            <td class="cell" th:text="${workItem.description}">Description/td>-->
-<!--            <td class="cell" th:text="${workItem.creator}">Creator</td>-->
-<!--            <td class="cell" th:text="${workItem.reviewer}">Reviewer</td>-->
-<!--            <td class="cell" th:text="${workItem.status}">Status</td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
+        <thead>
+        <tr>
+            <th scope="col" th:text="#{workItem.label.id}"></th>
+            <th scope="col" th:text="#{workItem.label.title}"></th>
+            <th scope="col" th:text="#{workItem.label.description}"></th>
+            <th scope="col" th:text="#{workItem.label.creator}"></th>
+            <th scope="col" th:text="#{workItem.label.reviewer}"></th>
+            <th scope="col" th:text="#{workItem.label.status}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="workItem : ${workItems}">
+            <td class="cell">
+                <a href="#" th:href="@{/workItems/{id}(id=${workItem.id})}" th:text="${workItem.id}">Id</a>
+            </td>
+            <td class="cell" th:text="${workItem.getTitle()}">Title</td>
+            <td class="cell" th:text="${workItem.description}">Description/td>
+            <td class="cell" th:text="${workItem.creator}">Creator</td>
+            <td class="cell" th:text="${workItem}">Reviewer</td>
+            <td class="cell" th:text="${workItem.status}">Status</td><td class="cell" th:text="${workItem.status}">Status</td>
+            <td class="cell" th:text="${workItem.team}">Status</td>
+        </tr>
+        </tbody>
+    </table>
 
-<div class="sales-boxes">
-    <div class="recent-sales box">
-        <div class="title">Recent Sales</div>
-        <li class="topic" th:each="workitem:${workItems}">
-            <span th:text="${workitem.getTitle()}"></span>
+<!--<div class="sales-boxes">-->
+<!--    <div class="recent-sales box">-->
+<!--        <div class="title" th:each="workitem:${workItems}">Recent Sales</div>-->
+<!--        <li class="topic" th:text="${workitem.getTitle()}"></li>-->
 
-            <ul class="details">
-                <li class="topic">Customer</li>
-                <li></li>
+<!--            <ul class="details">-->
+<!--                <li class="topic">Customer</li>-->
+<!--                <li></li>-->
 
-            </ul>
-            <ul class="details">
-                <li class="topic">Sales</li>
-                <li>>Delivered</li>
+<!--            </ul>-->
+<!--            <ul class="details">-->
+<!--                <li class="topic">Sales</li>-->
+<!--                <li>>Delivered</li>-->
 
-            </ul>
-            <ul class="details">
-                <li class="topic">Total</li>
-                <li>$204.98</li>
+<!--            </ul>-->
+<!--            <ul class="details">-->
+<!--                <li class="topic">Total</li>-->
+<!--                <li>$204.98</li>-->
 
-            </ul>
+<!--            </ul>-->
 
-    </div>
-</div>
+<!--    </div>-->
+<!--</div>-->
 </body>
 
 </html>

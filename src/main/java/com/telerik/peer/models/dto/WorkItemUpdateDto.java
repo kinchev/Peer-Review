@@ -6,11 +6,12 @@ import javax.validation.constraints.Size;
 
 public class WorkItemUpdateDto {
 
-    @Size(min=10, max=80, message = "Title should be between 10 and 80 characters.")
+
+    @Size(min = 10, max = 80, message = "Title should be between 10 and 80 characters.")
     private String title;
 
     @NotBlank
-    @Size(min=5, message = "Description should be minimum 20 symbols.")
+    @Size(min = 5, message = "Description should be minimum 20 symbols.")
     private String description;
 
     public WorkItemUpdateDto() {
@@ -31,4 +32,6 @@ public class WorkItemUpdateDto {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 }
