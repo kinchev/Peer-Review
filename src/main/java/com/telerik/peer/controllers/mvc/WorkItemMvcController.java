@@ -215,7 +215,7 @@ public class WorkItemMvcController {
             return "redirect:/workItems";
         } catch (DuplicateEntityException e) {
             errors.rejectValue("workItemTitle", "duplicate-workItem", e.getMessage());
-            return "workitems-all";
+            return "access-denied";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
