@@ -14,10 +14,13 @@ import com.telerik.peer.services.contracts.TeamService;
 import com.telerik.peer.services.contracts.UserService;
 import com.telerik.peer.services.contracts.WorkItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -125,7 +128,7 @@ public class TeamMvcController {
         try {
             user = authenticationHelper.tryGetUser(session);
         } catch (AuthenticationFailureException e) {
-            return "redirect:/login";
+            return "redirect:/auth/login";
         }
 
         if (errors.hasErrors()) {
@@ -161,6 +164,58 @@ public class TeamMvcController {
         try {
             userService.delete(id, user);
             return "redirect:/";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "access-denied";
+        }
+    }
+
+    @PostMapping("/{id}/add/{userId}")
+    public String addMemberToTeam(@RequestHeader HttpHeaders headers, @PathVariable long id, @PathVariable long userId,
+                                Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        }
+        try {
+            Team team = teamService.getById(id);
+            User userToAdd = userService.getById(userId);
+            teamService.addMemberToTeam(team, user, userToAdd);
+            return "redirect:/teams" + team.getTeamId();
+        } catch (DuplicateEntityException e) {
+            model.addAttribute("error", e.getMessage());
+            return "access-denied";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "access-denied";
+        }
+    }
+
+    @PostMapping("/{id}/remove/{userId}")
+    public String removeMemberFromTeam(@RequestHeader HttpHeaders headers, @PathVariable long id, @PathVariable long userId,
+                                  Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        }
+        try {
+            Team team = teamService.getById(id);
+            User userToRemove = userService.getById(userId);
+            teamService.removeMemberFromTeam(team, user, userToRemove);
+            return "redirect:/teams" + team.getTeamId();
+        } catch (DuplicateEntityException e) {
+            model.addAttribute("error", e.getMessage());
+            return "access-denied";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
