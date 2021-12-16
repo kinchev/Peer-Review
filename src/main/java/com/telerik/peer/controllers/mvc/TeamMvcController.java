@@ -71,7 +71,7 @@ public class TeamMvcController {
         }
         model.addAttribute("user", user);
         model.addAttribute("teams", teamService.getAll());
-        return "user";
+        return "teams-all";
     }
 
     @GetMapping("/{id}")
