@@ -117,7 +117,7 @@ public class UserMvcController {
         try {
             UserDto userDto = userMapper.userToDto(user);
             model.addAttribute("userId", id);
-//                model.addAttribute("userDto", userDto);
+            model.addAttribute("userDto", userDto);
             model.addAttribute("user", user);
             return "user-update";
         } catch (EntityNotFoundException e) {
@@ -144,7 +144,7 @@ public class UserMvcController {
         }
         try {
             userService.update(userToUpdate, user);
-            return "user-update";
+            return "redirect:/user";
         } catch (DuplicateEntityException e) {
             errors.rejectValue("name", "duplicate_user", e.getMessage());
             return "user-update";
@@ -154,7 +154,7 @@ public class UserMvcController {
         }
     }
 
-    @PostMapping("/user")
+    @PostMapping("/{id}")
     public String updatePhoto(
             @RequestParam("file") MultipartFile multipartFile,
             @PathVariable long id, Model model, BindingResult errors,

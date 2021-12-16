@@ -40,9 +40,6 @@ public class User {
         return id + "/" + photoName;
     }
 
-    public boolean isAdmin() {
-        return true;
-    }
 
     public User() {
 

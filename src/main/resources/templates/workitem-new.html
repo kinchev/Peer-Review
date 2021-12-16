@@ -101,7 +101,7 @@
             <select class="form-control" th:field="*{teamId}" id="exampleFormControlSelect1" name="platform" required="required">
                 <option th:each="team : ${teams}"
                         th:value="${team.getTeamId()}"
-                        th:text="${team.getTeamName()}">
+                        th:text="${team.getOwner().getUsername()}">
 
                 </option>
             </select>
@@ -112,7 +112,7 @@
             <select th:field="*{creatorId}" class="form-control" id="exampleFormControlSelect2" name="platform" required="required">
                 <option th:each="creator : ${users}"
                         th:value="${creator.id}"
-                        th:text="${creator.username}">
+                        th:text="${creator.getUsername()}">
                     Creator
                 </option>
             </select>
@@ -123,7 +123,7 @@
             <select class="form-control" th:field="*{reviewerId}" id="exampleFormControlSelect3" name="platform" required="required">
                 <option th:each="reviewer : ${users}"
                         th:value="${reviewer.id}"
-                        th:text="${reviewer.username}">
+                        th:text="${reviewer.getUsername()}">
 
                 </option>
             </select>
