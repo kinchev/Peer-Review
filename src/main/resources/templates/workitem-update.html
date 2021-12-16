@@ -13,7 +13,7 @@
 
 <h2>Edit Work Item</h2>
 
-<form th:fragment="workItem-form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${workItem}" method="post">
+<form th:fragment="workItem-form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${workItemUpdateDto}" method="post">
 
     <label th:text="#{workItem.label.title}">Title</label>
     <br>

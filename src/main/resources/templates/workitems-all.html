@@ -289,7 +289,7 @@
 								</span>
                     </th>
                     <th>Title</th>
-                    <th>Description</th>
+                    <th>Team</th>
                     <th>Reviewer</th>
                     <th>Creator</th>
                     <th>Status</th>
@@ -305,7 +305,7 @@
 								</span>
                     </td>
                     <td th:text="${workItem.getTitle()}"></td>
-                    <td th:text="${workItem.description}"></td>
+                    <td th:text="${workItem.getTeam().getTeamName()}"></td>
                     <td th:text="${workItem.getCreator().getUsername()}">Creator</td>>
                     <td  th:text="${workItem.getReviewer().getUsername()}">Reviewer</td>
                     <td><span class="label label-success" th:text="${workItem.status.getStatus()}">text</span></td>

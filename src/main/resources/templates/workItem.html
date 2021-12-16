@@ -20,11 +20,11 @@
 </ul>
 
 <h3 th:text="'Title: ' + ${workItem.getTitle()}">Title</h3>
-<h3 th:text="'Description: ' + ${workItem.getDescription()}">Description</h3>
 <h3 th:text="'Creator: ' + ${workItem.getCreator().getUsername()}">Creator</h3>
 <h3 th:text="'Reviewer: ' + ${workItem.getReviewer().getUsername()}">Reviewer</h3>
 <h3 th:text="'Status: ' + ${workItem.getStatus().getStatus()}">Status</h3>
 <h3 th:text="'Team: ' + ${workItem.getTeam().getTeamName()}">Status</h3>
+<h3 th:text="'Description: ' + ${workItem.getDescription()}">Description</h3>
 
 <h3>
     <a href="#" th:href="@{__${#httpServletRequest.requestURI}__/update}">Update</a>

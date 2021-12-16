@@ -10,7 +10,7 @@
 
 <h3>CREATE NEW WORK ITEM</h3>
 
-<form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${workItem}" method="post">
+<form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${workItemDto}" method="post">
 
     <label th:text="#{workItem.label.title}">Title</label>
     <br>

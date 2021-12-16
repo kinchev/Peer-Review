@@ -131,13 +131,13 @@ public class WorkItemMvcController {
         } catch (AuthenticationFailureException e) {
             return "redirect:login";
         }
-        model.addAttribute("workItem", new WorkItemDto());
+        model.addAttribute("workItemDto", new WorkItemDto());
         model.addAttribute("user", user);
         return "workitem-new";
     }
 
     @PostMapping("/new")
-    public String createWorkItem(@Valid @ModelAttribute("workItem") WorkItemDto workItemDto,
+    public String createWorkItem(@Valid @ModelAttribute("workItemDto") WorkItemDto workItemDto,
                                  BindingResult errors,
                                  Model model,
                                  HttpSession session) {
@@ -155,7 +155,7 @@ public class WorkItemMvcController {
         try {
             WorkItem workItem = workItemMapper.fromDto(workItemDto);
             workItemService.create(workItem);
-            return "redirect:/workItems";
+            return "redirect:/workitems-all";
         } catch (DuplicateEntityException e) {
             errors.rejectValue("title", "duplicate_workItem", e.getMessage());
             return "workitem-new";
@@ -169,7 +169,7 @@ public class WorkItemMvcController {
     }
 
     @GetMapping("/{id}/update")
-    public String showEditWorkitemPage(@PathVariable long id, Model model, HttpSession session) {
+    public String showEditWorkItemPage(@PathVariable long id, Model model, HttpSession session) {
         User user;
         try {
             user = authenticationHelper.tryGetUser(session);
@@ -182,7 +182,7 @@ public class WorkItemMvcController {
             WorkItem workItem = workItemService.getById(id);
             WorkItemUpdateDto dto = workItemMapper.workItemToUpdateDto(workItem);
             model.addAttribute("workItemId", id);
-            model.addAttribute("workItem", dto);
+            model.addAttribute("workItemUpdateDto", dto);
             model.addAttribute("user", user);
 
             return "workitem-update";
@@ -194,7 +194,7 @@ public class WorkItemMvcController {
 
     @PostMapping("/{id}/update")
     public String updateWorkitem(@PathVariable long id,
-                                 @Valid @ModelAttribute("workItem") WorkItemUpdateDto dto,
+                                 @Valid @ModelAttribute("workItemUpdateDto") WorkItemUpdateDto dto,
                                  BindingResult errors,
                                  Model model,
                                  HttpSession session) {
