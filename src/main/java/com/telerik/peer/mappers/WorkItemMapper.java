@@ -36,7 +36,7 @@ public class WorkItemMapper {
 
     public WorkItemDto workitemToDto(WorkItem workItem) {
         WorkItemDto workItemDto = new WorkItemDto();
-        workItemDto.setComments(workItem.getComments());
+
         workItemDto.setTeamId(workItem.getTeam().getTeamId());
         workItemDto.setCreatorId(workItem.getCreator().getId());
         workItemDto.setTitle(workItem.getTitle());

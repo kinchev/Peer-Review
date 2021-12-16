@@ -3,6 +3,7 @@ package com.telerik.peer.controllers.mvc;
 import com.telerik.peer.controllers.rest.AuthenticationHelper;
 import com.telerik.peer.exceptions.*;
 import com.telerik.peer.mappers.WorkItemMapper;
+import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
 import com.telerik.peer.models.dto.WorkItemDto;
@@ -52,10 +53,10 @@ public class WorkItemMvcController {
         return userService.getAll();
     }
 
-//    @ModelAttribute("teams")
-//    public List<Team> populateTeams() {
-//        return teamService.getAll();
-//    }
+    @ModelAttribute("teams")
+    public List<Team> populateTeams() {
+        return teamService.getAll();
+    }
 
 
     @GetMapping
@@ -155,7 +156,7 @@ public class WorkItemMvcController {
         try {
             WorkItem workItem = workItemMapper.fromDto(workItemDto);
             workItemService.create(workItem);
-            return "redirect:/workitems-all";
+            return "redirect:/workItems";
         } catch (DuplicateEntityException e) {
             errors.rejectValue("title", "duplicate_workItem", e.getMessage());
             return "workitem-new";
