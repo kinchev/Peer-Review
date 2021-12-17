@@ -7,9 +7,17 @@
 </head>
 <body>
 <ul>
-    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+    <div>
+        <aside><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4424790/Mirror.png" alt="404 Image" />
+        </aside>
+        <main>
+            <h1>Sorry!</h1>
+            <p>
+                Either you aren't cool enough to visit this page or it doesn't exist <em>. . . like your social life.</em>
+            </p>
+            <button>You can go now!</button>
+        </main>
+    </div>
 </ul>
-<h2 th:text="#{error.not-found}">Page Not Found</h2>
-<h3 class="error" th:text="${error}">Error placeholder</h3>
 </body>
 </html>

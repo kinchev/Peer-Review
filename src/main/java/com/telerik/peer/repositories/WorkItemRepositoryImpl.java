@@ -30,7 +30,7 @@ public class WorkItemRepositoryImpl extends AbstractCRUDRepository<WorkItem> imp
                                  Optional<String> creator, Optional<String> reviewer,
                                  Optional<String> team, Optional<String> sortBy) {
         try (Session session = sessionFactory.openSession()) {
-            var queryString = new StringBuilder("from WorkItem ");
+            var queryString = new StringBuilder(" from WorkItem ");
             var filters = new ArrayList<String>();
             var params = new HashMap<String, Object>();
 

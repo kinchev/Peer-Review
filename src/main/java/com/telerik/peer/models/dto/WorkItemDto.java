@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class WorkItemDto {
 
-    @Size(min=10, max=80, message = "Title should be between 10 and 80 characters.")
+    @Size(min=5, max=80, message = "Title should be between 5 and 80 characters.")
     private String title;
 
     @Positive(message = "Team Id should be positive.")

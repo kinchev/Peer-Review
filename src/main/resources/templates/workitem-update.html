@@ -1,64 +1,55 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Work Item Update</title>
-    <link href="../static/css/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link rel='stylesheet' th:href='@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css}'>
+    <link rel="stylesheet" th:href="@{/css/workitem-update.css}" media="screen">
+    <style> h1 {
+        font-size: 20px;
+        margin-top: 24px;
+        margin-bottom: 24px;
+    }
+
+    img {
+        height: 40px;
+    }
+    body{
+        background:#37517e;
+    }
+
+    </style>
+    <title></title>
 </head>
 <body>
 
-<div>
-    <h3><a href="#" th:href="@{/workItems}" th:text="#{navigation.all-workItems}">Browse all WorkItems</a></h3>
-</div>
 
-<h2>Edit Work Item</h2>
 
-<form th:fragment="workItem-form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${workItemUpdateDto}" method="post">
+<div class="col-md-6 offset-md-3 mt-5">
 
-    <label th:text="#{workItem.label.title}">Title</label>
     <br>
-    <label>
-        <input type="text" th:field="*{title}"/>
-    </label>
-    <label class="error" th:errors="*{title}"></label>
-    <br><br>
 
-    <label th:text="#{workItem.label.description}">Description</label>
-    <br>
-    <label>
-        <input type="text" th:field="*{description}"/>
-    </label>
-    <label class="error" th:errors="*{description}"></label>
-    <br><br>
 
-    <input type="submit" value="Save"/>
-
-    <div class="sales-boxes">
-        <div class="recent-sales box">
-            <div class="title">Recent Sales</div>
-            <ul class="details">
-                <li class="topic">Date</li>
-                <li></li>
-
-                <ul class="details">
-                    <li class="topic">Customer</li>
-                    <li></li>
-
-                </ul>
-                <ul class="details">
-                    <li class="topic">Sales</li>
-                    <li>>Delivered</li>
-
-                </ul>
-                <ul class="details">
-                    <li class="topic">Total</li>
-                    <li>$204.98</li>
-
-                </ul>
-            </ul>
+    <form accept-charset="UTF-8" th:action="@{__${#httpServletRequest.requestURI}__}" enctype="multipart/form-data" method="post" th:object="${workItemUpdateDto}" target="_blank">
+        <div class="form-group">
+            <h2> <label for="exampleInputName" th:text="#{workItem.label.title}">Title</label></h2>
+            <input type="text" name="fullname" th:field="*{title}" class="form-control" id="exampleInputName" placeholder="Enter Title" required="required">
+            <label class="error" th:errors="*{title}"></label>
         </div>
-    </div>
-</form>
+        <div class="form-group">
+            <h2><label for="exampleInputEmail1" required="required"  th:text="#{workItem.label.description}">Description</label></h2>
+            <input type="text" name="email"  th:field="*{description}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Description">
+            <label class="error" th:errors="*{description}"></label>
+        </div>
+        <hr>
+<!--        <div class="form-group mt-3">-->
+<!--            <label class="mr-2"></label>-->
+<!--            <input type="file" name="file" value="Save">-->
+<!--        </div>-->
+<!--        <hr>-->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 </body>
 </html>
 

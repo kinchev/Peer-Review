@@ -54,7 +54,7 @@
                 <li><a class="link_name" href="#">User</a></li>
                 <li><a  th:href="@{/user/{id}/(id=${user.getId()})}">Single User</a></li>
                 <li><a  th:href="@{/user/{id}/update(id=${user.getId()})}">User Update</a></li>
-                <li><a  th:href="@{/}">User Logout</a></li>
+
 
 
             </ul>
@@ -98,77 +98,27 @@
                 <li><a href="table.html "th:href="@{/workItems}">All WorkItem</a></li>
 <!--                <li><a href="#" th:href="@{/workItems/{id}(id=${workitem.getId()})}">Single WorkItem</a></li>-->
                 <li><a href="#" th:href="@{/workItems/new}">Create WorkItem</a></li>
-                <li><a href="#">Update</a></li>
+                <li><a href="#" th:href="@{/workItems/{id}/update(id=workItems.id)}">Update</a></li>
             </ul>
         </li>
 
 
-        <li>
-            <div class="icon-link">
-                <a href="#">
-                    <i class='bx bx-plug' ></i>
-                    <span class="link_name">Review Requests </span>
-                </a>
-                <i class='bx bxs-chevron-down arrow' ></i>
-            </div>
-            <ul class="sub-menu">
-                <li><a class="link_name" href="#">Review Requests</a></li>
-                <li><a href="#">Review Requests Sent</a></li>
-                <li><a href="#">Review Requests Receive</a></li>
-                <li><a href="#"></a></li>
-            </ul>
-        </li>
+
+
+
+
+
+
+
 
 
         <li>
             <a href="#">
-                <i class='bx bx-pie-chart-alt-2' ></i>
-                <span class="link_name">Change Password</span>
+                <i class='bx bx-log-out'></i>
+                <span class="link_name">Log Out</span>
             </a>
             <ul class="sub-menu blank">
-                <li><a class="link_name" href="#">Change Password</a></li>
-            </ul>
-        </li>
-
-
-        <li>
-            <a href="#">
-                <i class='bx bx-line-chart' ></i>
-                <span class="link_name">Review Requests Sent</span>
-            </a>
-            <ul class="sub-menu blank">
-                <li><a class="link_name" href="#">Chart</a></li>
-            </ul>
-        </li>
-
-
-        <li>
-            <a href="#">
-                <i class='bx bx-compass' ></i>
-                <span class="link_name">Explore</span>
-            </a>
-            <ul class="sub-menu blank">
-                <li><a class="link_name" href="#">Explore</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">
-                <i class='bx bx-history'></i>
-                <span class="link_name">History</span>
-            </a>
-            <ul class="sub-menu blank">
-                <li><a class="link_name" href="#">History</a></li>
-            </ul>
-        </li>
-
-
-        <li>
-            <a href="#">
-                <i class='bx bx-cog' ></i>
-                <span class="link_name">Setting</span>
-            </a>
-            <ul class="sub-menu blank">
-                <li><a class="link_name" href="#">Setting</a></li>
+                <li><a   th:if="${isAuthenticated}" th:href="@{/auth/logout}">User Logout</a></li>
             </ul>
         </li>
 

@@ -14,9 +14,7 @@
     height: 40px;
     }
    body{
-       background-color: #67B26F;
-       background: -webkit-linear-gradient(to right, #4ca2cd, #67B26F);
-       background: linear-gradient(to right, #4ca2cd, #67B26F);
+       background:#37517e;
    }
 
     </style>
@@ -33,17 +31,17 @@
 
     <form accept-charset="UTF-8" th:action="@{__${#httpServletRequest.requestURI}__}" enctype="multipart/form-data" method="post" th:object="${workItemDto}" target="_blank">
         <div class="form-group">
-            <label for="exampleInputName" th:text="#{workItem.label.title}">Title</label>
+            <h2><label for="exampleInputName" th:text="#{workItem.label.title}">Title</label></h2>
             <input type="text" name="fullname" th:field="*{title}" class="form-control" id="exampleInputName" placeholder="Enter Title" required="required">
             <label class="error" th:errors="*{title}"></label>
         </div>
         <div class="form-group">
-            <label for="exampleInputEmail1" required="required"  th:text="#{workItem.label.description}">Description</label>
+            <h2>  <label for="exampleInputEmail1" required="required"  th:text="#{workItem.label.description}">Description</label></h2>
             <input type="text" name="email"  th:field="*{description}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Description">
             <label class="error" th:errors="*{description}"></label>
         </div>
         <div class="form-group">
-            <label for="exampleFormControlSelect1" th:text="#{workItem.label.team}" >Team</label>
+            <h2><label for="exampleFormControlSelect1" th:text="#{workItem.label.team}" >Team</label></h2>
             <select class="form-control" th:field="*{teamId}" id="exampleFormControlSelect1" name="platform" required="required">
                 <option th:each="team : ${teams}"
                         th:value="${team.getTeamId()}"
@@ -54,10 +52,10 @@
             <label class="error" th:errors="*{teamId}">error placeholder</label>
         </div>
         <div class="form-group">
-            <label for="exampleFormControlSelect1">Creator</label>
+            <h2> <label for="exampleFormControlSelect1">Creator</label></h2>
             <select th:field="*{creatorId}" class="form-control" id="exampleFormControlSelect2" name="platform" required="required">
                 <option th:each="creator : ${users}"
-                        th:value="${creator.id}"
+                        th:value="${creator.getId()}"
                         th:text="${creator.getUsername()}">
 
                 </option>
@@ -65,7 +63,7 @@
             <label class="error" th:errors="*{creatorId}">error placeholder</label>
         </div>
         <div class="form-group">
-            <label for="exampleFormControlSelect1">Reviewer</label>
+            <h2> <label for="exampleFormControlSelect1">Reviewer</label></h2>
             <select class="form-control" th:field="*{reviewerId}" id="exampleFormControlSelect3" name="platform" required="required">
                 <option th:each="reviewer : ${users}"
                         th:value="${reviewer.id}"
