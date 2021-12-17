@@ -219,7 +219,7 @@ public class TeamMvcController {
     }
 
     @GetMapping("/{id}/add")
-    public String addMemberToTeam(@RequestHeader HttpHeaders headers, @PathVariable long id,
+    public String addMemberToTeam(@PathVariable long id,
                                   Model model, HttpSession session) {
         User user;
         try {
@@ -234,8 +234,7 @@ public class TeamMvcController {
 
 
     @PostMapping("/{id}/add")
-    public String addMemberToTeam(@RequestHeader HttpHeaders headers, @PathVariable long id,
-                                       @ModelAttribute("addDto") AddByIdDto dto,
+    public String addMemberToTeam(@PathVariable long id, @ModelAttribute("addDto") AddByIdDto dto,
                                        Model model, HttpSession session) {
         User user;
         try {

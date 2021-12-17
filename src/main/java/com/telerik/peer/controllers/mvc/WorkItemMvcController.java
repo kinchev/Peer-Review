@@ -7,16 +7,17 @@ import com.telerik.peer.models.Status;
 import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
-import com.telerik.peer.models.dto.FilterDto;
-import com.telerik.peer.models.dto.WorkItemDto;
-import com.telerik.peer.models.dto.WorkItemUpdateDto;
+import com.telerik.peer.models.dto.*;
 import com.telerik.peer.services.contracts.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -54,23 +55,22 @@ public class WorkItemMvcController {
         return session.getAttribute("currentUser") != null;
     }
 
+    @ModelAttribute("statuses")
+    public List<Status> populateStatuses() {
+        return statusService.getAll();
+    }
+
     @ModelAttribute("users")
     public List<User> populateUsers() {
         return userService.getAll();
     }
-
-
-
 
     @ModelAttribute("teams")
     public List<Team> populateTeams() {
         return teamService.getAll();
     }
 
-    @ModelAttribute("statuses")
-    public List<Status> populateStatuses() {
-        return statusService.getAll();
-    }
+
 
     @GetMapping
     public String showAllWorkItems(HttpSession session, Model model) {
@@ -261,6 +261,45 @@ public class WorkItemMvcController {
             return "access-denied";
         }
     }
+
+    @GetMapping("/{id}/status")
+    public String setStatus(@RequestHeader HttpHeaders headers, @PathVariable long id,
+                                  Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        }
+        model.addAttribute("workItemId", id);
+        model.addAttribute("statusDto", new StatusDto());
+        return "workitem-status";
+    }
+
+    @PostMapping("/{id}/status")
+    public String setStatusWithComment(@PathVariable long id, @ModelAttribute("statusDto") StatusDto dto,
+                                         Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        }
+
+        try {
+            WorkItem workItem = workItemService.getById(id);
+            Status status = statusService.getById(dto.getId());
+            String commentToAdd = dto.getComment();
+            workItemService.setStatus(workItem, user, status, commentToAdd);
+            return "redirect:/workItems";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (InvalidUserInputException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
 
 }
 

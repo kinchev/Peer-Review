@@ -34,20 +34,11 @@
                                 class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-3-base u-radius-50 u-btn-1"
                                 href="#" th:href="@{/workItems/{id}/delete(id=${workItem.getId()})}">DELETE<br>
                         </a>
+                        <a
+                                class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-3-base u-radius-50 u-btn-1"
+                                href="#" th:href="@{/workItems/{id}/status(id=${workItem.getId()})}">SET STATUS<br>
+                        </a>
                     </div>
-                    <div class="dropdown" >
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                            Change status
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" th:each="status : ${statuses}"
-                                               th:href="@{/workitems/{id}/status/
-                                                {statusId}(id=${workItem.id}, statusId = ${status.statusId})}"
-                                               th:text="${status.status}"></a>
-                                        </div>
-                                    </div>
                 </div>
             </div>
             <div class="col-lg-8">
