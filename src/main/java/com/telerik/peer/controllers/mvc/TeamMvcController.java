@@ -234,7 +234,7 @@ public class TeamMvcController {
 
 
     @PostMapping("/{id}/add")
-    public String removeMemberFromTeam(@RequestHeader HttpHeaders headers, @PathVariable long id,
+    public String addMemberToTeam(@RequestHeader HttpHeaders headers, @PathVariable long id,
                                        @ModelAttribute("addDto") AddByIdDto dto,
                                        Model model, HttpSession session) {
         User user;
@@ -256,6 +256,46 @@ public class TeamMvcController {
             return "not-found";
         }
     }
+
+    @GetMapping("/{id}/remove")
+    public String RemoveMemberFromTeam(@RequestHeader HttpHeaders headers, @PathVariable long id,
+                                  Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        }
+        model.addAttribute("teamId", id);
+        model.addAttribute("removeDto", new AddByIdDto());
+        return "team-remove";
+    }
+
+
+    @PostMapping("/{id}/remove")
+    public String removeMemberFromTeam(@RequestHeader HttpHeaders headers, @PathVariable long id,
+                                  @ModelAttribute("removeDto") AddByIdDto dto,
+                                  Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        }
+        try {
+            Team team = teamService.getById(id);
+            User userToRemove = userService.getById(dto.getId());
+            teamService.removeMemberFromTeam(team, user, userToRemove);
+            return "redirect:/teams";
+        } catch (DuplicateEntityException | UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "access-denied";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        }
+    }
+
 
 }
 
