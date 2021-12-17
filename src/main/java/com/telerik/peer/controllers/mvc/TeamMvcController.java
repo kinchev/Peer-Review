@@ -1,15 +1,13 @@
 package com.telerik.peer.controllers.mvc;
 
 import com.telerik.peer.controllers.rest.AuthenticationHelper;
-import com.telerik.peer.exceptions.AuthenticationFailureException;
-import com.telerik.peer.exceptions.DuplicateEntityException;
-import com.telerik.peer.exceptions.EntityNotFoundException;
-import com.telerik.peer.exceptions.UnauthorizedOperationException;
+import com.telerik.peer.exceptions.*;
 import com.telerik.peer.mappers.TeamMapper;
 import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
 import com.telerik.peer.models.dto.TeamDto;
+import com.telerik.peer.models.dto.WorkItemDto;
 import com.telerik.peer.services.contracts.TeamService;
 import com.telerik.peer.services.contracts.UserService;
 import com.telerik.peer.services.contracts.WorkItemService;
@@ -19,9 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -95,6 +95,52 @@ public class TeamMvcController {
             return "not-found";
         }
     }
+
+    @GetMapping("/new")
+    public String showNewTeamPage(Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        }
+        model.addAttribute("teamDto", new TeamDto());
+        model.addAttribute("user", user);
+        return "team-new";
+    }
+
+    @PostMapping("/new")
+    public String createTeam(@Valid @ModelAttribute("TeamDto") TeamDto teamDto,
+                                 BindingResult errors,
+                                 Model model,
+                                 HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        }
+
+        if (errors.hasErrors()) {
+            return "team-new";
+        }
+
+        try {
+            Team team = teamMapper.fromDto(teamDto);
+            teamService.create(team);
+            return "redirect:/teams";
+        } catch (DuplicateEntityException e) {
+            errors.rejectValue("teamName", "duplicate_workItem", e.getMessage());
+            return "team-new";
+        } catch (InvalidUserInputException e) {
+            errors.rejectValue("ownerId", "team_mismatch", e.getMessage());
+            return "team-new";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        }
+    }
+
 
     @GetMapping("/{id}/update")
     public String showEditTeamPage(@PathVariable int id, Model model, HttpSession session) {
