@@ -1,25 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel='stylesheet' th:href='@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css}'>
-
-    <style> h1 {
-        font-size: 20px;
-        margin-top: 24px;
-        margin-bottom: 24px;
-    }
-
-    img {
-        height: 40px;
-    }
-
-    </style>
-    <title></title>
+    <title>Title</title>
 </head>
 <body>
-
-
 <div class="col-md-6 offset-md-3 mt-5">
     <a target="_blank" href="https://getform.io?ref=codepenHTML">
         <img th:src="@{https://i.imgur.com/Z2Nyxsm.png}">
@@ -27,53 +12,7 @@
     <br>
 
 
-    <form accept-charset="UTF-8" th:action="@{__${#httpServletRequest.requestURI}__}"  method="post" th:object="${teamDto}" target="_blank">
+    <form accept-charset="UTF-8" th:action="@{__${#httpServletRequest.requestURI}__}" enctype="multipart/form-data" method="post" th:object="${}" target="_blank">
         <div class="form-group">
-            <label for="exampleInputName" th:text="#{team.name}">Title</label>
-            <input type="text" name="fullname" th:field="*{teamName}" class="form-control" id="exampleInputName" placeholder="Enter Title" required="required">
-            <label class="error" th:errors="*{teamName}"></label>
-        </div>
-        <div class="form-group">
-            <label for="exampleFormControlSelect1" th:text="#{team.owner}" >Owner</label>
-            <select class="form-control" th:field="*{ownerId}" id="exampleFormControlSelect1" name="platform" required="required">
-                <option th:each="user : ${users}"
-                        th:value="${user.getId()}"
-                        th:text="${user.getUsername()}">
-
-                </option>
-            </select>
-            <label class="error" th:errors="*{ownerId}">error placeholder</label>
-        </div>
-<!--        <div class="form-group">-->
-<!--            <label for="exampleFormControlSelect1">Creator</label>-->
-<!--            <select th:field="*{creatorId}" class="form-control" id="exampleFormControlSelect2" name="platform" required="required">-->
-<!--                <option th:each="creator : ${users}"-->
-<!--                        th:value="${creator.id}"-->
-<!--                        th:text="${creator.getUsername()}">-->
-<!--                    Creator-->
-<!--                </option>-->
-<!--            </select>-->
-<!--            <label class="error" th:errors="*{creatorId}">error placeholder</label>-->
-<!--        </div>-->
-<!--        <div class="form-group">-->
-<!--            <label for="exampleFormControlSelect1">Reviewer</label>-->
-<!--            <select class="form-control" th:field="*{reviewerId}" id="exampleFormControlSelect3" name="platform" required="required">-->
-<!--                <option th:each="reviewer : ${users}"-->
-<!--                        th:value="${reviewer.id}"-->
-<!--                        th:text="${reviewer.getUsername()}">-->
-
-<!--                </option>-->
-<!--            </select>-->
-<!--            <label class="error" th:errors="*{reviewerId}">error placeholder</label>-->
-<!--        </div>-->
-
-<!--        <hr>-->
-<!--     -->
-<!--        <hr>-->
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
-
-
 </body>
 </html>

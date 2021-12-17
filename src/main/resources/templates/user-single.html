@@ -11,7 +11,7 @@
     <link rel="stylesheet" th:href="@{/css/workitem-single.css}" media="screen">
     <link rel="stylesheet" th:href="@{/css/nicepage.css}" media="screen">
     <meta charset="UTF-8">
-    <title><h2>Title</title>
+    <title>Title</title>
 </head>
 <body>
 <div class="student-profile py-4">
@@ -21,19 +21,16 @@
                 <div class="card shadow-sm">
                     <div class="card-header bg-transparent text-center">
                         <img class="profile_img"
-                             th:src="@{/src/main/resources/user-photos/{path}(path=${workItem.getCreator().getPhotoPath()})}"
+                             th:src="@{/src/main/resources/user-photos/{path}(path=${user.getPhotoPath()})}"
                              alt="photo">
-                        <h3>CREATOR</h3>
+                        <h3>USER</h3>
                     </div>
                     <div class="card-body">
                         <a
                                 class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-3-base u-radius-50 u-btn-1"
-                                href="#" th:href="@{/workItems/{id}/update(id=${workItem.getId()})}">UPDATE<br>
+                                href="#" th:href="@{/user/{id}/(id=${user.getId()})}">Change Photo<br>
                         </a>
-                        <a
-                                class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-3-base u-radius-50 u-btn-1"
-                                href="#" th:href="@{/workItems/{id}/delete(id=${workItem.getId()})}">DELETE<br>
-                        </a>
+
                     </div>
                 </div>
             </div>
@@ -47,28 +44,24 @@
                             <tr>
                                 <th width="30%">ID</th>
                                 <td width="2%">:</td>
-                                <td th:text="${workItem.getId()}">id</td>
+                                <td th:text="${user.getId()}">ID</td>
                             </tr>
                             <tr>
-                                <th width="30%">TITLE</th>
+                                <th width="30%">Username</th>
                                 <td width="2%">:</td>
-                                <td th:text="${workItem.getTitle()}">text</td>
+                                <td th:text="${user.getUsername()}">text</td>
                             </tr>
                             <tr>
-                                <th width="30%">Creator</th>
+                                <th width="30%">Email</th>
                                 <td width="2%">:</td>
-                                <td th:text="${workItem.getCreator().getUsername()}">Creator</td>
+                                <td th:text="${user.getEmail()}">text</td>
                             </tr>
                             <tr>
-                                <th width="30%">Reviewer</th>
+                                <th width="30%">Phone Number</th>
                                 <td width="2%">:</td>
-                                <td th:text="${workItem.getReviewer().getUsername()}">Reviewer</td>
+                                <td th:text="${user.getNumber()}">text</td>
                             </tr>
-                            <tr>
-                                <th width="30%">Status</th>
-                                <td width="2%">:</td>
-                                <td th:text="${workItem.status.getStatus()}">text</td>
-                            </tr>
+
                             <!--                            <tr>-->
                             <!--                                <th width="30%">blood</th>-->
                             <!--                                <td width="2%">:</td>-->
@@ -77,14 +70,14 @@
                         </table>
                     </div>
                 </div>
-                <div style="height: 26px"></div>
-                <div class="card shadow-sm">
-                    <div class="card-header bg-transparent border-0">
-                        <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Description</h3>
-                    </div>
-                    <div class="card-body pt-0">
-                        <p th:text="${workItem.description}">description</p>
-                    </div>
+<!--                <div style="height: 26px"></div>-->
+<!--                <div class="card shadow-sm">-->
+<!--                    <div class="card-header bg-transparent border-0">-->
+<!--                        <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Description</h3>-->
+<!--                    </div>-->
+<!--                    <div class="card-body pt-0">-->
+<!--                        <p th:text="${}">description</p>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
