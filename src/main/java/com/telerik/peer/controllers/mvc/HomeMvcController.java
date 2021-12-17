@@ -11,11 +11,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/")
 public class HomeMvcController {
-//    private final UserService userService;
-//
-//    public HomeMvcController(UserService userService) {
-//        this.userService = userService;
-//    }
 
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {

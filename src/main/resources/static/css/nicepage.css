@@ -4606,7 +4606,7 @@ ol {
   border: 0 none transparent;
   outline-width: 0;
   background-color: transparent;
-  margin: 0;
+  margin: -9;
   -webkit-text-decoration-skip: objects;
   font-style: initial;
   white-space: nowrap;
@@ -4615,7 +4615,7 @@ ol {
           user-select: none;
   vertical-align: middle;
   text-align: center;
-  padding: 10px 30px;
+  padding: 10px 47px;
   border-radius: 0;
   align-self: flex-start;
 }

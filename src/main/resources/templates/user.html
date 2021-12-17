@@ -52,8 +52,10 @@
             </div>
             <ul class="sub-menu">
                 <li><a class="link_name" href="#">User</a></li>
-                <li><a href="user-update.html" th:href="@{/user/{id}/update(id=${user.getId()})}">User Update</a></li>
-                <li><a href="#" th:href="@{/user/{id}/delete(id=${user.getId()})}">User Delete</a></li>
+                <li><a  th:href="@{/user/{id}/(id=${user.getId()})}">Single User</a></li>
+                <li><a  th:href="@{/user/{id}/update(id=${user.getId()})}">User Update</a></li>
+                <li><a  th:href="@{/}">User Logout</a></li>
+
 
             </ul>
         </li>
@@ -70,9 +72,9 @@
                 <i class='bx bxs-chevron-down arrow' ></i>
             </div>
             <ul class="sub-menu">
-                <li><a class="link_name" href="#">Teams</a></li>
+                <li><a class="link_name"  href="#">Teams</a></li>
 <!--                <li><a href="team.html" th:href="@{/teams}">All Team</a></li>-->
-                <li><a href="#" >Create Team</a></li>
+<!--                <li><a th:href="@{/teams/{id}(id=${team.id})}" >Create Team</a></li>-->
                 <li><a href="#">User`s Teams</a></li>
                 <li><a href="#">Review Requests</a></li>
                 <li><a href="#">Add Member</a></li>
@@ -94,7 +96,7 @@
             <ul class="sub-menu">
                 <li><a class="link_name" href="#">WorkItems</a></li>
                 <li><a href="table.html "th:href="@{/workItems}">All WorkItem</a></li>
-<!--                <li><a href="#" th:href="@{/workItems/{id}(id=${workItem.getId()})}">Single WorkItem</a></li>-->
+<!--                <li><a href="#" th:href="@{/workItems/{id}(id=${workitem.getId()})}">Single WorkItem</a></li>-->
                 <li><a href="#" th:href="@{/workItems/new}">Create WorkItem</a></li>
                 <li><a href="#">Update</a></li>
             </ul>

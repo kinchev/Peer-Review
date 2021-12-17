@@ -49,10 +49,10 @@ public class TeamMvcController {
         return session.getAttribute("currentUser") != null;
     }
 
-//    @ModelAttribute("teams")
-//    public List<Team> populateTeams() {
-//        return teamService.getAll();
-//    }
+    @ModelAttribute("teams")
+    public List<Team> populateTeams() {
+        return teamService.getAll();
+    }
 
     @ModelAttribute("users")
     public List<User> populateUsers() {

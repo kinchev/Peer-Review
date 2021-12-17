@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
         <link rel='stylesheet' th:href='@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css}'>
-
+    <link rel="stylesheet" th:href="@{/css/workitem-update.css}" media="screen">
    <style> h1 {
     font-size: 20px;
     margin-top: 24px;
@@ -13,75 +13,21 @@
     img {
     height: 40px;
     }
+   body{
+       background-color: #67B26F;
+       background: -webkit-linear-gradient(to right, #4ca2cd, #67B26F);
+       background: linear-gradient(to right, #4ca2cd, #67B26F);
+   }
 
     </style>
     <title></title>
 </head>
 <body>
 
-<!--<h3>CREATE NEW WORK ITEM</h3>-->
 
-<!--<form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${workItemDto}" method="post">-->
-
-<!--    <label th:text="#{workItem.label.title}">Title</label>-->
-<!--    <br>-->
-<!--    <label>-->
-<!--        <input type="text" th:field="*{title}"/>-->
-<!--    </label>-->
-<!--    <label class="error" th:errors="*{title}"></label>-->
-<!--    <br><br>-->
-
-<!--    <label th:text="#{workItem.label.description}">Description</label>-->
-<!--    <br>-->
-<!--    <label>-->
-<!--        <input type="text" th:field="*{description}"/>-->
-<!--    </label>-->
-<!--    <label class="error" th:errors="*{description}"></label>-->
-<!--    <br><br>-->
-
-<!--    <label th:text="#{workItem.label.team}">Team</label>-->
-<!--    <br/>-->
-<!--    <select th:field="*{teamId}">-->
-<!--        <option th:each="team : ${teams}"-->
-<!--                th:value="${team.getTeamId()}"-->
-<!--                th:text="${team.getTeamName()}">-->
-<!--            Team-->
-<!--        </option>-->
-<!--    </select>-->
-<!--    <label class="error" th:errors="*{teamId}">error placeholder</label>-->
-<!--    <br><br>-->
-
-<!--    <label th:text="#{workItem.label.creator}">Creator</label>-->
-<!--    <br/>-->
-<!--    <select th:field="*{creatorId}">-->
-<!--        <option th:each="creator : ${users}"-->
-<!--                th:value="${creator.id}"-->
-<!--                th:text="${creator.username}">-->
-<!--            Creator-->
-<!--        </option>-->
-<!--    </select>-->
-<!--    <label class="error" th:errors="*{creatorId}">error placeholder</label>-->
-<!--    <br><br>-->
-
-<!--    <label th:text="#{workItem.label.reviewer}">Reviewer</label>-->
-<!--    <br/>-->
-<!--    <select th:field="*{reviewerId}">-->
-<!--        <option th:each="reviewer : ${users}"-->
-<!--                th:value="${reviewer.id}"-->
-<!--                th:text="${reviewer.username}">-->
-<!--            Reviewer-->
-<!--        </option>-->
-<!--    </select>-->
-<!--    <label class="error" th:errors="*{reviewerId}">error placeholder</label>-->
-<!--    <br><br>-->
-
-<!--    <input type="submit" value="Save"/>-->
-<!--</form>-->
 
 <div class="col-md-6 offset-md-3 mt-5">
-    <a target="_blank" href="https://getform.io?ref=codepenHTML">
-        <img th:src="@{https://i.imgur.com/Z2Nyxsm.png}">
-    </a>
+
     <br>
 
 
@@ -113,7 +59,7 @@
                 <option th:each="creator : ${users}"
                         th:value="${creator.id}"
                         th:text="${creator.getUsername()}">
-                    Creator
+
                 </option>
             </select>
             <label class="error" th:errors="*{creatorId}">error placeholder</label>
@@ -132,7 +78,7 @@
 
         <hr>
         <div class="form-group mt-3">
-            <label class="mr-2">UPLOAD FILE</label>
+            <label class="mr-2"></label>
             <input type="file" name="file" value="Save">
         </div>
         <hr>
