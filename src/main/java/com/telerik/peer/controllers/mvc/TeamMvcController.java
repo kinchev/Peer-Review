@@ -6,6 +6,7 @@ import com.telerik.peer.mappers.TeamMapper;
 import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
+import com.telerik.peer.models.dto.AddByIdDto;
 import com.telerik.peer.models.dto.TeamDto;
 import com.telerik.peer.models.dto.WorkItemDto;
 import com.telerik.peer.services.contracts.TeamService;
@@ -111,9 +112,9 @@ public class TeamMvcController {
 
     @PostMapping("/new")
     public String createTeam(@Valid @ModelAttribute("TeamDto") TeamDto teamDto,
-                                 BindingResult errors,
-                                 Model model,
-                                 HttpSession session) {
+                             BindingResult errors,
+                             Model model,
+                             HttpSession session) {
         User user;
         try {
             user = authenticationHelper.tryGetUser(session);
@@ -217,31 +218,8 @@ public class TeamMvcController {
         }
     }
 
-    @PostMapping("/{id}/add/{userId}")
-    public String addMemberToTeam(@RequestHeader HttpHeaders headers, @PathVariable long id, @PathVariable long userId,
-                                Model model, HttpSession session) {
-        User user;
-        try {
-            user = authenticationHelper.tryGetUser(session);
-        } catch (AuthenticationFailureException e) {
-            return "redirect:/auth/login";
-        }
-        try {
-            Team team = teamService.getById(id);
-            User userToAdd = userService.getById(userId);
-            teamService.addMemberToTeam(team, user, userToAdd);
-            return "redirect:/teams" + team.getTeamId();
-        } catch (DuplicateEntityException | UnauthorizedOperationException e) {
-            model.addAttribute("error", e.getMessage());
-            return "access-denied";
-        } catch (EntityNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
-            return "not-found";
-        }
-    }
-
-    @PostMapping("/{id}/remove/{userId}")
-    public String removeMemberFromTeam(@RequestHeader HttpHeaders headers, @PathVariable long id, @PathVariable long userId,
+    @GetMapping("/{id}/add")
+    public String addMemberToTeam(@RequestHeader HttpHeaders headers, @PathVariable long id,
                                   Model model, HttpSession session) {
         User user;
         try {
@@ -249,11 +227,27 @@ public class TeamMvcController {
         } catch (AuthenticationFailureException e) {
             return "redirect:/auth/login";
         }
+        model.addAttribute("teamId", id);
+        model.addAttribute("addDto", new AddByIdDto());
+        return "team-add";
+    }
+
+
+    @PostMapping("/{id}/add")
+    public String removeMemberFromTeam(@RequestHeader HttpHeaders headers, @PathVariable long id,
+                                       @ModelAttribute("addDto") AddByIdDto dto,
+                                       Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        }
         try {
             Team team = teamService.getById(id);
-            User userToRemove = userService.getById(userId);
-            teamService.removeMemberFromTeam(team, user, userToRemove);
-            return "redirect:/teams" + team.getTeamId();
+            User userToAdd = userService.getById(dto.getId());
+            teamService.addMemberToTeam(team, user, userToAdd);
+            return "redirect:/teams";
         } catch (DuplicateEntityException | UnauthorizedOperationException e) {
             model.addAttribute("error", e.getMessage());
             return "access-denied";
@@ -264,3 +258,25 @@ public class TeamMvcController {
     }
 
 }
+
+//    public String removeMemberFromTeam(@RequestHeader HttpHeaders headers, @PathVariable long id, @PathVariable long userId,
+//                                       Model model, HttpSession session) {
+//        User user;
+//        try {
+//            user = authenticationHelper.tryGetUser(session);
+//        } catch (AuthenticationFailureException e) {
+//            return "redirect:/auth/login";
+//        }
+//        try {
+//            Team team = teamService.getById(id);
+//            User userToRemove = userService.getById(userId);
+//            teamService.removeMemberFromTeam(team, user, userToRemove);
+//            return "redirect:/teams" + team.getTeamId();
+//        } catch (DuplicateEntityException | UnauthorizedOperationException e) {
+//            model.addAttribute("error", e.getMessage());
+//            return "access-denied";
+//        } catch (EntityNotFoundException e) {
+//            model.addAttribute("error", e.getMessage());
+//            return "not-found";
+//        }
+//    }
