@@ -41,9 +41,7 @@ public class AuthenticationController {
         this.userMapper = userMapper;
     }
 
-    public boolean isAdmin() {
-        return true;
-    }
+
 
     //да Покаже login page
     @GetMapping("/login")
@@ -123,7 +121,7 @@ public class AuthenticationController {
         try {
             user = authenticationHelper.tryGetUser(session);
         } catch (AuthenticationFailureException e) {
-            return "redirect:/login";
+            return "redirect:/auth/login";
         }
         model.addAttribute("changePassword", new ChangePasswordDto());
         return "change-password";
@@ -136,7 +134,7 @@ public class AuthenticationController {
         try {
             user = authenticationHelper.tryGetUser(session);
         } catch (AuthenticationFailureException e) {
-            return "redirect:/login";
+            return "redirect:/auth/login";
         }
         if (errors.hasErrors()) {
             return "change-password";
@@ -144,7 +142,7 @@ public class AuthenticationController {
         try {
             userService.changePassword(user.getId(), changePassword.getOldPassword(),
                     changePassword.getPassword(), changePassword.getPasswordConfirm());
-            return "redirect:/auth/login";
+            return "redirect:/user";
         } catch (UnauthorizedOperationException e) {
             errors.rejectValue("password", "ChangePassword-error", e.getMessage());
             return "change-password";

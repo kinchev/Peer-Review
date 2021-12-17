@@ -10,6 +10,7 @@ import com.telerik.peer.models.ReviewRequest;
 import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
+import com.telerik.peer.models.dto.ChangePasswordDto;
 import com.telerik.peer.models.dto.UserDto;
 import com.telerik.peer.services.contracts.ReviewRequestService;
 import com.telerik.peer.services.contracts.TeamService;
@@ -88,7 +89,6 @@ public class UserMvcController {
         model.addAttribute("activeReceivedRequests", activeReceivedRequests);
         return "user";
     }
-
 
     @GetMapping
     public String showAllUsers(Model model, HttpSession session) {
