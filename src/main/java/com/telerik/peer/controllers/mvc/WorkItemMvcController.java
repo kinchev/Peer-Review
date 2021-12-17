@@ -3,6 +3,7 @@ package com.telerik.peer.controllers.mvc;
 import com.telerik.peer.controllers.rest.AuthenticationHelper;
 import com.telerik.peer.exceptions.*;
 import com.telerik.peer.mappers.WorkItemMapper;
+import com.telerik.peer.models.Status;
 import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
@@ -32,9 +33,10 @@ public class WorkItemMvcController {
     private final TeamService teamService;
     private final CommentService commentService;
     private final AttachmentService attachmentService;
+    private final StatusService statusService;
 
     @Autowired
-    public WorkItemMvcController(WorkItemService workItemService, WorkItemMapper workItemMapper, UserService userService, AuthenticationHelper authenticationHelper, TeamService teamService, CommentService commentService, AttachmentService attachmentService) {
+    public WorkItemMvcController(WorkItemService workItemService, WorkItemMapper workItemMapper, UserService userService, AuthenticationHelper authenticationHelper, TeamService teamService, CommentService commentService, AttachmentService attachmentService, StatusService statusService) {
         this.workItemService = workItemService;
         this.workItemMapper = workItemMapper;
         this.userService = userService;
@@ -42,6 +44,7 @@ public class WorkItemMvcController {
         this.teamService = teamService;
         this.commentService = commentService;
         this.attachmentService = attachmentService;
+        this.statusService = statusService;
     }
 
     @ModelAttribute("isAuthenticated")
@@ -59,6 +62,10 @@ public class WorkItemMvcController {
         return teamService.getAll();
     }
 
+    @ModelAttribute("statuses")
+    public List<Status> populateStatuses() {
+        return statusService.getAll();
+    }
 
     @GetMapping
     public String showAllWorkItems(HttpSession session, Model model) {

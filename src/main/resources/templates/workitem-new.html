@@ -101,7 +101,7 @@
             <select class="form-control" th:field="*{teamId}" id="exampleFormControlSelect1" name="platform" required="required">
                 <option th:each="team : ${teams}"
                         th:value="${team.getTeamId()}"
-                        th:text="${team.getOwner().getUsername()}">
+                        th:text="${team.getTeamName()}">
 
                 </option>
             </select>

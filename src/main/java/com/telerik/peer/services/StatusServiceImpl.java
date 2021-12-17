@@ -6,6 +6,8 @@ import com.telerik.peer.services.contracts.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StatusServiceImpl implements StatusService {
 
@@ -14,6 +16,12 @@ public class StatusServiceImpl implements StatusService {
     @Autowired
     public StatusServiceImpl(StatusRepository statusRepository) {
         this.statusRepository = statusRepository;
+    }
+
+
+    @Override
+    public List<Status> getAll() {
+        return statusRepository.getAll();
     }
 
     @Override
