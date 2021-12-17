@@ -7,6 +7,7 @@ import com.telerik.peer.models.Status;
 import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
+import com.telerik.peer.models.dto.FilterDto;
 import com.telerik.peer.models.dto.WorkItemDto;
 import com.telerik.peer.models.dto.WorkItemUpdateDto;
 import com.telerik.peer.services.contracts.*;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/workItems")
@@ -56,6 +58,7 @@ public class WorkItemMvcController {
     public List<User> populateUsers() {
         return userService.getAll();
     }
+
 
 
 

@@ -7,6 +7,7 @@ import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.exceptions.UnauthorizedOperationException;
 import com.telerik.peer.mappers.UserMapper;
 import com.telerik.peer.models.ReviewRequest;
+import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
 import com.telerik.peer.models.dto.UserDto;
@@ -41,16 +42,24 @@ public class UserMvcController {
     private final UserMapper userMapper;
     private final AuthenticationHelper authenticationHelper;
 
+
     @Autowired
-    public UserMvcController(UserService userService, WorkItemService workItemService,
-                             TeamService teamService, ReviewRequestService reviewRequestService,
-                             UserMapper userMapper, AuthenticationHelper authenticationHelper) {
+    public UserMvcController(UserService userService, WorkItemService workItemService, TeamService teamService, ReviewRequestService reviewRequestService, UserMapper userMapper, AuthenticationHelper authenticationHelper, TeamService teamService1) {
         this.userService = userService;
         this.workItemService = workItemService;
         this.teamService = teamService;
         this.reviewRequestService = reviewRequestService;
         this.userMapper = userMapper;
         this.authenticationHelper = authenticationHelper;
+
+    }
+
+
+
+
+    @ModelAttribute("teams")
+    public List<Team> populateTeams() {
+        return teamService.getAll();
     }
 
 
@@ -59,26 +68,26 @@ public class UserMvcController {
         return session.getAttribute("currentUser") != null;
     }
 
-//    public String showUserPersonalPage(Model model, HttpSession session) {
-//        User user;
-//        try {
-//            user = authenticationHelper.tryGetUser(session);
-//        } catch (AuthenticationFailureException e) {
-//            return "redirect:/auth/login";
-//        } catch (UnauthorizedOperationException e) {
-//            model.addAttribute("error", e.getMessage());
-//            return "access-denied";
-//        }
-//        List<ReviewRequest> sentReviewRequests = reviewRequestService.getReviewRequestByCreator(user.getId());
-//        List<ReviewRequest> receivedReviewRequests = reviewRequestService.getReviewRequestByReviewer(user.getId());
-//        List<ReviewRequest> activeReceivedRequests = reviewRequestService.getReviewRequestByReviewer(user.getId())
-//                        . stream().filter(w -> w.getWorkItem().getStatus().getStatusId() > 3).collect(Collectors.toList());
-//        model.addAttribute("user", user);
-//        model.addAttribute("sentReviewRequests", sentReviewRequests);
-//        model.addAttribute("receivedReviewRequests", receivedReviewRequests);
-//        model.addAttribute("activeReceivedRequests", activeReceivedRequests);
-//        return "user";
-//    }
+    public String showUserPersonalPage(Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "access-denied";
+        }
+        List<ReviewRequest> sentReviewRequests = reviewRequestService.getReviewRequestByCreator(user.getId());
+        List<ReviewRequest> receivedReviewRequests = reviewRequestService.getReviewRequestByReviewer(user.getId());
+        List<ReviewRequest> activeReceivedRequests = reviewRequestService.getReviewRequestByReviewer(user.getId())
+                        . stream().filter(w -> w.getWorkItem().getStatus().getStatusId() > 3).collect(Collectors.toList());
+        model.addAttribute("user", user);
+        model.addAttribute("sentReviewRequests", sentReviewRequests);
+        model.addAttribute("receivedReviewRequests", receivedReviewRequests);
+        model.addAttribute("activeReceivedRequests", activeReceivedRequests);
+        return "user";
+    }
 
 
     @GetMapping
@@ -91,6 +100,7 @@ public class UserMvcController {
         }
         model.addAttribute("users", userService.getAll());
         model.addAttribute("user", user);
+
         return "user";
     }
 
@@ -99,7 +109,7 @@ public class UserMvcController {
         try {
             User user = userService.getById(id);
             model.addAttribute("user", user);
-            return "user";
+            return "user-single";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";

@@ -75,12 +75,9 @@
                 <li><a class="link_name"  href="#">Teams</a></li>
 <!--                <li><a href="team.html" th:href="@{/teams}">All Team</a></li>-->
 <!--                <li><a th:href="@{/teams/{id}(id=${team.id})}" >Create Team</a></li>-->
-                <li><a href="#">User`s Teams</a></li>
-                <li><a href="#">Review Requests</a></li>
-                <li><a href="#">Add Member</a></li>
-                <li><a href="#">Remove Member</a></li>
-                <li><a href="#">All Members</a></li>
-                <li><a href="#">Update</a></li>
+                <li><a th:href="@{/teams}">ALL Teams</a></li>
+                <li><a th:href="@{/teams/new}">New Team</a></li>
+
             </ul>
         </li>
 
@@ -94,11 +91,11 @@
                 <i class='bx bxs-chevron-down arrow' ></i>
             </div>
             <ul class="sub-menu">
-                <li><a class="link_name" href="#">WorkItems</a></li>
+                <li><a class="link_name" href="#" >WorkItems</a></li>
                 <li><a href="table.html "th:href="@{/workItems}">All WorkItem</a></li>
 <!--                <li><a href="#" th:href="@{/workItems/{id}(id=${workitem.getId()})}">Single WorkItem</a></li>-->
                 <li><a href="#" th:href="@{/workItems/new}">Create WorkItem</a></li>
-                <li><a href="#" th:href="@{/workItems/{id}/update(id=workItems.id)}">Update</a></li>
+
             </ul>
         </li>
 
