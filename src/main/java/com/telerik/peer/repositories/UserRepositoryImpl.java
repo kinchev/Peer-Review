@@ -33,27 +33,21 @@ public class UserRepositoryImpl extends AbstractCRUDRepository<User> implements 
                 Query<User> query = session.createQuery("from User where username like :username", User.class);
                 query.setParameter("username", "%" + value + "%");
                 users.addAll(query.list());
-//                if (users.size() == 0) {
-//                    throw new EntityNotFoundException("User", "username (full or part of it)", value);
-//                }
+
             });
 
             email.ifPresent(value -> {
                 Query<User> query = session.createQuery("from User where email like :email", User.class);
                 query.setParameter("email", "%" + value + "%");
                 users.addAll(query.list());
-//                if (users.size() == 0) {
-//                    throw new EntityNotFoundException("User", "email (full or part of it)", value);
-//                }
+
             });
 
             number.ifPresent(value -> {
                 Query<User> query = session.createQuery("from User where number like :number", User.class);
                 query.setParameter("number", "%" + value + "%");
                 users.addAll(query.list());
-//                if (users.size() == 0) {
-//                    throw new EntityNotFoundException("User", "number (full or part of it)", value);
-//                }
+
             });
 
             return users;
@@ -63,55 +57,4 @@ public class UserRepositoryImpl extends AbstractCRUDRepository<User> implements 
 
     }
 
-//    public User getByUsername(String username) {
-//        try(Session session = sessionFactory.openSession()){
-//            Query<User> query = session.createQuery()
-//        }
-//
-//    }
-//    @Override
-//    public List<User> getAll() {
-//        try (Session session = sessionFactory.openSession()) {
-//            return session
-//                    .createQuery("from User", User.class)
-//                    .list();
-//        }
-//    }
-//
-//    @Override
-//    public User getById(long id) {
-//        try (Session session = sessionFactory.openSession()) {
-//            User user = session.get(User.class, id);
-//            if (user == null) {
-//                throw new EntityNotFoundException("User", id);
-//            }
-//            return user;
-//        }
-//    }
-//
-//    @Override
-//    public void create(User user) {
-//        try (Session session = sessionFactory.openSession()) {
-//            session.save(user);
-//        }
-//    }
-//
-//    @Override
-//    public void update(User user) {
-//        try (Session session = sessionFactory.openSession()) {
-//            session.beginTransaction();
-//            session.update(user);
-//            session.getTransaction().commit();
-//        }
-//    }
-//
-//    @Override
-//    public void delete(long id) {
-//        User userToDelete = getById(id);
-//        try (Session session = sessionFactory.openSession()) {
-//            session.beginTransaction();
-//            session.delete(userToDelete);
-//            session.getTransaction().commit();
-//        }
-//    }
 }

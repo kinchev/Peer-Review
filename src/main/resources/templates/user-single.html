@@ -4,12 +4,28 @@
     <!-- Google Fonts -->
     <link th:href="@{https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap}" rel="stylesheet">
     <!-- Bootstrap CSS -->
-    <!--    <link rel='stylesheet' th:href='@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css}'>-->
+            <link rel='stylesheet' th:href='@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css}'>
     <!-- Font Awesome CSS -->
     <link rel='stylesheet' th:href='@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css}'>
     <link rel="stylesheet" th:href="@{/css/user-single.css}" media="screen">
     <link rel="stylesheet" th:href="@{/css/workitem-single.css}" media="screen">
     <link rel="stylesheet" th:href="@{/css/nicepage.css}" media="screen">
+    <style>
+        .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button1 {background-color: #4CAF50;} /* Green */
+        .button2 {background-color: #008CBA;} /* Blue */
+    </style>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -26,12 +42,19 @@
                         <h3>USER</h3>
                     </div>
                     <div class="card-body">
-<!--                        <a-->
-<!--                                class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-3-base u-radius-50 u-btn-1"-->
-<!--                                href="#" th:href="@{/user/{id}/(id=${user.getId()})}">Change Photo<br>-->
-<!--                        </a>-->
+                        <a
+                                class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-3-light-1 u-radius-50 u-btn-2"
+                                href="#" th:href="@{/user/{id}/update/(id=${user.getId()})}">User Update<br>
+                        </a>
+                        <a
+                                class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-3-light-1 u-radius-50 u-btn-2"
+                                href="#" th:href="@{/auth/changePassword}">Change Password<br>
+                        </a>
 
                     </div>
+<!--                    <button class="button button1" input type="button" value="Input Button" th:href="@{/user/{id}/update/(id=${user.getId()})}">Update User</button>-->
+<!--                    <button class="button button1" th:href="@{/auth/changePassword}">Change Password</button>-->
+
                 </div>
             </div>
             <div class="col-lg-8">
@@ -82,6 +105,6 @@
             </div>
         </div>
     </div>
-</div>
+
 </body>
 </html>
