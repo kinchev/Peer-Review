@@ -129,11 +129,12 @@ public class UserMvcController {
 
     @PostMapping("/{id}/update")
     public String updateUser(@PathVariable long id,
-                             @Valid @ModelAttribute("user") User user,
+                             @Valid @ModelAttribute("userDto") UserDto userDto,
                              BindingResult errors,
                              Model model,
                              HttpSession session) {
-        User userToUpdate = userService.getById(id);
+        User userToUpdate = userMapper.fromDto(userDto, id);
+        User user;
         try {
             user = authenticationHelper.tryGetUser(session);
         } catch (AuthenticationFailureException e) {
@@ -146,7 +147,7 @@ public class UserMvcController {
             userService.update(userToUpdate, user);
             return "redirect:/user";
         } catch (DuplicateEntityException e) {
-            errors.rejectValue("name", "duplicate_user", e.getMessage());
+            errors.rejectValue("username", "duplicate_user", e.getMessage());
             return "user-update";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
@@ -196,11 +197,11 @@ public class UserMvcController {
         }
     }
 
-    @GetMapping("/user")
-    public String showAllUsers(Model model) {
-        model.addAttribute("users", userService.getAll());
-        return "user";
-    }
+//    @GetMapping("/user")
+//    public String showAllUsers(Model model) {
+//        model.addAttribute("users", userService.getAll());
+//        return "user";
+//    }
 
 
 }

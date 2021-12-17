@@ -24,7 +24,7 @@
 
 
 
-    <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${user}" method="post">
+    <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${userDto}" method="post">
         <div class="panel">
             <div class="state"><br><br>UPDATE</div>
 
@@ -32,15 +32,15 @@
                 <label>
                     <input placeholder='Username' type="text" th:field="*{username}">
                 </label>
-                <label class="error" th:errors="*{username}"></label>
+                <label class="error" th:errors="*{username}">Username error</label>
                 <label>
                     <input placeholder='Email' type="text" th:field="*{email}">
                 </label>
-                <label class="error" th:errors="*{email}">Phone Number error placeholder</label>
+                <label class="error" th:errors="*{email}">Email error</label>
                 <label>
                     <input placeholder='Phone Number' type="text" th:field="*{number}">
                 </label>
-                <label class="error" th:errors="*{number}"></label>
+                <label class="error" th:errors="*{number}">Number error</label>
                 <input class="login" type="submit" value="UPDATE"/>
             </div>
 
