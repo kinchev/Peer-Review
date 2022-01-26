@@ -156,6 +156,7 @@ public class TeamMvcController {
             TeamDto teamDto = teamMapper.TeamToDto(team);
             model.addAttribute("teamId", id);
             model.addAttribute("teamDto", teamDto);
+            model.addAttribute("team-members", team.getMembers());
             return "team-update";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());

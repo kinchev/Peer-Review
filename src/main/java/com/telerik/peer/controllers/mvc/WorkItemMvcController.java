@@ -296,7 +296,8 @@ public class WorkItemMvcController {
             model.addAttribute("error", e.getMessage());
             return "not-found";
         } catch (InvalidUserInputException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+            model.addAttribute("error", e.getMessage());
+            return "access-denied";
         }
     }
 

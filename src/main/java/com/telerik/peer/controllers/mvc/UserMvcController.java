@@ -96,7 +96,7 @@ public class UserMvcController {
         try {
             user = authenticationHelper.tryGetUser(session);
         } catch (AuthenticationFailureException e) {
-            return "redirect:/login";
+            return "redirect:/auth/login";
         }
         model.addAttribute("users", userService.getAll());
         model.addAttribute("user", user);
@@ -168,9 +168,9 @@ public class UserMvcController {
     @PostMapping("/{id}")
     public String updatePhoto(
             @RequestParam("file") MultipartFile multipartFile,
-            @PathVariable long id, Model model, BindingResult errors,
+            @PathVariable long id, Model model,
             HttpSession session) throws IOException {
-        User userToUpdate = userService.getById(id);
+//        User userToUpdate = userService.getById(id);
         User user;
         String fileName;
         try {
@@ -185,7 +185,7 @@ public class UserMvcController {
                 String uploadDir = "src/main/resources/user-photos/" + user.getId();
                 FileUploadHelper.saveFile(uploadDir, fileName, multipartFile);
             }
-            userService.update(userToUpdate, user);
+            userService.update(user, user);
             return "redirect:/user";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
@@ -207,11 +207,11 @@ public class UserMvcController {
         }
     }
 
-//    @GetMapping("/user")
-//    public String showAllUsers(Model model) {
-//        model.addAttribute("users", userService.getAll());
-//        return "user";
-//    }
+    @GetMapping("/users")
+    public String showAllUsers(Model model) {
+        model.addAttribute("users", userService.getAll());
+        return "users-all";
+    }
 
 
 }

@@ -40,6 +40,13 @@
                              th:src="@{/src/main/resources/user-photos/{path}(path=${user.getPhotoPath()})}"
                              alt="photo">
                         <h3>USER</h3>
+                        <div class="d-flex align-items-start py-3 border-bottom">
+                            <form action="#" th:action="@{/user/{id}(id=${user.getId()})}" method="post"
+                                  enctype="multipart/form-data" th:object="${user}">
+                                <input type="file" name="file">
+                                <input type="submit" value="Change Photo">
+                            </form>
+                        </div>
                     </div>
                     <div class="card-body">
                         <a
