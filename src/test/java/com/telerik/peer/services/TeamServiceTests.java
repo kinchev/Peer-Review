@@ -5,6 +5,7 @@ import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
 import com.telerik.peer.repositories.contracts.TeamRepository;
+import com.telerik.peer.services.contracts.WorkItemService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import static com.telerik.peer.Helper.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,9 @@ public class TeamServiceTests {
 
     @Mock
     TeamRepository mockRepository;
+
+    @Mock
+    WorkItemService workItemService;
 
     @InjectMocks
     TeamServiceImpl teamService;
@@ -45,26 +51,26 @@ public class TeamServiceTests {
     }
 
     @Test
-    public void getAll_should_callRepository(){
+    public void getAll_should_callRepository() {
         Mockito.when(mockRepository.getAll()).thenReturn(teams);
 
 
         teamService.getAll();
 
 
-        Assertions.assertEquals(mockTeam,teamService.getAll().get(0));
-        Mockito.verify(mockRepository,Mockito.times(1)).getAll();
+        Assertions.assertEquals(mockTeam, teamService.getAll().get(0));
+        Mockito.verify(mockRepository, Mockito.times(2)).getAll();
 
     }
+
     @Test
     void create_should_throw_when_NameIsTaken() {
-        // Arrange
-        Mockito.when(mockRepository.getAll()).thenReturn(teams);
+
 
         Team team = createMockTeam();
         team.setTeamName(mockTeam.getTeamName());
 
-        // Act,Assert
+
         Assertions.assertThrows(DuplicateEntityException.class, () -> teamService.create(team));
     }
 }
