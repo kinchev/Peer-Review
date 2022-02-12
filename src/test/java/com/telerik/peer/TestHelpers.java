@@ -6,7 +6,7 @@ import java.lang.reflect.Member;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Helper {
+public class TestHelpers {
     public static User createMockUser2(){
         return createMockUser();
     }
@@ -39,6 +39,7 @@ public class Helper {
         mockTeam.setOwner(createMockUser());
         mockTeam.setWorkItems(createMockWorkItemSet());
         mockTeam.setMembers(createMockMemberSet());
+
         return mockTeam;
     }
     public static WorkItem createMockWorkItem(){

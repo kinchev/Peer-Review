@@ -1,6 +1,8 @@
 package com.telerik.peer.services;
 
+import com.telerik.peer.TestHelpers;
 import com.telerik.peer.exceptions.DuplicateEntityException;
+import com.telerik.peer.exceptions.EntityNotFoundException;
 import com.telerik.peer.models.Team;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.WorkItem;
@@ -16,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.telerik.peer.Helper.*;
+import static com.telerik.peer.TestHelpers.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +29,13 @@ public class TeamServiceTests {
 
 
     @Mock
-    TeamRepository mockRepository;
+    TeamRepository teamRepository;
 
     @Mock
     WorkItemService workItemService;
 
     @InjectMocks
-    TeamServiceImpl teamService;
+    TeamServiceImpl teamServiceImpl;
 
     private static User mockUser;
     private static WorkItem mockWorkItem;
@@ -52,14 +54,14 @@ public class TeamServiceTests {
 
     @Test
     public void getAll_should_callRepository() {
-        Mockito.when(mockRepository.getAll()).thenReturn(teams);
+        Mockito.when(teamRepository.getAll()).thenReturn(teams);
 
 
-        teamService.getAll();
+        teamServiceImpl.getAll();
 
 
-        Assertions.assertEquals(mockTeam, teamService.getAll().get(0));
-        Mockito.verify(mockRepository, Mockito.times(2)).getAll();
+        Assertions.assertEquals(mockTeam, teamServiceImpl.getAll().get(0));
+        Mockito.verify(teamRepository, Mockito.times(2)).getAll();
 
     }
 
@@ -71,6 +73,26 @@ public class TeamServiceTests {
         team.setTeamName(mockTeam.getTeamName());
 
 
-        Assertions.assertThrows(DuplicateEntityException.class, () -> teamService.create(team));
+        Assertions.assertThrows(DuplicateEntityException.class, () -> teamServiceImpl.create(team));
     }
+
+    @Test
+    void getById_should_returnUser_when_matchExist() {
+        User mockUser = createMockUser();
+        Mockito.when(teamRepository.getById(mockUser.getId())).thenReturn(mockTeam);
+
+        Team result = teamServiceImpl.getById(mockUser.getId());
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(mockTeam.getTeamId(), result.getTeamId()),
+                () -> Assertions.assertEquals(mockTeam.getTeamName(), result.getTeamName()),
+                () -> Assertions.assertEquals(mockTeam.getOwner(), result.getOwner()),
+                () -> Assertions.assertEquals(mockTeam.getMembers(), result.getMembers()),
+                () -> Assertions.assertEquals(mockTeam.getWorkItems(), result.getWorkItems())
+
+
+
+        );
+    }
+
 }
