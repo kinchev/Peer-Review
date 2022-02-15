@@ -8,9 +8,11 @@ import com.telerik.peer.models.ReviewRequest;
 import com.telerik.peer.models.User;
 import com.telerik.peer.models.dto.RegisterDto;
 import com.telerik.peer.models.dto.UserDto;
+import com.telerik.peer.services.contracts.VerificationTokenService;
 import com.telerik.peer.services.contracts.ReviewRequestService;
 import com.telerik.peer.services.contracts.UserService;
 import com.telerik.peer.utils.FileUploadHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
@@ -34,15 +36,18 @@ public class UserController {
     private final UserMapper userMapper;
     private final AuthenticationHelper authenticationHelper;
     private final ReviewRequestService reviewRequestService;
+    private final VerificationTokenService verificationTokenService;
 
-    public UserController(UserService userService, UserMapper userMapper,
-                          AuthenticationHelper authenticationHelper, ReviewRequestService reviewRequestService) {
+
+
+    @Autowired
+    public UserController(UserService userService, UserMapper userMapper, AuthenticationHelper authenticationHelper, ReviewRequestService reviewRequestService, VerificationTokenService verificationTokenService) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.authenticationHelper = authenticationHelper;
         this.reviewRequestService = reviewRequestService;
+        this.verificationTokenService = verificationTokenService;
     }
-
 
     @GetMapping("{id}")
     public User getById(@RequestHeader HttpHeaders headers, @PathVariable long id) {
@@ -66,6 +71,7 @@ public class UserController {
         try {
             User user = userMapper.createUserFromRegisterDto(registerDto);
             userService.create(user);
+
             return user;
         } catch (DuplicateEntityException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());

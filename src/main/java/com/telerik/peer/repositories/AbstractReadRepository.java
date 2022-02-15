@@ -6,11 +6,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static java.lang.String.format;
 
 public abstract class  AbstractReadRepository<T> implements CRUDRepository<T> {
-    private final Class<T> clazz;
+  public final Class<T> clazz;
     private final SessionFactory sessionFactory;
 
     protected AbstractReadRepository(Class<T> clazz, SessionFactory sessionFactory) {
@@ -45,4 +47,5 @@ public abstract class  AbstractReadRepository<T> implements CRUDRepository<T> {
             return session.createQuery(format("from %s ", clazz.getName()), clazz).list();
         }
     }
+
 }

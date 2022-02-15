@@ -34,6 +34,9 @@ public class User {
     @Column(name = "photo_name")
     private String photoName;
 
+    private boolean isEnable;
+
+
     @Transient
     @JsonIgnore
     public String getPhotoPath() {
@@ -93,6 +96,13 @@ public class User {
         this.photoName = photoName;
     }
 
+    public boolean isEnable() {
+        return isEnable;
+    }
+
+    public void setEnable(boolean enable) {
+        isEnable = enable;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

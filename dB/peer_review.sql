@@ -14,7 +14,6 @@
 
 
 -- Dumping database structure for peer_review
-DROP DATABASE IF EXISTS `peer_review`;
 CREATE DATABASE IF NOT EXISTS `peer_review` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `peer_review`;
 
@@ -115,11 +114,11 @@ CREATE TABLE IF NOT EXISTS `teams` (
 DELETE FROM `teams`;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
 INSERT INTO `teams` (`team_id`, `name`, `owner_id`) VALUES
-	(1, 'qqqq', 6),
-	(2, 'qqq', 6),
-	(3, 'Awesome team3', 8),
-	(4, 'Awesome team2', 9),
-	(5, 'My Awesome Team', 10),
+	(1, 'Team1', 6),
+	(2, 'Team2', 6),
+	(3, 'Awesome Team3', 8),
+	(4, 'Awesome Team4', 9),
+	(5, 'Team5', 10),
 	(6, 'New Team with owner-member', 11);
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 
@@ -182,24 +181,29 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `users_images_fk` (`photo_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
--- Dumping data for table peer_review.users: ~14 rows (approximately)
+-- Dumping data for table peer_review.users: ~19 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `phone_number`, `photo_name`) VALUES
-	(6, 'bbb', '22', 'hev@yahoo.com', '0896000036', 'FONT.png'),
-	(7, 'bb', '22', 'kinchev@yahoo.com', '0896000035', 'FONT@.png'),
-	(8, 'alex1', '$2a$10$1qBAEH2AdUcVWuVYJ/Q8WutKn0gQYXKWEQJtrK5/8O7gqDTET29vS', 'alex1@abv.bg', '0898384663', 'Alex for LinkedIn.JPG'),
-	(9, 'alex2', '$2a$10$8o4pdO6a7./a7cUNUL.evONekds/KShk28dpLnfI41TtzgqCqAD46', 'alex2@abv.bg', '0889223600', NULL),
-	(10, 'alex3', '$2a$10$4wSEZ5QWk1.LIEbPmT/AT.kXW5ampq7b2FEXy8vcqDuvLFmj2BM5e', 'alex3@abv.bg', '0889223600', NULL),
-	(11, 'alex4', '$2a$10$fTxsC5c6d2pYESq0dOXyvupOKG7MI5xBedkK1nSzsCifntdVuy7o2', 'alex4@abv.bg', '0889223600', 'Alex for LinkedIn.JPG'),
-	(12, 'alex5', '$2a$10$Xg7NKXm/d9Y//SZSknXIT.5sAs5xxkoIGNQapKtAkwU7614gNVNv2', 'alex5@abv.bg', '0898384661', 'Alex for LinkedIn.JPG'),
-	(13, 'alex6', '$2a$10$jxYtjTGiG3i/jC/15n3FHOqiDppEf1uCeMJwaiKJ4vuOd6gbmBoYm', 'alex6@abv.bg', '0898384661', 'Alexportret.jpg'),
-	(14, 'alex7', '$2a$10$zYxFg.0Vddmi0tmgLj.CIe6WI6MEwB2p/NO2ysInkz/E5fs6N7KPy', 'alex7@abv.bg', '0898384661', ''),
-	(15, 'alex8', '$2a$10$yWr5cmOUCkzq/BvkLdRlYOaZzu90daq47G.hUth.g6lcxyT4QJzI6', 'alex8@abv.bg', '0898384661', ''),
-	(16, 'alex9', '$2a$10$Ot3FHNHN/f3xynMCSyK7xutdEDgmbNK26jz0Ftg/8DVe35gHJiiZe', 'alex9@abv.bg', '0898384661', 'Alexportret.jpg'),
-	(17, 'alex10', '$2a$10$bcU.PtayZ9mg/43AUYqdGehyMkabHaiwHN8nPD0CNcB227I32.18y', 'alex10@abv.bg', '0898384661', 'Alexportret - Copy.jpg'),
-	(18, 'alex11', '$2a$10$HXTkpcNLHHNWxJFRwCeOzOAV9OukJI3dmkR/bbWSNDZSndPp2j2.K', 'alex11@abv.bg', '0898384661', 'Alex for LinkedIn.JPG'),
-	(21, 'alex19', '$2a$10$MJZW4OwM9jvUC2nnoIpXjOJti4RjFciuWdCbfgwqI5gAA76SLRy0C', 'alex12@abv.bg', '0898384661', 'Alexportret.jpg');
+	(1, 'Ianko', 'qwerty', 'hev@yahoo.com', '0879654565', 'celebrities-before-famous-1588175098.jpg'),
+	(2, 'Nikol', '!27dsdjasaa', 'hev232@yahoo.com', '0875456525', 'celebrities-before-famous-1588175098 (1).jpg'),
+	(3, 'Eva', 'azsxdcfvb', 'evaaa@yahoo.com', '0854789653', 'jennifer-aniston-1588167141.jpg'),
+	(4, 'Elica', '321312313', 'el@yahoo.com', '0876546523', 'jenniferlopez-1588167242.jpg'),
+	(5, 'Adelina', 'ivanmivandigivan', 'adi@yahoo.com', '0874854653', 'ariana-grande-1588167315.jpg'),
+	(6, 'Gosho', 'e3234248', 'hev@yahoo.com', '0889654525', 'blake-lively-1588167416.jpg'),
+	(7, 'BBB', '3255245252', 'kinchev@yahoo.com', '0896000035', 'gettyimages-51506153-1588176289.jpg'),
+	(8, 'Monica', '$2a$10$1qBAEH2AdUcVWuVYJ/Q8WutKn0gQYXKWEQJtrK5/8O7gqDTET29vS', 'moni@abv.bg', '0898384663', 'gigi-hadid-1588167487.jpg'),
+	(9, 'Katrin', '$2a$10$8o4pdO6a7./a7cUNUL.evONekds/KShk28dpLnfI41TtzgqCqAD46', 'kati2@abv.bg', '0889223600', 'meghan-markle-before-royal-1588168531.jpg'),
+	(10, 'Ivan', '$2a$10$4wSEZ5QWk1.LIEbPmT/AT.kXW5ampq7b2FEXy8vcqDuvLFmj2BM5e', 'vanio@abv.bg', '0889223600', 'angelina-jolie-1588166967.jpg'),
+	(11, 'Georgi', '$2a$10$fTxsC5c6d2pYESq0dOXyvupOKG7MI5xBedkK1nSzsCifntdVuy7o2', 'gosho@abv.bg', '0889223600', 'margot-robbie-1588168612.jpg'),
+	(12, 'Simona', '$2a$10$Xg7NKXm/d9Y//SZSknXIT.5sAs5xxkoIGNQapKtAkwU7614gNVNv2', 'simonkata@abv.bg', '0879654525', 'kim-kardashian-1588170307.jpg'),
+	(13, 'Gergana', '$2a$10$jxYtjTGiG3i/jC/15n3FHOqiDppEf1uCeMJwaiKJ4vuOd6gbmBoYm', 'geri@abv.bg', '0898384661', 'julia-roberts-1588168040.jpg'),
+	(14, 'Luchiq', '$2a$10$zYxFg.0Vddmi0tmgLj.CIe6WI6MEwB2p/NO2ysInkz/E5fs6N7KPy', 'lulu@abv.bg', '0879654123', 'meryl-streep-1588168280.jpg'),
+	(15, 'Sitniq', '$2a$10$yWr5cmOUCkzq/BvkLdRlYOaZzu90daq47G.hUth.g6lcxyT4QJzI6', 'sitniq@abv.bg', '0898384661', 'bella-hadid-1588170435.jpg'),
+	(16, 'Ivo', '$2a$10$Ot3FHNHN/f3xynMCSyK7xutdEDgmbNK26jz0Ftg/8DVe35gHJiiZe', 'iivvoo@abv.bg', '0898384661', 'prah-winfrey-1588168908.jpg'),
+	(17, 'Viktoriq', '$2a$10$bcU.PtayZ9mg/43AUYqdGehyMkabHaiwHN8nPD0CNcB227I32.18y', 'vki@abv.bg', '0879546525', 'hailey-baldwin-1588168448.jpg'),
+	(18, 'Snejina', '$2a$10$HXTkpcNLHHNWxJFRwCeOzOAV9OukJI3dmkR/bbWSNDZSndPp2j2.K', 'snej@abv.bg', '0898384661', 'jennifer-lawrence-1588169369.jpg'),
+	(21, 'Mariq', '$2a$10$MJZW4OwM9jvUC2nnoIpXjOJti4RjFciuWdCbfgwqI5gAA76SLRy0C', 'mariq@abv.bg', '0885654525', 'emma-watson-1588169821.jpg');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Dumping structure for table peer_review.workitems
@@ -226,19 +230,19 @@ CREATE TABLE IF NOT EXISTS `workitems` (
 DELETE FROM `workitems`;
 /*!40000 ALTER TABLE `workitems` DISABLE KEYS */;
 INSERT INTO `workitems` (`workitem_id`, `title`, `description`, `status_id`, `creator_id`, `reviewer_id`, `team_id`) VALUES
-	(1, 'aaaa', '1111', 4, 6, 7, 1),
-	(2, 'bbbb', '2222', 2, 6, 7, 1),
-	(8, 'test-test-test', 'Workitem for test purposes only!', 1, 10, 11, 2),
-	(9, 'test-test-test3', 'Workitem for test purposes only!', 1, 10, 6, 2),
-	(10, 'test-test-test3', 'Workitem for update purposes only, check update !!!', 4, 10, 11, 2),
-	(11, 'test-test-test5', 'Workitem for test purposes only!', 1, 10, 11, 2),
-	(12, 'test-test-test6', 'Workitem for test purposes only!', 1, 10, 11, 2),
-	(13, 'test-test-test7', 'Workitem for test purposes only!', 1, 10, 11, 2),
-	(14, 'test-test-test8', 'Workitem for test purposes only!', 1, 10, 11, 2),
-	(15, 'test-test-test9', 'Workitem for test purposes only!', 1, 10, 11, 2),
-	(16, 'test-test-test10', 'Workitem for test purposes only!', 1, 10, 11, 2),
-	(17, 'test-test-test11', 'Workitem for test purposes only!', 1, 7, 9, 1),
-	(18, 'test-test-test15', 'Workitem for test purposes only!', 1, 7, 8, 1),
+	(1, 'Title_1', 'Description_1', 4, 6, 7, 1),
+	(2, 'Title_2', '2222', 2, 6, 7, 1),
+	(8, 'Title_3', 'Description_1', 1, 10, 11, 2),
+	(9, 'Title_3', 'Description_2', 1, 10, 6, 2),
+	(10, 'Title_4', 'Workitem for update purposes only, check update !!!', 4, 10, 11, 2),
+	(11, 'Title_5', 'Description_3', 1, 10, 11, 2),
+	(12, 'Title_6', 'Description_4', 1, 10, 11, 2),
+	(13, 'Title_7', 'Description_5', 1, 10, 11, 2),
+	(14, 'Title_8', 'Description_6', 1, 10, 11, 2),
+	(15, 'Title_9', 'Description_7', 1, 10, 11, 2),
+	(16, 'Title_10', 'Description_8', 1, 10, 11, 2),
+	(17, 'Title_11', 'Description_9', 1, 7, 9, 1),
+	(18, 'Title_12', 'Workitem for test purposes only!', 1, 7, 8, 1),
 	(19, 'workitem_with_request', 'Workitem for test purposes only!', 1, 10, 11, 2),
 	(20, 'Test Item Web', 'Test Item Web', 1, 10, 11, 2);
 /*!40000 ALTER TABLE `workitems` ENABLE KEYS */;

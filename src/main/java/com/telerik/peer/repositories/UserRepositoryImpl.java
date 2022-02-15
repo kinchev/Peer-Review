@@ -30,7 +30,8 @@ public class UserRepositoryImpl extends AbstractCRUDRepository<User> implements 
             List<User> users = new ArrayList<>();
 
             username.ifPresent(value -> {
-                Query<User> query = session.createQuery("from User where username like :username", User.class);
+                Query<User> query = session.createQuery("from User where username like :username",
+                        User.class);
                 query.setParameter("username", "%" + value + "%");
                 users.addAll(query.list());
 
@@ -55,6 +56,11 @@ public class UserRepositoryImpl extends AbstractCRUDRepository<User> implements 
 
 
 
+    }
+
+    @Override
+    public User findByEmailId(String emailId) {
+        return null;
     }
 
 }
